@@ -1,0 +1,498 @@
+
+
+<form id="demo" >
+<span id="demo_input_area"></span>
+<script>
+
+ga.tmp.bgi = ga.color.data.body.background;
+
+
+
+if ( !0 ) {
+    $("body").css( { "background": ga.tmp.bgi + " no-repeat center center fixed", "-webkit-background-size" : "cover", "-moz-background-size" : "cover", "-o-background-size" : "cover" , "background-size": "cover"} );
+}
+
+input_eval = "";
+input_html = "<table>";
+input_repeats = "";
+input_trees = [];
+skipped_row = 0;
+demo_done_eval = "";
+_jmol_info = {};
+// jmol = "jmol";
+ga.pull.clearPull();
+ga.specproj.clear();
+$('#demo').on("keyup keypress", function(e) { var code = e.keyCode || e.which;  if (code  == 13) { e.preventDefault(); return false; }});
+
+this_html = '<tr><td colspan=5 id="text1"> <div style="width:800px;margin-left:100px">     <p><span style="font-weight:bold;font-size:20pt;font-family:\'Times New Roman\'">Instructions</span></p>      <p style="text-align:left;margin-bottom:0.000000pt;margin-top:0.000000pt"></p>          <p style="font-size:16pt;font-family:\'Times New Roman\'">     <i>RotDif</i> requires 2 input files:</p>      <p style="text-align:justify;margin-bottom:0.000000pt;margin-top:0.000000pt">          <span style="font-size:16pt;font-family:\'Times New Roman\'">        <p> 	<ul> 	  <li> Relaxation file (.txt) </li> 	</ul> 	       </p>        	<p> 	  <ul> 	    <li>PDB file (.pdb) </li> 	  </ul> 	  	</p>      	<hr>  	 <p><span style="font-weight:bold;font-size:20pt;font-family:\'Times New Roman\'">Example set of files</span></p> 	 	<p> Relaxation files</p> 	<ul> 	    <li> <a href="demo/rotdif_demo_data.txt" download>Data at 1 field, rotdif_demo_data.txt</a> </li> 	    <li> <a href="demo/rotdif_demo_5fields_data.txt" download>Data at 5 fields, rotdif_demo_5fields_data.txt</a> </li> 	     	</ul> 	<p> Protein coordinates </p> 	<ul> 	  <li> <a href="demo/rotdif_demo_structure.pdb">Coordinates, rotdif_demo_structure.pdb </a></li> 	   	</ul> 	 	     </span></p>     </div> </td></tr>';
+input_html += this_html;
+if( skipped_row == 1 ){ input_html += "</tr>"; }
+input_html += '</table>';
+$( '#demo_input_area' ).html( input_html );
+eval( input_eval );
+</script>
+<p><button id="demo_submit" class="help_link"><span class="buttontext">Submit</span></button>
+<span class="help">this is help for the submit button</span>
+<button id="demo_reset" class="help_link"><span class="buttontext">Reset to default values</span></button>
+<span class="help">this is help for the reset to default values button</span>
+
+</p>
+<span id="demo_progress"></span>
+<script>
+$( "#demo_reset" ).remove();
+
+$( "#demo_submit" ).remove();
+
+
+
+var demo_output_msgs = $("#demo_output_msgs");
+demo_output_msgs.text( "" );
+
+var demo_timeout_handler = "unset";
+var demo_timeout_handler_uuid;
+
+function get_results_demo( id, last_timeout, getlastmsg, getinput )
+{
+
+//             url:"ajax/get_results.php?_window=" +  window.name + "&_logon=" +$( "#_state" ).data( "_logon" ) + '&_uuid=' + id,
+    var job_status = "";
+    
+    $.getJSON( 
+             "ajax/get_results.php",
+             {
+                tagmode: "any",
+                format: "json",
+                _window : window.name,
+                _logon : $( "#_state" ).data( "_logon" ),
+                _uuid : id,
+                _getlastmsg : getlastmsg,
+                _getinput : getinput ? true : false
+             } )
+    .done( function( data, status, xhr ) {
+
+           var do_refresh = 1;
+
+           if ( do_refresh ) {
+              ga.fc.clear( $.base64.encode( "./" + $( "#_state" ).data( "_project" ) ) );
+              ga.jc.clear_leaf( id );
+           }
+
+           job_status = ga.data.update( "demo", data ).job_status;
+           if ( job_status == "complete" ||
+                job_status == "cancelled" ||
+                job_status == "failed" )
+           {
+              if ( demo_timeout_handler != "unset" )
+              {
+                  clearTimeout( demo_timeout_handler );
+                  demo_timeout_handler = "unset";
+              }
+              ga.ws.unsub( id, "demo" );
+              eval( demo_done_eval );
+           } else {
+               if ( !last_timeout || last_timeout < 2000 )
+               { 
+                  last_timeout = 2000;
+               } else {
+                  if ( last_timeout < 16000 )
+                  {
+                      last_timeout *= 2;
+                  } else {
+                      last_timeout = 16000;
+                  }
+               }
+
+               demo_timeout_handler =  setTimeout( get_results_demo, last_timeout, id, last_timeout, 0 );
+               demo_timeout_handler_uuid = id;
+           }
+          } )
+    .fail( function( xhr, status, errorThrown ) {
+
+           $( "#demo_results" ).html( "<span class=\"warning\"> Failed: " + status + " : '" + xhr.status + ":" + errorThrown + "' on URL ajax/tools/center.php </span>" );
+           $('#demo_progress').html( "" );
+           if ( demo_timeout_handler != "unset" )
+           {
+               clearTimeout( demo_timeout_handler );
+               demo_timeout_handler = "unset";
+           }
+           ga.ws.unsub( id, "demo" );
+           eval( demo_done_eval );
+          } );
+    return false;
+};
+
+function msg_demo ( id, data )
+{
+   ga.data.update( "demo", data, get_results_demo, id );
+};
+
+$( "#demo_submit" ).click( function( e ) {
+   e.preventDefault();
+   e.returnValue = false;
+   $( "#demo" ).find( ".toclear" ).remove();   
+   if ( demo_timeout_handler != "unset" ) {
+       
+       clearTimeout( demo_timeout_handler );
+       if ( demo_timeout_handler_uuid ) {
+           ga.ws.unsub( demo_timeout_handler_uuid, "demo" );
+       }
+       demo_timeout_handler = "unset";
+   }
+   ga.value.resetDefaultValues( "demo_output", true );
+
+   
+   return ga.xsede.select( "__resource__", do_demo_submit, $(this) );
+   //   return do_demo_submit( $(this) );
+});
+
+function do_demo_submit( $form, airavataresource, skipcached ) {
+
+   var $ok = 0;
+   
+   
+
+   ga.event( "", "demo", "submit clicked" );
+
+   
+
+
+
+
+
+   if ( !ga.valid.checksubmit( "demo" ) ) {
+       ga.valid.showerrormessage( "demo" );
+       return false;
+   }
+
+   if ( ga.specproj.data.length ) {
+      if ( $( "#_state" ).data( '_logon' ) &&
+           $( "#_state" ).data( '_logon' ).length ) {
+          $( "#sel_project" ).html( ga.specproj.gname() );
+          $( "#_state" ).data( '_project', ga.specproj.gname() );
+          
+      }
+   }  
+
+//   if ( 0 && !xsedeproject) {
+//      
+//      switch( project = ga.xsede.select( "__resource__", do_demo_submit, $form ) ) {
+//      case "deferred" : return false; break;
+//      case "abort"    : return false; break;
+//      case "notused"  : break;
+//      }
+      
+      
+
+   if ( !airavataresource ) {
+      
+      switch( airavataresource = ga.airavata.select( "__resource__", "__airavataselect__", do_demo_submit, $form ) ) {
+      case "deferred" : return false; break;
+      case "abort"    : return false; break;
+      case "notused"  : break;
+      }
+      
+   }
+   
+
+   $.ajax({
+       type: 'get'
+       ,url: "ajax/sys_config/sys_joblocked.php?_window=" +  window.name + "&_logon=" + $( "#_state" ).data( "_logon" )
+
+
+
+       ,context: $form
+       ,success: function( data ) { // your success handler
+
+          if ( !$ok )
+          {
+          switch ( data )
+          {
+             case "1" :
+             {
+                 ga.msg.box( { icon:"warning.png", text:"This project directory is currently locked by another project.\nYou can wait until it completes, change the project in user configuration or clear the lock in the job manager." } );
+                 return;
+             } break;
+             case "2" :
+             {
+                 ga.msg.box( { icon:"warning.png", text:"You must be logged in to submit this module." } );
+                 return;
+             } break;
+             case "0" :
+             {
+
+                 $ok = 1;
+             } break;
+             default : 
+             {
+                if ( /^Your job/.test( data ) ) {
+                   ga.msg.box( { icon : "warning.png",
+                                 text : data } );
+                   return;
+                }
+                
+                if ( skipcached ) {
+                    $ok = 1;
+                } else {
+                    return ga.cache.msg( "", "", get_results_demo, do_demo_submit, data, $form, airavataresource );
+                }
+             } break;
+          }
+          }
+       }
+       ,error: function() { // your error handler
+          ga.msg.box( { icon:"toast.png", text:"Checking the project lock failed. This is possibly a server or network issue" } );
+       }
+       ,complete: function() { 
+          this.off('submit');
+          if ( $ok )
+          {
+
+
+              $( "#demo_results" ).text( "" );
+
+              ga.value.saveLastValues( "demo" );
+              ga.value.resetDefaultValues( "demo_output", true );
+
+              var found_errors = 0;
+              $("#demo").find("input").each(function(i){
+                 if ( $(this).attr( 'required' ) && $(this).val().length == 0 )
+                 {
+                    var tag =  "#demo " + "#" + $(this).attr('id') + "_msg";
+
+                    $( tag ).html( "missing required field" );
+                    found_errors = 1;
+                 }
+              });
+              if ( found_errors ) {
+                  return;
+              }
+
+    var tree_html = "";
+    $( "._hidden_tree_selects" ).remove( );
+    $.each( input_trees, function( k, v ){
+
+        $( 'input[type=hidden][name="' + v + '[]"]' ).remove();
+        var selectedElms = $('#' + v).jstree("get_selected", true);
+        var i = 0;
+        $.each(selectedElms, function() {
+           tree_html += '<input type="hidden" name="' + v + '[]" value="' + this.id + '" class="_hidden_tree_selects"/>';
+
+        });
+    });
+
+    $( this ).append( tree_html );
+
+
+    var logonadd = $("<input>").attr("type", "hidden").attr("name", "_logon").val( $( "#_state" ).data( "_logon" ) );$( this ).append($(logonadd));
+    var projectadd = $("<input>").attr("type", "hidden").attr("name", "_project").val( $( "#_state" ).data( "_project" ) );$( this ).append($(projectadd));
+    var windowadd = $("<input>").attr("type", "hidden").attr("name", "_window").val( window.name );$( this ).append($(windowadd));
+    
+    var vuuid = uuid.v1();
+
+
+
+
+
+
+
+    if ( airavataresource != "notused" ) {
+        $( this ).append( $("<input>").attr("type", "hidden").attr("name", "_airavataresource").val( airavataresource ) );
+    }
+
+    var uuidadd = $("<input>").attr("type", "hidden").attr("name", "_uuid").val( vuuid );$( this ).append($(uuidadd));
+//    ga.altfile.add( "demo" );
+    ga.valuen.addhtml( "demo" );
+
+    ga.extrahidden( "demo" );
+
+    ga.ws.sub( vuuid, msg_demo, "demo" );
+
+    var formData = new FormData($('#demo')[0]);
+    
+     
+     
+    
+     
+     
+
+     
+     if ( ga.multistage["demo"] )
+      {
+        ga.value.modifyformdata(ga.multistage, "demo", formData, ga.stages["demo"], ga.currentstage);
+      }
+
+
+
+    $('#demo_progress').html( "Uploading:<progress></progress>" );
+
+    var job_status = "";
+
+    ga.event( "", "demo", "submit: passed submit checks, submitting" );
+
+
+    // var url - coditional based on module's .json setting, and use it in ajax call
+
+    $.ajax( {
+             dataType: "json",
+             cache:false,
+//             timeout:3000,  // for testing
+             type:"POST",
+             url:"ajax/demo_menu/demo.php",
+             data: formData,
+             xhr: function() {  // Custom XMLHttpRequest
+                 var myXhr = $.ajaxSettings.xhr();
+                 if(myXhr.upload){ // Check if upload property exists
+                     myXhr.upload.addEventListener('progress',
+                         function(e) {
+                         if(e.lengthComputable){
+                           $('#demo_progress progress').attr({value:e.loaded,max:e.total});
+                         } }
+//                     progressHandlingFunction
+                    , false);
+                 }
+                 return myXhr;
+             },
+             contentType: false,
+             processData: false
+            } )
+    .done( function( data, status, xhr ) {
+    
+    if ( ga.multistage["demo"] )
+      {
+        ga.value.showfields(ga.multistage, "demo", ga.stages["demo"], ga.currentstage);
+    	delete ga.stages["demo"][ga.currentstage]; 
+    	++ga.currentstage;	
+      }	
+
+
+
+
+// refresh cache for this project
+           $('#demo_progress').html( "" );
+   
+           var do_refresh = 1;
+
+           if ( do_refresh ) {
+              ga.fc.clear( $.base64.encode( "./" + $( "#_state" ).data( "_project" ) ) );
+              ga.jc.clear_leaf( vuuid );
+           }
+           
+// loop through data pairs
+           demo_output_msgs.text( "" );
+           job_status = ga.data.update( "demo", data ).job_status;
+
+           if ( job_status == "complete" ||
+                job_status == "cancelled" ||
+                job_status == "failed" )
+           {
+               if ( demo_timeout_handler != "unset" )
+               {
+                   clearTimeout( demo_timeout_handler );
+                   demo_timeout_handler = "unset";
+               }
+               ga.ws.unsub( vuuid, "demo" );
+               eval( demo_done_eval );
+           } else {
+               demo_timeout_handler = setTimeout( get_results_demo, 2000, vuuid, 2000, 0 );
+               demo_timeout_handler_uuid = vuuid;
+
+           }
+          } )
+    .fail( function( xhr, status, errorThrown ) {
+
+
+
+
+           $( "#demo_results" ).html( "<span class=\"warning\"> Failed: " + status + " : '" + xhr.status + ":" + errorThrown + "' on URL ajax/demo_menu/demo.php </span>" );
+           $('#demo_progress').html( "" );
+           if ( demo_timeout_handler != "unset" )
+           {
+               clearTimeout( demo_timeout_handler );
+               demo_timeout_handler = "unset";
+           }
+           ga.ws.unsub( vuuid, "demo" );
+           eval( demo_done_eval );
+          } );
+          } else {
+
+          }
+       }
+   });
+} 
+
+demo_reset = function() {
+    
+    if ( !10 ) {
+        // required to reset scrollheight ... 
+        document.getElementById( "demo_output_textarea" ).style.height = 0;
+    }
+
+    if ( demo_timeout_handler != "unset" ) {
+       
+       clearTimeout( demo_timeout_handler );
+       if ( demo_timeout_handler_uuid ) {
+           ga.ws.unsub( demo_timeout_handler_uuid, "demo" );
+       }
+       demo_timeout_handler = "unset";
+    }
+    ga.event( "", "demo", "reset clicked" );
+    ga.valid.clearerrorcounter( "demo" );
+
+   if ( ga.multistage["demo"] )
+     {
+       ga.currentstage = 0;
+       ga.value.sethiddenfields(ga.multistage,"demo");
+       ga.stages["demo"].length = 0;
+       ga.stages["demo"] = ga.stagesdefault["demo"].slice();
+       console.log("Reset: " + ga.stages["demo"]);
+     }
+
+    //    ga.value.resetDefaultValues( "demo" );
+    ga.valuen.restore.dflt(  "demo" );
+    ga.value.resetDefaultValues( "demo_output", true );
+    
+    eval( input_repeats );
+    return false;
+}
+
+$( "#demo_reset" ).click( function() {
+   return demo_reset();
+});
+
+ga.hhelp.set();
+
+
+eval( input_repeats );
+ga.pull.doPull();
+</script>
+</form>
+<div id="demo_results"></div>
+<script>
+ga.tmp.html = "<hr>";
+ga.tmp.html = "";
+$("#demo").append( ga.tmp.html );
+</script>
+
+<form id="demo_output">
+<div id="demo_output_msgs" class="warning" type="msgs"></div>
+<script>
+ga.value.setLastValueOutput( "demo_output" );
+ga.value.extra_resets.clear();
+</script>
+
+<span id="demo_output_airavata"></span>
+
+<table>
+<tr>
+<td colspan="4" style="vertical-align:top"><label hidden id="demo_output_textarea_label" for="demo_output_textarea" class="header3 ">Report:</label>
+<textarea readonly hidden id="demo_output_textarea" rows="10" cols="110" class="help_link"></textarea>
+<span class="help">general textarea help</span>
+</td>
+</tr>
+</table>
+</form>
+
+
+
+
+<script>loaded_demo = 1; </script>

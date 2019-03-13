@@ -1,0 +1,937 @@
+
+
+<form id="rotdif_main" >
+<span id="rotdif_main_input_area"></span>
+<script>
+
+ga.tmp.bgi = ga.color.data.body.background;
+
+
+
+if ( !0 ) {
+    $("body").css( { "background": ga.tmp.bgi + " no-repeat center center fixed", "-webkit-background-size" : "cover", "-moz-background-size" : "cover", "-o-background-size" : "cover" , "background-size": "cover"} );
+}
+
+input_eval = "";
+input_html = "<table>";
+input_repeats = "";
+input_trees = [];
+skipped_row = 0;
+rotdif_main_done_eval = "";
+_jmol_info = {};
+// jmol = "jmol";
+ga.pull.clearPull();
+ga.specproj.clear();
+$('#rotdif_main').on("keyup keypress", function(e) { var code = e.keyCode || e.which;  if (code  == 13) { e.preventDefault(); return false; }});
+
+this_html = '<tr><td><label for="projectname">Project name </label></td><td><input type="text" name="projectname" id="projectname" required class="help_link"><span class="help">Enter a project name</span><span id="projectname_msg" class="warning field_msg" > </span></td></tr>';
+this_eval = 
+
+
+
+
+'ga.value.registerid("rotdif_main","projectname","Project name","text");'
++ '$( "#projectname" ).blur( function() { ga.valid.checkText( "#projectname" ); });'
++ 'ga.specproj( "Run_", "#projectname" );' +
+'ga.value.setLastValue( "rotdif_main", "#projectname" );$( "#projectname" ).keypress( function() { $( "#projectname_msg" ).html( "" ); });';
+if ( skipped_row == 1 ){ this_html = this_html.replace(/^<tr>/, "" ); skipped_row=0;};
+
+
+
+
+
+
+input_html += this_html;
+input_eval += this_eval;
+this_html = '<tr><td><hr></td></tr><tr><td><label id="data_label_label" class=" ">DATA</label>' + 
+'</td>' +
+'<td><div id="data_label"></div>' +
+'</td></tr><tr><td><hr></td></tr>';
+this_eval = '';
+
+
+
+
+
+input_html += this_html;
+input_eval += this_eval;
+this_html = '<tr><td><label for="relax_location" >Relaxation File </label></td>' +
+'<td><input type="file" name="relax_location" id="relax_location" data-add="relax_location_altval" accept=".txt" class="help_link"><span class="help">Upload relaxation file</span>' +
+' or <button id="relax_location_button" name="relax_location_button" data-type="lrfile" class="help_link"><span class="buttontext">Browse server</span></button>' +
+'<span class="help">Upload relaxation file</span>' +
+' <span id="relax_location_altval"></span>' +
+'<span id="relax_location_msg" class="warning field_msg" > </span></td><input type="hidden" name="_selaltval_relax_location" value="relax_location_altval"</input></tr>';
+
+this_eval = 'ga.value.setLastValue( "rotdif_main", "#relax_location" );' +
+'ga.altfile("rotdif_main","relax_location","relax_location_altval");' +
+
+'$( "#relax_location" ).change( function(){$("#relax_location_altval").html( "<i>Local</i>: " + $("#relax_location").val().replace(/^C:.fakepath./,""));$("#relax_location_msg").html("");});' +
+'ga.altfile.button("rotdif_main","relax_location","Relaxation File","rfile",function(v){ga.altfile.button.lrfile(v,"rotdif_main","relax_location");},"lrfile");' +
+'$("#relax_location_button").on("click",function(){return ga.altfile.button.call("rotdif_main","relax_location");});' +
+
+'';
+
+// var s = $(v).jstree("get_selected", true),r="";$.each(s,function(){r=r+$.base64.decode(this.id).substr(2)+" "});$("#relax_location_altval").html( r.length ? "<i>Server</i>: " + r : "");r.length?$("#relax_location").val(""):""});' +
+
+if ( skipped_row == 1 ){ this_html = this_html.replace(/^<tr>/, "" ); skipped_row=0;};
+
+
+
+
+
+input_html += this_html;
+input_eval += this_eval;
+this_html = '<tr><td><label for="pdb_location" >PDB File </label></td>' +
+'<td><input type="file" name="pdb_location" id="pdb_location" data-add="pdb_location_altval" accept=".pdb" class="help_link"><span class="help">Upload PDB file</span>' +
+' or <button id="pdb_location_button" name="pdb_location_button" data-type="lrfile" class="help_link"><span class="buttontext">Browse server</span></button>' +
+'<span class="help">Upload PDB file</span>' +
+' <span id="pdb_location_altval"></span>' +
+'<span id="pdb_location_msg" class="warning field_msg" > </span></td><input type="hidden" name="_selaltval_pdb_location" value="pdb_location_altval"</input></tr>';
+
+this_eval = 'ga.value.setLastValue( "rotdif_main", "#pdb_location" );' +
+'ga.altfile("rotdif_main","pdb_location","pdb_location_altval");' +
+
+'$( "#pdb_location" ).change( function(){$("#pdb_location_altval").html( "<i>Local</i>: " + $("#pdb_location").val().replace(/^C:.fakepath./,""));$("#pdb_location_msg").html("");});' +
+'ga.altfile.button("rotdif_main","pdb_location","PDB File","rfile",function(v){ga.altfile.button.lrfile(v,"rotdif_main","pdb_location");},"lrfile");' +
+'$("#pdb_location_button").on("click",function(){return ga.altfile.button.call("rotdif_main","pdb_location");});' +
+
+'';
+
+// var s = $(v).jstree("get_selected", true),r="";$.each(s,function(){r=r+$.base64.decode(this.id).substr(2)+" "});$("#pdb_location_altval").html( r.length ? "<i>Server</i>: " + r : "");r.length?$("#pdb_location").val(""):""});' +
+
+if ( skipped_row == 1 ){ this_html = this_html.replace(/^<tr>/, "" ); skipped_row=0;};
+
+
+
+
+
+input_html += this_html;
+input_eval += this_eval;
+this_html = '<tr><td><hr></td></tr><tr><td><label id="runmenu_label_label" class=" ">RUN MENU</label>' + 
+'</td>' +
+'<td><div id="runmenu_label"></div>' +
+'</td></tr><tr><td><hr></td></tr>';
+this_eval = '';
+
+
+
+
+
+input_html += this_html;
+input_eval += this_eval;
+this_html = '<tr id="optimization_method_tr"><td><label for="optimization_method">Optimization Method </label></td><td><select id="optimization_method" name="optimization_method" data-repeater="listbox" class="help_link"><option value="leastsq">Least Squares</option><option value="robust">Robust Least Squares (3.0sig)</option></select>'
++ '<span class="help">Choose optimization method</span>'
++ '</td></tr>'
++ '<tr><td></td><td colspan="4"><table id="optimization_method-repeater"></table></td></tr>' 
+;
+
+this_eval = 
+'ga.repeat.repeater( "rotdif_main", "optimization_method", "listbox" );' +
+'$("#optimization_method option[value=\'leastsq\']").attr("selected", "true");' +
+'$( "#optimization_method" ).attr( "value", $( "#optimization_method" ).val() );' +
+'ga.value.setLastValue( "rotdif_main", "#optimization_method", "leastsq" );'
++ 'ga.repeat.change( "rotdif_main", "optimization_method" );$( "#optimization_method" ).change( function() { ga.repeat.change( "rotdif_main", "optimization_method" ); } );'
+
+
+;
+
+ input_repeats += 'ga.repeat.change( "rotdif_main", "optimization_method", 1 );';
+
+if ( skipped_row == 1 ){ this_html = this_html.replace(/^<tr>/, "" ); skipped_row=0;};
+
+
+
+
+
+input_html += this_html;
+input_eval += this_eval;
+this_html = '<tr id="stat_tr"><td><label for="stat" class="highlight">Full Statistics  </label></td><td><input type="checkbox" name="stat" id="stat"></td></tr>'
+
+;
+this_eval = 
+'ga.value.setLastValue( "rotdif_main", "#stat" );'
+
+
+
+
+
+
+
+
+
+;
+
+if ( skipped_row == 1 ){ this_html = this_html.replace(/^<tr id="stat_tr">/, "" ); skipped_row=0;};
+
+
+
+
+
+input_html += this_html;
+input_eval += this_eval;
+if( skipped_row == 1 ){ input_html += "</tr>"; }
+input_html += '</table>';
+$( '#rotdif_main_input_area' ).html( input_html );
+eval( input_eval );
+</script>
+<p><button id="rotdif_main_submit" class="help_link"><span class="buttontext">Submit</span></button>
+<span class="help">this is help for the submit button</span>
+<button id="rotdif_main_reset" class="help_link"><span class="buttontext">Reset to default values</span></button>
+<span class="help">this is help for the reset to default values button</span>
+
+</p>
+<span id="rotdif_main_progress"></span>
+<script>
+
+
+
+
+
+
+var rotdif_main_output_msgs = $("#rotdif_main_output_msgs");
+rotdif_main_output_msgs.text( "" );
+
+var rotdif_main_timeout_handler = "unset";
+var rotdif_main_timeout_handler_uuid;
+
+function get_results_rotdif_main( id, last_timeout, getlastmsg, getinput )
+{
+
+//             url:"ajax/get_results.php?_window=" +  window.name + "&_logon=" +$( "#_state" ).data( "_logon" ) + '&_uuid=' + id,
+    var job_status = "";
+    
+    $.getJSON( 
+             "ajax/get_results.php",
+             {
+                tagmode: "any",
+                format: "json",
+                _window : window.name,
+                _logon : $( "#_state" ).data( "_logon" ),
+                _uuid : id,
+                _getlastmsg : getlastmsg,
+                _getinput : getinput ? true : false
+             } )
+    .done( function( data, status, xhr ) {
+
+           var do_refresh = 1;
+
+           if ( do_refresh ) {
+              ga.fc.clear( $.base64.encode( "./" + $( "#_state" ).data( "_project" ) ) );
+              ga.jc.clear_leaf( id );
+           }
+
+           job_status = ga.data.update( "rotdif_main", data ).job_status;
+           if ( job_status == "complete" ||
+                job_status == "cancelled" ||
+                job_status == "failed" )
+           {
+              if ( rotdif_main_timeout_handler != "unset" )
+              {
+                  clearTimeout( rotdif_main_timeout_handler );
+                  rotdif_main_timeout_handler = "unset";
+              }
+              ga.ws.unsub( id, "rotdif_main" );
+              eval( rotdif_main_done_eval );
+           } else {
+               if ( !last_timeout || last_timeout < 2000 )
+               { 
+                  last_timeout = 2000;
+               } else {
+                  if ( last_timeout < 16000 )
+                  {
+                      last_timeout *= 2;
+                  } else {
+                      last_timeout = 16000;
+                  }
+               }
+
+               rotdif_main_timeout_handler =  setTimeout( get_results_rotdif_main, last_timeout, id, last_timeout, 0 );
+               rotdif_main_timeout_handler_uuid = id;
+           }
+          } )
+    .fail( function( xhr, status, errorThrown ) {
+
+           $( "#rotdif_main_results" ).html( "<span class=\"warning\"> Failed: " + status + " : '" + xhr.status + ":" + errorThrown + "' on URL ajax/tools/center.php </span>" );
+           $('#rotdif_main_progress').html( "" );
+           if ( rotdif_main_timeout_handler != "unset" )
+           {
+               clearTimeout( rotdif_main_timeout_handler );
+               rotdif_main_timeout_handler = "unset";
+           }
+           ga.ws.unsub( id, "rotdif_main" );
+           eval( rotdif_main_done_eval );
+          } );
+    return false;
+};
+
+function msg_rotdif_main ( id, data )
+{
+   ga.data.update( "rotdif_main", data, get_results_rotdif_main, id );
+};
+
+$( "#rotdif_main_submit" ).click( function( e ) {
+   e.preventDefault();
+   e.returnValue = false;
+   $( "#rotdif_main" ).find( ".toclear" ).remove();   
+   if ( rotdif_main_timeout_handler != "unset" ) {
+       
+       clearTimeout( rotdif_main_timeout_handler );
+       if ( rotdif_main_timeout_handler_uuid ) {
+           ga.ws.unsub( rotdif_main_timeout_handler_uuid, "rotdif_main" );
+       }
+       rotdif_main_timeout_handler = "unset";
+   }
+   ga.value.resetDefaultValues( "rotdif_main_output", true );
+
+   
+   return ga.xsede.select( "__resource__", do_rotdif_main_submit, $(this) );
+   //   return do_rotdif_main_submit( $(this) );
+});
+
+function do_rotdif_main_submit( $form, airavataresource, skipcached ) {
+
+   var $ok = 0;
+   
+   
+
+   ga.event( "", "rotdif_main", "submit clicked" );
+
+   
+
+
+
+
+
+   if ( !ga.valid.checksubmit( "rotdif_main" ) ) {
+       ga.valid.showerrormessage( "rotdif_main" );
+       return false;
+   }
+
+   if ( ga.specproj.data.length ) {
+      if ( $( "#_state" ).data( '_logon' ) &&
+           $( "#_state" ).data( '_logon' ).length ) {
+          $( "#sel_project" ).html( ga.specproj.gname() );
+          $( "#_state" ).data( '_project', ga.specproj.gname() );
+          
+      }
+   }  
+
+//   if ( 0 && !xsedeproject) {
+//      
+//      switch( project = ga.xsede.select( "__resource__", do_rotdif_main_submit, $form ) ) {
+//      case "deferred" : return false; break;
+//      case "abort"    : return false; break;
+//      case "notused"  : break;
+//      }
+      
+      
+
+   if ( !airavataresource ) {
+      
+      switch( airavataresource = ga.airavata.select( "__resource__", "__airavataselect__", do_rotdif_main_submit, $form ) ) {
+      case "deferred" : return false; break;
+      case "abort"    : return false; break;
+      case "notused"  : break;
+      }
+      
+   }
+   
+
+   $.ajax({
+       type: 'get'
+       ,url: "ajax/sys_config/sys_joblocked.php?_window=" +  window.name + "&_logon=" + $( "#_state" ).data( "_logon" )
+ + "&_submitpolicy=login"
+
+
+       ,context: $form
+       ,success: function( data ) { // your success handler
+
+          if ( !$ok )
+          {
+          switch ( data )
+          {
+             case "1" :
+             {
+                 ga.msg.box( { icon:"warning.png", text:"This project directory is currently locked by another project.\nYou can wait until it completes, change the project in user configuration or clear the lock in the job manager." } );
+                 return;
+             } break;
+             case "2" :
+             {
+                 ga.msg.box( { icon:"warning.png", text:"You must be logged in to submit this module." } );
+                 return;
+             } break;
+             case "0" :
+             {
+
+                 $ok = 1;
+             } break;
+             default : 
+             {
+                if ( /^Your job/.test( data ) ) {
+                   ga.msg.box( { icon : "warning.png",
+                                 text : data } );
+                   return;
+                }
+                
+                if ( skipcached ) {
+                    $ok = 1;
+                } else {
+                    return ga.cache.msg( "", "", get_results_rotdif_main, do_rotdif_main_submit, data, $form, airavataresource );
+                }
+             } break;
+          }
+          }
+       }
+       ,error: function() { // your error handler
+          ga.msg.box( { icon:"toast.png", text:"Checking the project lock failed. This is possibly a server or network issue" } );
+       }
+       ,complete: function() { 
+          this.off('submit');
+          if ( $ok )
+          {
+
+
+              $( "#rotdif_main_results" ).text( "" );
+
+              ga.value.saveLastValues( "rotdif_main" );
+              ga.value.resetDefaultValues( "rotdif_main_output", true );
+
+              var found_errors = 0;
+              $("#rotdif_main").find("input").each(function(i){
+                 if ( $(this).attr( 'required' ) && $(this).val().length == 0 )
+                 {
+                    var tag =  "#rotdif_main " + "#" + $(this).attr('id') + "_msg";
+
+                    $( tag ).html( "missing required field" );
+                    found_errors = 1;
+                 }
+              });
+              if ( found_errors ) {
+                  return;
+              }
+
+    var tree_html = "";
+    $( "._hidden_tree_selects" ).remove( );
+    $.each( input_trees, function( k, v ){
+
+        $( 'input[type=hidden][name="' + v + '[]"]' ).remove();
+        var selectedElms = $('#' + v).jstree("get_selected", true);
+        var i = 0;
+        $.each(selectedElms, function() {
+           tree_html += '<input type="hidden" name="' + v + '[]" value="' + this.id + '" class="_hidden_tree_selects"/>';
+
+        });
+    });
+
+    $( this ).append( tree_html );
+
+
+    var logonadd = $("<input>").attr("type", "hidden").attr("name", "_logon").val( $( "#_state" ).data( "_logon" ) );$( this ).append($(logonadd));
+    var projectadd = $("<input>").attr("type", "hidden").attr("name", "_project").val( $( "#_state" ).data( "_project" ) );$( this ).append($(projectadd));
+    var windowadd = $("<input>").attr("type", "hidden").attr("name", "_window").val( window.name );$( this ).append($(windowadd));
+    
+    var vuuid = uuid.v1();
+
+
+
+
+
+
+
+    if ( airavataresource != "notused" ) {
+        $( this ).append( $("<input>").attr("type", "hidden").attr("name", "_airavataresource").val( airavataresource ) );
+    }
+
+    var uuidadd = $("<input>").attr("type", "hidden").attr("name", "_uuid").val( vuuid );$( this ).append($(uuidadd));
+//    ga.altfile.add( "rotdif_main" );
+    ga.valuen.addhtml( "rotdif_main" );
+
+    ga.extrahidden( "rotdif_main" );
+
+    ga.ws.sub( vuuid, msg_rotdif_main, "rotdif_main" );
+
+    var formData = new FormData($('#rotdif_main')[0]);
+    
+     
+     
+    
+     
+     
+
+     
+     if ( ga.multistage["rotdif_main"] )
+      {
+        ga.value.modifyformdata(ga.multistage, "rotdif_main", formData, ga.stages["rotdif_main"], ga.currentstage);
+      }
+
+
+
+    $('#rotdif_main_progress').html( "Uploading:<progress></progress>" );
+
+    var job_status = "";
+
+    ga.event( "", "rotdif_main", "submit: passed submit checks, submitting" );
+
+
+    // var url - coditional based on module's .json setting, and use it in ajax call
+
+    $.ajax( {
+             dataType: "json",
+             cache:false,
+//             timeout:3000,  // for testing
+             type:"POST",
+             url:"ajax/rotdif_menu/rotdif_main.php",
+             data: formData,
+             xhr: function() {  // Custom XMLHttpRequest
+                 var myXhr = $.ajaxSettings.xhr();
+                 if(myXhr.upload){ // Check if upload property exists
+                     myXhr.upload.addEventListener('progress',
+                         function(e) {
+                         if(e.lengthComputable){
+                           $('#rotdif_main_progress progress').attr({value:e.loaded,max:e.total});
+                         } }
+//                     progressHandlingFunction
+                    , false);
+                 }
+                 return myXhr;
+             },
+             contentType: false,
+             processData: false
+            } )
+    .done( function( data, status, xhr ) {
+    
+    if ( ga.multistage["rotdif_main"] )
+      {
+        ga.value.showfields(ga.multistage, "rotdif_main", ga.stages["rotdif_main"], ga.currentstage);
+    	delete ga.stages["rotdif_main"][ga.currentstage]; 
+    	++ga.currentstage;	
+      }	
+
+
+
+
+// refresh cache for this project
+           $('#rotdif_main_progress').html( "" );
+   
+           var do_refresh = 1;
+
+           if ( do_refresh ) {
+              ga.fc.clear( $.base64.encode( "./" + $( "#_state" ).data( "_project" ) ) );
+              ga.jc.clear_leaf( vuuid );
+           }
+           
+// loop through data pairs
+           rotdif_main_output_msgs.text( "" );
+           job_status = ga.data.update( "rotdif_main", data ).job_status;
+
+           if ( job_status == "complete" ||
+                job_status == "cancelled" ||
+                job_status == "failed" )
+           {
+               if ( rotdif_main_timeout_handler != "unset" )
+               {
+                   clearTimeout( rotdif_main_timeout_handler );
+                   rotdif_main_timeout_handler = "unset";
+               }
+               ga.ws.unsub( vuuid, "rotdif_main" );
+               eval( rotdif_main_done_eval );
+           } else {
+               rotdif_main_timeout_handler = setTimeout( get_results_rotdif_main, 2000, vuuid, 2000, 0 );
+               rotdif_main_timeout_handler_uuid = vuuid;
+
+           }
+          } )
+    .fail( function( xhr, status, errorThrown ) {
+
+
+
+
+           $( "#rotdif_main_results" ).html( "<span class=\"warning\"> Failed: " + status + " : '" + xhr.status + ":" + errorThrown + "' on URL ajax/rotdif_menu/rotdif_main.php </span>" );
+           $('#rotdif_main_progress').html( "" );
+           if ( rotdif_main_timeout_handler != "unset" )
+           {
+               clearTimeout( rotdif_main_timeout_handler );
+               rotdif_main_timeout_handler = "unset";
+           }
+           ga.ws.unsub( vuuid, "rotdif_main" );
+           eval( rotdif_main_done_eval );
+          } );
+          } else {
+
+          }
+       }
+   });
+} 
+
+rotdif_main_reset = function() {
+    
+    if ( !10 ) {
+        // required to reset scrollheight ... 
+        document.getElementById( "rotdif_main_output_textarea" ).style.height = 0;
+    }
+
+    if ( rotdif_main_timeout_handler != "unset" ) {
+       
+       clearTimeout( rotdif_main_timeout_handler );
+       if ( rotdif_main_timeout_handler_uuid ) {
+           ga.ws.unsub( rotdif_main_timeout_handler_uuid, "rotdif_main" );
+       }
+       rotdif_main_timeout_handler = "unset";
+    }
+    ga.event( "", "rotdif_main", "reset clicked" );
+    ga.valid.clearerrorcounter( "rotdif_main" );
+
+   if ( ga.multistage["rotdif_main"] )
+     {
+       ga.currentstage = 0;
+       ga.value.sethiddenfields(ga.multistage,"rotdif_main");
+       ga.stages["rotdif_main"].length = 0;
+       ga.stages["rotdif_main"] = ga.stagesdefault["rotdif_main"].slice();
+       console.log("Reset: " + ga.stages["rotdif_main"]);
+     }
+
+    //    ga.value.resetDefaultValues( "rotdif_main" );
+    ga.valuen.restore.dflt(  "rotdif_main" );
+    ga.value.resetDefaultValues( "rotdif_main_output", true );
+    
+    eval( input_repeats );
+    return false;
+}
+
+$( "#rotdif_main_reset" ).click( function() {
+   return rotdif_main_reset();
+});
+
+ga.hhelp.set();
+
+
+eval( input_repeats );
+ga.pull.doPull();
+</script>
+</form>
+<div id="rotdif_main_results"></div>
+<script>
+ga.tmp.html = "<hr>";
+
+$("#rotdif_main").append( ga.tmp.html );
+</script>
+
+<form id="rotdif_main_output">
+<div id="rotdif_main_output_msgs" class="warning" type="msgs"></div>
+<script>
+ga.value.setLastValueOutput( "rotdif_main_output" );
+ga.value.extra_resets.clear();
+</script>
+
+<span id="rotdif_main_output_airavata"></span>
+
+<table>
+<tr>
+<td colspan="4" style="vertical-align:top"><label hidden id="rotdif_main_output_textarea_label" for="rotdif_main_output_textarea" class="header3 ">Report:</label>
+<textarea readonly hidden id="rotdif_main_output_textarea" rows="10" cols="110" class="help_link"></textarea>
+<span class="help">general textarea help</span>
+</td>
+</tr>
+<tr><td><label for="progress_output">Progress:  </label></td><td><progress name="progress_output" id="progress_output" value="0" max="1"></progress></td></tr>
+<script>
+ga.value.setLastValue( "rotdif_main_output", "#progress_output" );
+</script>
+<tr><td><label for="progress_text">Calculation Report:  </label></td><td><textarea name="progress_text" id="progress_text" cols="40" readonly></textarea>
+</td></tr>
+<script>
+
+ga.value.setLastValue( "rotdif_main_output", "#progress_text" );
+</script>
+<tr><td><label for="outputrotdif">Detailed Results File:  </label>
+</td>
+<td><div id="outputrotdif" type="filelinkm" readonly><span id="outputrotdif_filelink"></span></div>
+</td></tr>
+<script>
+ga.value.setLastValue( "rotdif_main_output", "#outputrotdif" );
+ga.value.extra_resets( "outputrotdif" );
+</script>
+<tr><td><label for="axi_out">Save PyMol Axes: axially symmetrical </label>
+</td>
+<td><div id="axi_out" type="filelinkm" readonly><span id="axi_out_filelink"></span></div>
+</td></tr>
+<script>
+ga.value.setLastValue( "rotdif_main_output", "#axi_out" );
+ga.value.extra_resets( "axi_out" );
+</script>
+<tr><td><label for="ani_out">Save PyMol Axes: anisotropic </label>
+</td>
+<td><div id="ani_out" type="filelinkm" readonly><span id="ani_out_filelink"></span></div>
+</td></tr>
+<script>
+ga.value.setLastValue( "rotdif_main_output", "#ani_out" );
+ga.value.extra_resets( "ani_out" );
+</script>
+</table>
+
+
+<p>
+
+<label for="exp_plot">Experiment Data</label></tr><tr>
+
+</p>
+
+<div name="exp_plot" id="exp_plot" type="plot3d"></div>
+
+
+<script>
+ga.value.setLastValue( "rotdif_main_output", "#exp_plot" );
+ga.value.extra_resets( "exp_plot" );
+</script>
+
+
+ <table cellpadding="10"><tr><td><button id="exp_plot_showcollapse" type="button" class="hidden">Show 3D plot</button></td><td><span id="exp_plot_showcollapse_message" style="color:green;"></span></td></tr> </table><script> ga.showcollapse3d["rotdif_main"]=1; $( "#exp_plot_showcollapse" ).click( function() {console.log("Inside Click: ");  if(!ga.plotted3d["rotdif_main"]){ $("#exp_plot").show();$("#exp_plot_showcollapse").html("Hide 3D plot");console.log("show!"); ga.plotted3d["rotdif_main"]=1;}else{$("#exp_plot").hide();ga.plotted3d["rotdif_main"]=0;$("#exp_plot_showcollapse").html("Show 3D plot");console.log("hide!");} });  </script> 
+
+<table></table>
+
+
+<p>
+
+<label for="vec_plot">Bond Vector Plot</label></tr><tr>
+
+</p>
+
+<div name="vec_plot" id="vec_plot" type="plotly"></div>
+
+
+<script>
+ga.value.setLastValue( "rotdif_main_output", "#vec_plot" );
+ga.value.extra_resets( "vec_plot" );
+</script>
+
+
+ <table cellpadding="10"><tr><td><button id="vec_plot_showcollapse" type="button" class="hidden">Show 3D plot</button></td><td><span id="vec_plot_showcollapse_message" style="color:green;"></span></td></tr> </table><script> ga.showcollapse3d["rotdif_main"]=1; $( "#vec_plot_showcollapse" ).click( function() {console.log("Inside Click: ");  if(!ga.plotted3d["rotdif_main"]){ $("#vec_plot").show();$("#vec_plot_showcollapse").html("Hide 3D plot");console.log("show!"); ga.plotted3d["rotdif_main"]=1;}else{$("#vec_plot").hide();ga.plotted3d["rotdif_main"]=0;$("#vec_plot_showcollapse").html("Show 3D plot");console.log("hide!");} });  </script> 
+
+<table></table>
+
+
+<p>
+
+<label for="chi2_plot">Chi-square Plot</label></tr><tr>
+
+</p>
+
+<div name="chi2_plot" id="chi2_plot" type="plotly"></div>
+
+
+<script>
+ga.value.setLastValue( "rotdif_main_output", "#chi2_plot" );
+ga.value.extra_resets( "chi2_plot" );
+</script>
+
+
+ <table cellpadding="10"><tr><td><button id="chi2_plot_showcollapse" type="button" class="hidden">Show 3D plot</button></td><td><span id="chi2_plot_showcollapse_message" style="color:green;"></span></td></tr> </table><script> ga.showcollapse3d["rotdif_main"]=1; $( "#chi2_plot_showcollapse" ).click( function() {console.log("Inside Click: ");  if(!ga.plotted3d["rotdif_main"]){ $("#chi2_plot").show();$("#chi2_plot_showcollapse").html("Hide 3D plot");console.log("show!"); ga.plotted3d["rotdif_main"]=1;}else{$("#chi2_plot").hide();ga.plotted3d["rotdif_main"]=0;$("#chi2_plot_showcollapse").html("Show 3D plot");console.log("hide!");} });  </script> 
+
+<table></table>
+
+
+<p>
+
+<label for="plot_2d">2D Model Fit:</label></tr><tr>
+
+</p>
+
+<div id="plot_2d_div" style="width:700px;">
+<p>
+<table class="help_link">
+<tr>
+   <td></td>
+   <td id="plot_2d_title" style="text-align:center"></td>
+   <td id="plot_2d_xy" class="coord"></td>
+</tr>
+<tr>
+   <td id="plot_2d_ylabel" style="text-align:center" class="verticaltext"></td>
+   <td id="plot_2d" type="plot2d" class="plot2ddef" style="width:700px;height:450px"></td>
+   <td id="plot_2d_legend"></td>
+</tr>
+<tr>
+   <td></td>
+   <td id="plot_2d_xlabel" style="text-align:center"></td>
+   <td></td>
+</tr>
+</table>
+
+</p>
+
+
+</div>
+
+<script>
+var tmp = $.plot( $( "#plot_2d" ), [[]], gd.data( "_plot_options" ) );
+ga.value.set.plot2d.pan( "#plot_2d", 0 );
+ga.value.set.plot2d.zoom( "#plot_2d", 0 );
+ga.value.set.plot2d.hover( "#plot_2d", 10 );
+ga.value.set.plot2d.selzoom( "#plot_2d", 10 );
+ga.value.set.plot2d.backgroundcolor( "#plot_2d"," white" );
+ga.value.set.plot2d.pkg( "rotdif_main_output", "#plot_2d" );
+$("#plot_2d").bind("plothover",function(e,p,i){var r=ga.set("plot2d:precision");$("#plot_2d_xy").addClass("coordvisible").text("( "+p.x.toPrecision(r)+" , "+p.y.toPrecision(r)+" )");}).on("mouseout", function(){setTimeout(function(){$("#plot_2d_xy").removeClass( "coordvisible" );}, 1500 )});
+ga.value.setLastValue( "rotdif_main_output", "#plot_2d" );
+ga.value.extra_resets( "plot_2d" );
+</script>
+
+
+ <table cellpadding="10" style="margin-bottom:5px"><tr><td><button id="plot_2d_savetofile" type="button" class="hidden">Download .png file:</button></td><td><span id="plot_2d_savetofile_link" style="color:black;"></span></td></tr></table> <script> $( "#plot_2d_savetofile" ).click( function() {ga.data.create_image_htmltocanvas("plot_2d"); });</script>
+
+ <table cellpadding="10"><tr><td><button id="plot_2d_changescalex" type="button" class="hidden">Change X-axis Scale: Log/Lin</button></td><td><span id="plot_2d_changescalex_message" style="color:green;"></span></td></tr> </table><script> $( "#plot_2d_changescalex" ).click( function() {console.log("Inside Click: ");  if(ga.plotglobal.xscale=="log"){ga.plotglobal.xscale=""; $("#plot_2d_changescalex_message").html("X-Lin");}else{ga.plotglobal.xscale="log";$("#plot_2d_changescalex_message").html("X-Log");} console.dir(ga.plotglobal); var plot=$.plot( "#plot_2d", ga.dataplotglobal, ga.value.get.plot2d.plot_options("#plot_2d", ga.plotglobal ) ); });  </script> 
+
+
+ <table cellpadding="10"><tr><td><button id="plot_2d_changescaley" type="button" class="hidden">Change Y-axis Scale: Log/Lin</button></td><td><span id="plot_2d_changescaley_message" style="color:green;"></span></td></tr> </table><script> $( "#plot_2d_changescaley" ).click( function() {console.log("Inside Click: ");  if(ga.plotglobal.yscale=="log"){ga.plotglobal.yscale=""; $("#plot_2d_changescaley_message").html("Y-Lin");}else{ga.plotglobal.yscale="log";$("#plot_2d_changescaley_message").html("Y-Log");} console.dir(ga.plotglobal); var plot=$.plot( "#plot_2d", ga.dataplotglobal, ga.value.get.plot2d.plot_options("#plot_2d", ga.plotglobal ) ); });  </script> 
+
+ <script> ga.customtooltips["rotdif_main"] = 1; </script>
+
+
+ <table cellpadding="10"><tr><td><button id="plot_2d_showcollapse" type="button" class="hidden">Show 2D plot</button></td><td><span id="plot_2d_showcollapse_message" style="color:green;"></span></td></tr> </table><script> ga.showcollapse2d["rotdif_main"]=1; $("#plot_2d").hide(); $( "#plot_2d_showcollapse" ).click( function() {console.log("Inside Click: "); if(!ga.plotted2d["rotdif_main"]){ $("#plot_2d_div").show(); if($("#plot_2d_savetofile").length ){$("#plot_2d_savetofile").show();$("#plot_2d_savetofile_link").show();} if($("#plot_2d_changescalex").length ){$("#plot_2d_changescalex").show();$("#plot_2d_changescalex_message").show();} if($("#plot_2d_changescaley").length ){$("#plot_2d_changescaley").show();$("#plot_2d_changescaley_message").show();} $("#plot_2d_showcollapse").html("Hide 2D plot");console.log("show!"); ga.plotted2d["rotdif_main"]=1;var plot=$.plot( "#plot_2d", ga.dataplotglobal, ga.value.get.plot2d.plot_options("#plot_2d", ga.plotglobal ) );}else{$("#plot_2d_div").hide(); if($("#plot_2d_savetofile").length ){$("#plot_2d_savetofile").hide();$("#plot_2d_savetofile_link").hide();} if($("#plot_2d_changescalex").length ){$("#plot_2d_changescalex").hide();$("#plot_2d_changescalex_message").hide();} if($("#plot_2d_changescaley").length ){$("#plot_2d_changescaley").hide();$("#plot_2d_changescaley_message").hide();} ga.plotted2d["rotdif_main"]=0;$("#plot_2d_showcollapse").html("Show 2D plot");console.log("hide!");} });  </script> 
+
+
+<table>
+</table>
+
+
+<p>
+
+<label for="plot_3d">3D Model Fit:</label></tr><tr>
+
+</p>
+
+<div name="plot_3d" id="plot_3d" type="plot3d"></div>
+
+
+<script>
+ga.value.setLastValue( "rotdif_main_output", "#plot_3d" );
+ga.value.extra_resets( "plot_3d" );
+</script>
+
+
+ <table cellpadding="10"><tr><td><button id="plot_3d_showcollapse" type="button" class="hidden">Show 3D plot</button></td><td><span id="plot_3d_showcollapse_message" style="color:green;"></span></td></tr> </table><script> ga.showcollapse3d["rotdif_main"]=1; $( "#plot_3d_showcollapse" ).click( function() {console.log("Inside Click: ");  if(!ga.plotted3d["rotdif_main"]){ $("#plot_3d").show();$("#plot_3d_showcollapse").html("Hide 3D plot");console.log("show!"); ga.plotted3d["rotdif_main"]=1;}else{$("#plot_3d").hide();ga.plotted3d["rotdif_main"]=0;$("#plot_3d_showcollapse").html("Show 3D plot");console.log("hide!");} });  </script> 
+
+<table></table>
+
+
+<p>
+
+<label for="iso_plot">Isotropic Model:</label></tr><tr>
+
+</p>
+
+<div name="iso_plot" id="iso_plot" type="plotly"></div>
+
+
+<script>
+ga.value.setLastValue( "rotdif_main_output", "#iso_plot" );
+ga.value.extra_resets( "iso_plot" );
+</script>
+
+
+ <table cellpadding="10"><tr><td><button id="iso_plot_showcollapse" type="button" class="hidden">Show 3D plot</button></td><td><span id="iso_plot_showcollapse_message" style="color:green;"></span></td></tr> </table><script> ga.showcollapse3d["rotdif_main"]=1; $( "#iso_plot_showcollapse" ).click( function() {console.log("Inside Click: ");  if(!ga.plotted3d["rotdif_main"]){ $("#iso_plot").show();$("#iso_plot_showcollapse").html("Hide 3D plot");console.log("show!"); ga.plotted3d["rotdif_main"]=1;}else{$("#iso_plot").hide();ga.plotted3d["rotdif_main"]=0;$("#iso_plot_showcollapse").html("Show 3D plot");console.log("hide!");} });  </script> 
+
+<table></table>
+
+
+<p>
+
+<label for="axi_plot">Axially Symmetric Model:</label></tr><tr>
+
+</p>
+
+<div name="axi_plot" id="axi_plot" type="plotly"></div>
+
+
+<script>
+ga.value.setLastValue( "rotdif_main_output", "#axi_plot" );
+ga.value.extra_resets( "axi_plot" );
+</script>
+
+
+ <table cellpadding="10"><tr><td><button id="axi_plot_showcollapse" type="button" class="hidden">Show 3D plot</button></td><td><span id="axi_plot_showcollapse_message" style="color:green;"></span></td></tr> </table><script> ga.showcollapse3d["rotdif_main"]=1; $( "#axi_plot_showcollapse" ).click( function() {console.log("Inside Click: ");  if(!ga.plotted3d["rotdif_main"]){ $("#axi_plot").show();$("#axi_plot_showcollapse").html("Hide 3D plot");console.log("show!"); ga.plotted3d["rotdif_main"]=1;}else{$("#axi_plot").hide();ga.plotted3d["rotdif_main"]=0;$("#axi_plot_showcollapse").html("Show 3D plot");console.log("hide!");} });  </script> 
+
+<table></table>
+
+
+<p>
+
+<label for="ani_plot">Fully Anisotropic Model:</label></tr><tr>
+
+</p>
+
+<div name="ani_plot" id="ani_plot" type="plotly"></div>
+
+
+<script>
+ga.value.setLastValue( "rotdif_main_output", "#ani_plot" );
+ga.value.extra_resets( "ani_plot" );
+</script>
+
+
+ <table cellpadding="10"><tr><td><button id="ani_plot_showcollapse" type="button" class="hidden">Show 3D plot</button></td><td><span id="ani_plot_showcollapse_message" style="color:green;"></span></td></tr> </table><script> ga.showcollapse3d["rotdif_main"]=1; $( "#ani_plot_showcollapse" ).click( function() {console.log("Inside Click: ");  if(!ga.plotted3d["rotdif_main"]){ $("#ani_plot").show();$("#ani_plot_showcollapse").html("Hide 3D plot");console.log("show!"); ga.plotted3d["rotdif_main"]=1;}else{$("#ani_plot").hide();ga.plotted3d["rotdif_main"]=0;$("#ani_plot_showcollapse").html("Show 3D plot");console.log("hide!");} });  </script> 
+
+<table></table>
+
+
+<p>
+
+<label for="diso_plot">Isotropic Model Dynamics Plot:</label></tr><tr>
+
+</p>
+
+<div name="diso_plot" id="diso_plot" type="plotly"></div>
+
+
+<script>
+ga.value.setLastValue( "rotdif_main_output", "#diso_plot" );
+ga.value.extra_resets( "diso_plot" );
+</script>
+
+
+ <table cellpadding="10"><tr><td><button id="diso_plot_showcollapse" type="button" class="hidden">Show 3D plot</button></td><td><span id="diso_plot_showcollapse_message" style="color:green;"></span></td></tr> </table><script> ga.showcollapse3d["rotdif_main"]=1; $( "#diso_plot_showcollapse" ).click( function() {console.log("Inside Click: ");  if(!ga.plotted3d["rotdif_main"]){ $("#diso_plot").show();$("#diso_plot_showcollapse").html("Hide 3D plot");console.log("show!"); ga.plotted3d["rotdif_main"]=1;}else{$("#diso_plot").hide();ga.plotted3d["rotdif_main"]=0;$("#diso_plot_showcollapse").html("Show 3D plot");console.log("hide!");} });  </script> 
+
+<table></table>
+
+
+<p>
+
+<label for="daxi_plot">Axially Symmetric Model Dynamics Plot:</label></tr><tr>
+
+</p>
+
+<div name="daxi_plot" id="daxi_plot" type="plotly"></div>
+
+
+<script>
+ga.value.setLastValue( "rotdif_main_output", "#daxi_plot" );
+ga.value.extra_resets( "daxi_plot" );
+</script>
+
+
+ <table cellpadding="10"><tr><td><button id="daxi_plot_showcollapse" type="button" class="hidden">Show 3D plot</button></td><td><span id="daxi_plot_showcollapse_message" style="color:green;"></span></td></tr> </table><script> ga.showcollapse3d["rotdif_main"]=1; $( "#daxi_plot_showcollapse" ).click( function() {console.log("Inside Click: ");  if(!ga.plotted3d["rotdif_main"]){ $("#daxi_plot").show();$("#daxi_plot_showcollapse").html("Hide 3D plot");console.log("show!"); ga.plotted3d["rotdif_main"]=1;}else{$("#daxi_plot").hide();ga.plotted3d["rotdif_main"]=0;$("#daxi_plot_showcollapse").html("Show 3D plot");console.log("hide!");} });  </script> 
+
+<table></table>
+
+
+<p>
+
+<label for="dani_plot">Fully Anisotropic Model Dynamics Plot:</label></tr><tr>
+
+</p>
+
+<div name="dani_plot" id="dani_plot" type="plotly"></div>
+
+
+<script>
+ga.value.setLastValue( "rotdif_main_output", "#dani_plot" );
+ga.value.extra_resets( "dani_plot" );
+</script>
+
+
+ <table cellpadding="10"><tr><td><button id="dani_plot_showcollapse" type="button" class="hidden">Show 3D plot</button></td><td><span id="dani_plot_showcollapse_message" style="color:green;"></span></td></tr> </table><script> ga.showcollapse3d["rotdif_main"]=1; $( "#dani_plot_showcollapse" ).click( function() {console.log("Inside Click: ");  if(!ga.plotted3d["rotdif_main"]){ $("#dani_plot").show();$("#dani_plot_showcollapse").html("Hide 3D plot");console.log("show!"); ga.plotted3d["rotdif_main"]=1;}else{$("#dani_plot").hide();ga.plotted3d["rotdif_main"]=0;$("#dani_plot_showcollapse").html("Show 3D plot");console.log("hide!");} });  </script> 
+
+<table></table>
+</form>
+
+
+
+
+<script>loaded_rotdif_main = 1; </script>

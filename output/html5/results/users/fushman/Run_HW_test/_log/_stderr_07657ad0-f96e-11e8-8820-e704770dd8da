@@ -1,0 +1,8 @@
+close failed in file object destructor:
+IOError: [Errno 9] Bad file descriptor
+Traceback (most recent call last):
+  File "/opt/genapp/rotdif/bin/main_rotdif.py", line 80, in <module>
+    output_res[ 'iso_plot' ] = iso_plot(exp_resi, color_list,exp_keys, dyna_flag, elm_flag, elmdock_flag)
+  File "/opt/genapp/rotdif/bin/plot_iso.py", line 12, in iso_plot
+    ind_a.append(to_index.index(int(exp_resi[ii])))
+ValueError: 4 is not in list

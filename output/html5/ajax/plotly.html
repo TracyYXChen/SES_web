@@ -1,0 +1,40 @@
+<style>
+#panel_plotly {
+    position: relative;
+    display: block;  
+}
+</style>
+<p>
+<center>
+
+    <button id="plotly_sub_plotly" class="help_link">Param_m</button><span class="help">help for Plotly</span>
+<script>
+    $( "#plotly_sub_plotly" ).click(function() {
+        var d=$( "#tab_docs > a" );
+        if ( d.length ) { d.attr( "href", "__docsbaseurl__/plotly/sub_plotly/sub_plotly.html" ); };
+    
+        if ( ga.valuen.lastload && $( "#" + ga.valuen.lastload ).is( ":visible" ) ) { ga.valuen.save( ga.valuen.lastload ); }
+
+        if ( ga.valuen.lastload != "sub_plotly" || !$( "#" + ga.valuen.lastload ).is( ":visible" ) ) {
+            ga.loader.show();
+            $( "#panel_plotly" ).load( "ajax/plotly/sub_plotly.html", function() { ga.valuen.save( "sub_plotly", true ); ga.valuen.restore( "sub_plotly" ); ga.valuen.lastload = "sub_plotly"; ga.loader.hide(); });
+        }
+    });
+$( "#plotly_sub_plotly" ).trigger( "click" );
+$( "#plotly_sub_plotly" ).hide();
+
+</script>
+</center>
+</p>
+
+<div id="panel_plotly">
+</div>
+
+
+<script>
+    $( "#panel_plotly" ).text("");
+ga.tmp.bgi = ga.color.data.body.background;
+
+
+$("body").css( { "background": ga.tmp.bgi + " no-repeat center center fixed", "-webkit-background-size" : "cover", "-moz-background-size" : "cover", "-o-background-size" : "cover" , "background-size": "cover"} );
+</script>

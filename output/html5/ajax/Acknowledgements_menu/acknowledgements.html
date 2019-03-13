@@ -1,0 +1,498 @@
+
+
+<form id="Acknowledgements" >
+<span id="Acknowledgements_input_area"></span>
+<script>
+
+ga.tmp.bgi = ga.color.data.body.background;
+
+
+
+if ( !0 ) {
+    $("body").css( { "background": ga.tmp.bgi + " no-repeat center center fixed", "-webkit-background-size" : "cover", "-moz-background-size" : "cover", "-o-background-size" : "cover" , "background-size": "cover"} );
+}
+
+input_eval = "";
+input_html = "<table>";
+input_repeats = "";
+input_trees = [];
+skipped_row = 0;
+Acknowledgements_done_eval = "";
+_jmol_info = {};
+// jmol = "jmol";
+ga.pull.clearPull();
+ga.specproj.clear();
+$('#Acknowledgements').on("keyup keypress", function(e) { var code = e.keyCode || e.which;  if (code  == 13) { e.preventDefault(); return false; }});
+
+this_html = '<tr><td colspan=5 id="text1"><div style="width:1000px;margin-left:100px" > <p><span style="font-weight:bold;font-size:20pt;font-family:\'Avenir\'">Acknowledgments </span></p> <div class="">   <img src="https://drive.google.com/uc?id=1VUO5ds0TfXGZ8ARc6dUF90GzuGk0yUTn" width="400" height="200"></img>   <img src="https://drive.google.com/uc?id=1MCe82b_VyJP7mFB_h_4fYFyCD8eKABmq" width="200" height="200"></img> </div>   <p class="_normal" style= "text-align:left;margin-bottom:8.000000pt;margin-top:0.000000pt" awml:style="_Normal"><span style= "font-size:16pt;font-family:\'Avenir\'">ROTDIF-Web is made possible by the collaboration between researchers from University of Texas Health Science Center (UTHSC)  and University of Maryland (UMD).</span></p>  <p><span style="font-weight:bold;font-size:18pt;font-family:\'Avenir\'">Main Contributions </span></p>  <div style= "font-size:16pt;font-family:\'Avenir\'">   <p>GenApp framework development: Emre Brookes@UTHSC</p>   <p>ROTDIF integration: Yuexi Chen@UMD, Alexey Savelyev@UTHSC</p>   <p>Guidance and design: David Fushman@UMD</p>   <p>Examples, feedback and suggestions: David Fushman@UMD, Andrew Boughton@UMD</p> </div>  <p><span style="font-weight:bold;font-size:18pt;font-family:\'Avenir\'">Funding </span></p> <div class="">   <img src="https://drive.google.com/uc?id=1ldadw-cR_WgqeqzvnhHba_QCXfBuHyc1" width="150" height="150"></img>   <img src="https://drive.google.com/uc?id=16xQfIud0tR1JcVXN6R3-ItoJm159q2dr" width="400" height="150"></img> </div>  <div style= "font-size:16pt;font-family:\'Avenir\'">   <p>OAC-1739549 (to D.F.)</p>   <p>OAC-1740087 (to E.B.)</p>   <p>Science Gateways Community Institute (summer internship to Y.C.)</p> </div>       </td></tr>';
+input_html += this_html;
+if( skipped_row == 1 ){ input_html += "</tr>"; }
+input_html += '</table>';
+$( '#Acknowledgements_input_area' ).html( input_html );
+eval( input_eval );
+</script>
+<p><button id="Acknowledgements_submit" class="help_link"><span class="buttontext">Submit</span></button>
+
+<button id="Acknowledgements_reset" class="help_link"><span class="buttontext">Reset to default values</span></button>
+
+
+</p>
+<span id="Acknowledgements_progress"></span>
+<script>
+$( "#Acknowledgements_reset" ).remove();
+
+$( "#Acknowledgements_submit" ).remove();
+
+
+
+var Acknowledgements_output_msgs = $("#Acknowledgements_output_msgs");
+Acknowledgements_output_msgs.text( "" );
+
+var Acknowledgements_timeout_handler = "unset";
+var Acknowledgements_timeout_handler_uuid;
+
+function get_results_Acknowledgements( id, last_timeout, getlastmsg, getinput )
+{
+
+//             url:"ajax/get_results.php?_window=" +  window.name + "&_logon=" +$( "#_state" ).data( "_logon" ) + '&_uuid=' + id,
+    var job_status = "";
+    
+    $.getJSON( 
+             "ajax/get_results.php",
+             {
+                tagmode: "any",
+                format: "json",
+                _window : window.name,
+                _logon : $( "#_state" ).data( "_logon" ),
+                _uuid : id,
+                _getlastmsg : getlastmsg,
+                _getinput : getinput ? true : false
+             } )
+    .done( function( data, status, xhr ) {
+
+           var do_refresh = 1;
+
+           if ( do_refresh ) {
+              ga.fc.clear( $.base64.encode( "./" + $( "#_state" ).data( "_project" ) ) );
+              ga.jc.clear_leaf( id );
+           }
+
+           job_status = ga.data.update( "Acknowledgements", data ).job_status;
+           if ( job_status == "complete" ||
+                job_status == "cancelled" ||
+                job_status == "failed" )
+           {
+              if ( Acknowledgements_timeout_handler != "unset" )
+              {
+                  clearTimeout( Acknowledgements_timeout_handler );
+                  Acknowledgements_timeout_handler = "unset";
+              }
+              ga.ws.unsub( id, "Acknowledgements" );
+              eval( Acknowledgements_done_eval );
+           } else {
+               if ( !last_timeout || last_timeout < 2000 )
+               { 
+                  last_timeout = 2000;
+               } else {
+                  if ( last_timeout < 16000 )
+                  {
+                      last_timeout *= 2;
+                  } else {
+                      last_timeout = 16000;
+                  }
+               }
+
+               Acknowledgements_timeout_handler =  setTimeout( get_results_Acknowledgements, last_timeout, id, last_timeout, 0 );
+               Acknowledgements_timeout_handler_uuid = id;
+           }
+          } )
+    .fail( function( xhr, status, errorThrown ) {
+
+           $( "#Acknowledgements_results" ).html( "<span class=\"warning\"> Failed: " + status + " : '" + xhr.status + ":" + errorThrown + "' on URL ajax/tools/center.php </span>" );
+           $('#Acknowledgements_progress').html( "" );
+           if ( Acknowledgements_timeout_handler != "unset" )
+           {
+               clearTimeout( Acknowledgements_timeout_handler );
+               Acknowledgements_timeout_handler = "unset";
+           }
+           ga.ws.unsub( id, "Acknowledgements" );
+           eval( Acknowledgements_done_eval );
+          } );
+    return false;
+};
+
+function msg_Acknowledgements ( id, data )
+{
+   ga.data.update( "Acknowledgements", data, get_results_Acknowledgements, id );
+};
+
+$( "#Acknowledgements_submit" ).click( function( e ) {
+   e.preventDefault();
+   e.returnValue = false;
+   $( "#Acknowledgements" ).find( ".toclear" ).remove();   
+   if ( Acknowledgements_timeout_handler != "unset" ) {
+       
+       clearTimeout( Acknowledgements_timeout_handler );
+       if ( Acknowledgements_timeout_handler_uuid ) {
+           ga.ws.unsub( Acknowledgements_timeout_handler_uuid, "Acknowledgements" );
+       }
+       Acknowledgements_timeout_handler = "unset";
+   }
+   ga.value.resetDefaultValues( "Acknowledgements_output", true );
+
+   
+   return ga.xsede.select( "__resource__", do_Acknowledgements_submit, $(this) );
+   //   return do_Acknowledgements_submit( $(this) );
+});
+
+function do_Acknowledgements_submit( $form, airavataresource, skipcached ) {
+
+   var $ok = 0;
+   
+   
+
+   ga.event( "", "Acknowledgements", "submit clicked" );
+
+   
+
+
+
+
+
+   if ( !ga.valid.checksubmit( "Acknowledgements" ) ) {
+       ga.valid.showerrormessage( "Acknowledgements" );
+       return false;
+   }
+
+   if ( ga.specproj.data.length ) {
+      if ( $( "#_state" ).data( '_logon' ) &&
+           $( "#_state" ).data( '_logon' ).length ) {
+          $( "#sel_project" ).html( ga.specproj.gname() );
+          $( "#_state" ).data( '_project', ga.specproj.gname() );
+          
+      }
+   }  
+
+//   if ( 0 && !xsedeproject) {
+//      
+//      switch( project = ga.xsede.select( "__resource__", do_Acknowledgements_submit, $form ) ) {
+//      case "deferred" : return false; break;
+//      case "abort"    : return false; break;
+//      case "notused"  : break;
+//      }
+      
+      
+
+   if ( !airavataresource ) {
+      
+      switch( airavataresource = ga.airavata.select( "__resource__", "__airavataselect__", do_Acknowledgements_submit, $form ) ) {
+      case "deferred" : return false; break;
+      case "abort"    : return false; break;
+      case "notused"  : break;
+      }
+      
+   }
+   
+
+   $.ajax({
+       type: 'get'
+       ,url: "ajax/sys_config/sys_joblocked.php?_window=" +  window.name + "&_logon=" + $( "#_state" ).data( "_logon" )
+
+
+
+       ,context: $form
+       ,success: function( data ) { // your success handler
+
+          if ( !$ok )
+          {
+          switch ( data )
+          {
+             case "1" :
+             {
+                 ga.msg.box( { icon:"warning.png", text:"This project directory is currently locked by another project.\nYou can wait until it completes, change the project in user configuration or clear the lock in the job manager." } );
+                 return;
+             } break;
+             case "2" :
+             {
+                 ga.msg.box( { icon:"warning.png", text:"You must be logged in to submit this module." } );
+                 return;
+             } break;
+             case "0" :
+             {
+
+                 $ok = 1;
+             } break;
+             default : 
+             {
+                if ( /^Your job/.test( data ) ) {
+                   ga.msg.box( { icon : "warning.png",
+                                 text : data } );
+                   return;
+                }
+                
+                if ( skipcached ) {
+                    $ok = 1;
+                } else {
+                    return ga.cache.msg( "", "", get_results_Acknowledgements, do_Acknowledgements_submit, data, $form, airavataresource );
+                }
+             } break;
+          }
+          }
+       }
+       ,error: function() { // your error handler
+          ga.msg.box( { icon:"toast.png", text:"Checking the project lock failed. This is possibly a server or network issue" } );
+       }
+       ,complete: function() { 
+          this.off('submit');
+          if ( $ok )
+          {
+
+
+              $( "#Acknowledgements_results" ).text( "" );
+
+              ga.value.saveLastValues( "Acknowledgements" );
+              ga.value.resetDefaultValues( "Acknowledgements_output", true );
+
+              var found_errors = 0;
+              $("#Acknowledgements").find("input").each(function(i){
+                 if ( $(this).attr( 'required' ) && $(this).val().length == 0 )
+                 {
+                    var tag =  "#Acknowledgements " + "#" + $(this).attr('id') + "_msg";
+
+                    $( tag ).html( "missing required field" );
+                    found_errors = 1;
+                 }
+              });
+              if ( found_errors ) {
+                  return;
+              }
+
+    var tree_html = "";
+    $( "._hidden_tree_selects" ).remove( );
+    $.each( input_trees, function( k, v ){
+
+        $( 'input[type=hidden][name="' + v + '[]"]' ).remove();
+        var selectedElms = $('#' + v).jstree("get_selected", true);
+        var i = 0;
+        $.each(selectedElms, function() {
+           tree_html += '<input type="hidden" name="' + v + '[]" value="' + this.id + '" class="_hidden_tree_selects"/>';
+
+        });
+    });
+
+    $( this ).append( tree_html );
+
+
+    var logonadd = $("<input>").attr("type", "hidden").attr("name", "_logon").val( $( "#_state" ).data( "_logon" ) );$( this ).append($(logonadd));
+    var projectadd = $("<input>").attr("type", "hidden").attr("name", "_project").val( $( "#_state" ).data( "_project" ) );$( this ).append($(projectadd));
+    var windowadd = $("<input>").attr("type", "hidden").attr("name", "_window").val( window.name );$( this ).append($(windowadd));
+    
+    var vuuid = uuid.v1();
+
+
+
+
+
+
+
+    if ( airavataresource != "notused" ) {
+        $( this ).append( $("<input>").attr("type", "hidden").attr("name", "_airavataresource").val( airavataresource ) );
+    }
+
+    var uuidadd = $("<input>").attr("type", "hidden").attr("name", "_uuid").val( vuuid );$( this ).append($(uuidadd));
+//    ga.altfile.add( "Acknowledgements" );
+    ga.valuen.addhtml( "Acknowledgements" );
+
+    ga.extrahidden( "Acknowledgements" );
+
+    ga.ws.sub( vuuid, msg_Acknowledgements, "Acknowledgements" );
+
+    var formData = new FormData($('#Acknowledgements')[0]);
+    
+     
+     
+    
+     
+     
+
+     
+     if ( ga.multistage["Acknowledgements"] )
+      {
+        ga.value.modifyformdata(ga.multistage, "Acknowledgements", formData, ga.stages["Acknowledgements"], ga.currentstage);
+      }
+
+
+
+    $('#Acknowledgements_progress').html( "Uploading:<progress></progress>" );
+
+    var job_status = "";
+
+    ga.event( "", "Acknowledgements", "submit: passed submit checks, submitting" );
+
+
+    // var url - coditional based on module's .json setting, and use it in ajax call
+
+    $.ajax( {
+             dataType: "json",
+             cache:false,
+//             timeout:3000,  // for testing
+             type:"POST",
+             url:"ajax/Acknowledgements_menu/Acknowledgements.php",
+             data: formData,
+             xhr: function() {  // Custom XMLHttpRequest
+                 var myXhr = $.ajaxSettings.xhr();
+                 if(myXhr.upload){ // Check if upload property exists
+                     myXhr.upload.addEventListener('progress',
+                         function(e) {
+                         if(e.lengthComputable){
+                           $('#Acknowledgements_progress progress').attr({value:e.loaded,max:e.total});
+                         } }
+//                     progressHandlingFunction
+                    , false);
+                 }
+                 return myXhr;
+             },
+             contentType: false,
+             processData: false
+            } )
+    .done( function( data, status, xhr ) {
+    
+    if ( ga.multistage["Acknowledgements"] )
+      {
+        ga.value.showfields(ga.multistage, "Acknowledgements", ga.stages["Acknowledgements"], ga.currentstage);
+    	delete ga.stages["Acknowledgements"][ga.currentstage]; 
+    	++ga.currentstage;	
+      }	
+
+
+
+
+// refresh cache for this project
+           $('#Acknowledgements_progress').html( "" );
+   
+           var do_refresh = 1;
+
+           if ( do_refresh ) {
+              ga.fc.clear( $.base64.encode( "./" + $( "#_state" ).data( "_project" ) ) );
+              ga.jc.clear_leaf( vuuid );
+           }
+           
+// loop through data pairs
+           Acknowledgements_output_msgs.text( "" );
+           job_status = ga.data.update( "Acknowledgements", data ).job_status;
+
+           if ( job_status == "complete" ||
+                job_status == "cancelled" ||
+                job_status == "failed" )
+           {
+               if ( Acknowledgements_timeout_handler != "unset" )
+               {
+                   clearTimeout( Acknowledgements_timeout_handler );
+                   Acknowledgements_timeout_handler = "unset";
+               }
+               ga.ws.unsub( vuuid, "Acknowledgements" );
+               eval( Acknowledgements_done_eval );
+           } else {
+               Acknowledgements_timeout_handler = setTimeout( get_results_Acknowledgements, 2000, vuuid, 2000, 0 );
+               Acknowledgements_timeout_handler_uuid = vuuid;
+
+           }
+          } )
+    .fail( function( xhr, status, errorThrown ) {
+
+
+
+
+           $( "#Acknowledgements_results" ).html( "<span class=\"warning\"> Failed: " + status + " : '" + xhr.status + ":" + errorThrown + "' on URL ajax/Acknowledgements_menu/Acknowledgements.php </span>" );
+           $('#Acknowledgements_progress').html( "" );
+           if ( Acknowledgements_timeout_handler != "unset" )
+           {
+               clearTimeout( Acknowledgements_timeout_handler );
+               Acknowledgements_timeout_handler = "unset";
+           }
+           ga.ws.unsub( vuuid, "Acknowledgements" );
+           eval( Acknowledgements_done_eval );
+          } );
+          } else {
+
+          }
+       }
+   });
+} 
+
+Acknowledgements_reset = function() {
+    
+    if ( !10 ) {
+        // required to reset scrollheight ... 
+        document.getElementById( "Acknowledgements_output_textarea" ).style.height = 0;
+    }
+
+    if ( Acknowledgements_timeout_handler != "unset" ) {
+       
+       clearTimeout( Acknowledgements_timeout_handler );
+       if ( Acknowledgements_timeout_handler_uuid ) {
+           ga.ws.unsub( Acknowledgements_timeout_handler_uuid, "Acknowledgements" );
+       }
+       Acknowledgements_timeout_handler = "unset";
+    }
+    ga.event( "", "Acknowledgements", "reset clicked" );
+    ga.valid.clearerrorcounter( "Acknowledgements" );
+
+   if ( ga.multistage["Acknowledgements"] )
+     {
+       ga.currentstage = 0;
+       ga.value.sethiddenfields(ga.multistage,"Acknowledgements");
+       ga.stages["Acknowledgements"].length = 0;
+       ga.stages["Acknowledgements"] = ga.stagesdefault["Acknowledgements"].slice();
+       console.log("Reset: " + ga.stages["Acknowledgements"]);
+     }
+
+    //    ga.value.resetDefaultValues( "Acknowledgements" );
+    ga.valuen.restore.dflt(  "Acknowledgements" );
+    ga.value.resetDefaultValues( "Acknowledgements_output", true );
+    
+    eval( input_repeats );
+    return false;
+}
+
+$( "#Acknowledgements_reset" ).click( function() {
+   return Acknowledgements_reset();
+});
+
+ga.hhelp.set();
+
+
+eval( input_repeats );
+ga.pull.doPull();
+</script>
+</form>
+<div id="Acknowledgements_results"></div>
+<script>
+ga.tmp.html = "<hr>";
+ga.tmp.html = "";
+$("#Acknowledgements").append( ga.tmp.html );
+</script>
+
+<form id="Acknowledgements_output">
+<div id="Acknowledgements_output_msgs" class="warning" type="msgs"></div>
+<script>
+ga.value.setLastValueOutput( "Acknowledgements_output" );
+ga.value.extra_resets.clear();
+</script>
+
+<span id="Acknowledgements_output_airavata"></span>
+
+<table>
+<tr>
+<td colspan="4" style="vertical-align:top"><label hidden id="Acknowledgements_output_textarea_label" for="Acknowledgements_output_textarea" class="header3 ">Report:</label>
+<textarea readonly hidden id="Acknowledgements_output_textarea" rows="10" cols="110" class="help_link"></textarea>
+<span class="help">general textarea help</span>
+</td>
+</tr>
+</table>
+</form>
+
+
+
+
+<script>loaded_Acknowledgements = 1; </script>

@@ -1,0 +1,498 @@
+
+
+<form id="welcome" >
+<span id="welcome_input_area"></span>
+<script>
+
+ga.tmp.bgi = ga.color.data.body.background;
+
+
+
+if ( !0 ) {
+    $("body").css( { "background": ga.tmp.bgi + " no-repeat center center fixed", "-webkit-background-size" : "cover", "-moz-background-size" : "cover", "-o-background-size" : "cover" , "background-size": "cover"} );
+}
+
+input_eval = "";
+input_html = "<table>";
+input_repeats = "";
+input_trees = [];
+skipped_row = 0;
+welcome_done_eval = "";
+_jmol_info = {};
+// jmol = "jmol";
+ga.pull.clearPull();
+ga.specproj.clear();
+$('#welcome').on("keyup keypress", function(e) { var code = e.keyCode || e.which;  if (code  == 13) { e.preventDefault(); return false; }});
+
+this_html = '<tr><td colspan=5 id="text1"> <div style="width:800px;margin-left:100px">     <p><span style="font-weight:bold;font-size:20pt;font-family:\'Avenir\'">Welcome</span></p>      <p style="text-align:left;margin-bottom:0.000000pt;margin-top:0.000000pt"></p>          <p style="font-size:16pt;font-family:\'Avenir\'">     Welcome to ROTDIF, a package for processing, prediction, and rigid-body docking based on nuclear spin-relaxation data!</p>      <p style="text-align:justify;margin-bottom:0.000000pt;margin-top:0.000000pt">     <span style=     "font-size:16pt;font-family:\'Avenir\'">       ROTDIF-Web is a web-server that helps researchers investigate the amplitudes and time scales of internal motions in biological macromolecules (proteins and nucleic acids). On ROTDIF-Web, users can simultaneously analyze Nuclear Magnetic Resonance (NMR) relaxation data obtained at multiple magnetic fields and for different nuclei. ROTDIF-Web also includes powerful tools for ab initio prediction of rotational diffusion tensors from macromolecular structures and for building macromolecular complexes using rotational diffusion-guided docking. ROTDIF-Web incorporates all the features of portable ROTDIF 3.0 (written in Java) and extends data management and visualization features.      </span></p>       <p></p>     <p> If you use ROTDIF in your work, please cite: </p>     <p style="color:#FFFFFF"> <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3939081/" target= "_new">[1] Konstantin Berlin, Andrew Longhini, T. Kwaku Dayie, David Fushman, Deriving quantitative dynamics information for proteins and RNAs using ROTDIF with a graphical user interface, <span style="font-style:italic;font-size:14pt;font-family:\'Times New Roman\'"> J Biomol NMR, </span> 2013 ;57(4):333-52 </a></p>     <p style="color:#FFFFFF"><a href="https://www.ncbi.nlm.nih.gov/pubmed/15140445" target="_new"> [2] Olivier Walker, Ranjani Varadan, David Fushman, Efficient and accurate determination of the overall rotational diffusion tensor of a molecule from 15N relaxation data using computer program ROTDIF,  <span style=     "font-style:italic;font-size:14pt;font-family:\'Times New Roman\'"> J Magn Reson, </span> 2004;168(2):336-45. </a></p>   </div>   </td></tr>';
+input_html += this_html;
+if( skipped_row == 1 ){ input_html += "</tr>"; }
+input_html += '</table>';
+$( '#welcome_input_area' ).html( input_html );
+eval( input_eval );
+</script>
+<p><button id="welcome_submit" class="help_link"><span class="buttontext">Submit</span></button>
+
+<button id="welcome_reset" class="help_link"><span class="buttontext">Reset to default values</span></button>
+
+
+</p>
+<span id="welcome_progress"></span>
+<script>
+$( "#welcome_reset" ).remove();
+
+$( "#welcome_submit" ).remove();
+
+
+
+var welcome_output_msgs = $("#welcome_output_msgs");
+welcome_output_msgs.text( "" );
+
+var welcome_timeout_handler = "unset";
+var welcome_timeout_handler_uuid;
+
+function get_results_welcome( id, last_timeout, getlastmsg, getinput )
+{
+
+//             url:"ajax/get_results.php?_window=" +  window.name + "&_logon=" +$( "#_state" ).data( "_logon" ) + '&_uuid=' + id,
+    var job_status = "";
+    
+    $.getJSON( 
+             "ajax/get_results.php",
+             {
+                tagmode: "any",
+                format: "json",
+                _window : window.name,
+                _logon : $( "#_state" ).data( "_logon" ),
+                _uuid : id,
+                _getlastmsg : getlastmsg,
+                _getinput : getinput ? true : false
+             } )
+    .done( function( data, status, xhr ) {
+
+           var do_refresh = 1;
+
+           if ( do_refresh ) {
+              ga.fc.clear( $.base64.encode( "./" + $( "#_state" ).data( "_project" ) ) );
+              ga.jc.clear_leaf( id );
+           }
+
+           job_status = ga.data.update( "welcome", data ).job_status;
+           if ( job_status == "complete" ||
+                job_status == "cancelled" ||
+                job_status == "failed" )
+           {
+              if ( welcome_timeout_handler != "unset" )
+              {
+                  clearTimeout( welcome_timeout_handler );
+                  welcome_timeout_handler = "unset";
+              }
+              ga.ws.unsub( id, "welcome" );
+              eval( welcome_done_eval );
+           } else {
+               if ( !last_timeout || last_timeout < 2000 )
+               { 
+                  last_timeout = 2000;
+               } else {
+                  if ( last_timeout < 16000 )
+                  {
+                      last_timeout *= 2;
+                  } else {
+                      last_timeout = 16000;
+                  }
+               }
+
+               welcome_timeout_handler =  setTimeout( get_results_welcome, last_timeout, id, last_timeout, 0 );
+               welcome_timeout_handler_uuid = id;
+           }
+          } )
+    .fail( function( xhr, status, errorThrown ) {
+
+           $( "#welcome_results" ).html( "<span class=\"warning\"> Failed: " + status + " : '" + xhr.status + ":" + errorThrown + "' on URL ajax/tools/center.php </span>" );
+           $('#welcome_progress').html( "" );
+           if ( welcome_timeout_handler != "unset" )
+           {
+               clearTimeout( welcome_timeout_handler );
+               welcome_timeout_handler = "unset";
+           }
+           ga.ws.unsub( id, "welcome" );
+           eval( welcome_done_eval );
+          } );
+    return false;
+};
+
+function msg_welcome ( id, data )
+{
+   ga.data.update( "welcome", data, get_results_welcome, id );
+};
+
+$( "#welcome_submit" ).click( function( e ) {
+   e.preventDefault();
+   e.returnValue = false;
+   $( "#welcome" ).find( ".toclear" ).remove();   
+   if ( welcome_timeout_handler != "unset" ) {
+       
+       clearTimeout( welcome_timeout_handler );
+       if ( welcome_timeout_handler_uuid ) {
+           ga.ws.unsub( welcome_timeout_handler_uuid, "welcome" );
+       }
+       welcome_timeout_handler = "unset";
+   }
+   ga.value.resetDefaultValues( "welcome_output", true );
+
+   
+   return ga.xsede.select( "__resource__", do_welcome_submit, $(this) );
+   //   return do_welcome_submit( $(this) );
+});
+
+function do_welcome_submit( $form, airavataresource, skipcached ) {
+
+   var $ok = 0;
+   
+   
+
+   ga.event( "", "welcome", "submit clicked" );
+
+   
+
+
+
+
+
+   if ( !ga.valid.checksubmit( "welcome" ) ) {
+       ga.valid.showerrormessage( "welcome" );
+       return false;
+   }
+
+   if ( ga.specproj.data.length ) {
+      if ( $( "#_state" ).data( '_logon' ) &&
+           $( "#_state" ).data( '_logon' ).length ) {
+          $( "#sel_project" ).html( ga.specproj.gname() );
+          $( "#_state" ).data( '_project', ga.specproj.gname() );
+          
+      }
+   }  
+
+//   if ( 0 && !xsedeproject) {
+//      
+//      switch( project = ga.xsede.select( "__resource__", do_welcome_submit, $form ) ) {
+//      case "deferred" : return false; break;
+//      case "abort"    : return false; break;
+//      case "notused"  : break;
+//      }
+      
+      
+
+   if ( !airavataresource ) {
+      
+      switch( airavataresource = ga.airavata.select( "__resource__", "__airavataselect__", do_welcome_submit, $form ) ) {
+      case "deferred" : return false; break;
+      case "abort"    : return false; break;
+      case "notused"  : break;
+      }
+      
+   }
+   
+
+   $.ajax({
+       type: 'get'
+       ,url: "ajax/sys_config/sys_joblocked.php?_window=" +  window.name + "&_logon=" + $( "#_state" ).data( "_logon" )
+
+
+
+       ,context: $form
+       ,success: function( data ) { // your success handler
+
+          if ( !$ok )
+          {
+          switch ( data )
+          {
+             case "1" :
+             {
+                 ga.msg.box( { icon:"warning.png", text:"This project directory is currently locked by another project.\nYou can wait until it completes, change the project in user configuration or clear the lock in the job manager." } );
+                 return;
+             } break;
+             case "2" :
+             {
+                 ga.msg.box( { icon:"warning.png", text:"You must be logged in to submit this module." } );
+                 return;
+             } break;
+             case "0" :
+             {
+
+                 $ok = 1;
+             } break;
+             default : 
+             {
+                if ( /^Your job/.test( data ) ) {
+                   ga.msg.box( { icon : "warning.png",
+                                 text : data } );
+                   return;
+                }
+                
+                if ( skipcached ) {
+                    $ok = 1;
+                } else {
+                    return ga.cache.msg( "", "", get_results_welcome, do_welcome_submit, data, $form, airavataresource );
+                }
+             } break;
+          }
+          }
+       }
+       ,error: function() { // your error handler
+          ga.msg.box( { icon:"toast.png", text:"Checking the project lock failed. This is possibly a server or network issue" } );
+       }
+       ,complete: function() { 
+          this.off('submit');
+          if ( $ok )
+          {
+
+
+              $( "#welcome_results" ).text( "" );
+
+              ga.value.saveLastValues( "welcome" );
+              ga.value.resetDefaultValues( "welcome_output", true );
+
+              var found_errors = 0;
+              $("#welcome").find("input").each(function(i){
+                 if ( $(this).attr( 'required' ) && $(this).val().length == 0 )
+                 {
+                    var tag =  "#welcome " + "#" + $(this).attr('id') + "_msg";
+
+                    $( tag ).html( "missing required field" );
+                    found_errors = 1;
+                 }
+              });
+              if ( found_errors ) {
+                  return;
+              }
+
+    var tree_html = "";
+    $( "._hidden_tree_selects" ).remove( );
+    $.each( input_trees, function( k, v ){
+
+        $( 'input[type=hidden][name="' + v + '[]"]' ).remove();
+        var selectedElms = $('#' + v).jstree("get_selected", true);
+        var i = 0;
+        $.each(selectedElms, function() {
+           tree_html += '<input type="hidden" name="' + v + '[]" value="' + this.id + '" class="_hidden_tree_selects"/>';
+
+        });
+    });
+
+    $( this ).append( tree_html );
+
+
+    var logonadd = $("<input>").attr("type", "hidden").attr("name", "_logon").val( $( "#_state" ).data( "_logon" ) );$( this ).append($(logonadd));
+    var projectadd = $("<input>").attr("type", "hidden").attr("name", "_project").val( $( "#_state" ).data( "_project" ) );$( this ).append($(projectadd));
+    var windowadd = $("<input>").attr("type", "hidden").attr("name", "_window").val( window.name );$( this ).append($(windowadd));
+    
+    var vuuid = uuid.v1();
+
+
+
+
+
+
+
+    if ( airavataresource != "notused" ) {
+        $( this ).append( $("<input>").attr("type", "hidden").attr("name", "_airavataresource").val( airavataresource ) );
+    }
+
+    var uuidadd = $("<input>").attr("type", "hidden").attr("name", "_uuid").val( vuuid );$( this ).append($(uuidadd));
+//    ga.altfile.add( "welcome" );
+    ga.valuen.addhtml( "welcome" );
+
+    ga.extrahidden( "welcome" );
+
+    ga.ws.sub( vuuid, msg_welcome, "welcome" );
+
+    var formData = new FormData($('#welcome')[0]);
+    
+     
+     
+    
+     
+     
+
+     
+     if ( ga.multistage["welcome"] )
+      {
+        ga.value.modifyformdata(ga.multistage, "welcome", formData, ga.stages["welcome"], ga.currentstage);
+      }
+
+
+
+    $('#welcome_progress').html( "Uploading:<progress></progress>" );
+
+    var job_status = "";
+
+    ga.event( "", "welcome", "submit: passed submit checks, submitting" );
+
+
+    // var url - coditional based on module's .json setting, and use it in ajax call
+
+    $.ajax( {
+             dataType: "json",
+             cache:false,
+//             timeout:3000,  // for testing
+             type:"POST",
+             url:"ajax/welcome_menu/welcome.php",
+             data: formData,
+             xhr: function() {  // Custom XMLHttpRequest
+                 var myXhr = $.ajaxSettings.xhr();
+                 if(myXhr.upload){ // Check if upload property exists
+                     myXhr.upload.addEventListener('progress',
+                         function(e) {
+                         if(e.lengthComputable){
+                           $('#welcome_progress progress').attr({value:e.loaded,max:e.total});
+                         } }
+//                     progressHandlingFunction
+                    , false);
+                 }
+                 return myXhr;
+             },
+             contentType: false,
+             processData: false
+            } )
+    .done( function( data, status, xhr ) {
+    
+    if ( ga.multistage["welcome"] )
+      {
+        ga.value.showfields(ga.multistage, "welcome", ga.stages["welcome"], ga.currentstage);
+    	delete ga.stages["welcome"][ga.currentstage]; 
+    	++ga.currentstage;	
+      }	
+
+
+
+
+// refresh cache for this project
+           $('#welcome_progress').html( "" );
+   
+           var do_refresh = 1;
+
+           if ( do_refresh ) {
+              ga.fc.clear( $.base64.encode( "./" + $( "#_state" ).data( "_project" ) ) );
+              ga.jc.clear_leaf( vuuid );
+           }
+           
+// loop through data pairs
+           welcome_output_msgs.text( "" );
+           job_status = ga.data.update( "welcome", data ).job_status;
+
+           if ( job_status == "complete" ||
+                job_status == "cancelled" ||
+                job_status == "failed" )
+           {
+               if ( welcome_timeout_handler != "unset" )
+               {
+                   clearTimeout( welcome_timeout_handler );
+                   welcome_timeout_handler = "unset";
+               }
+               ga.ws.unsub( vuuid, "welcome" );
+               eval( welcome_done_eval );
+           } else {
+               welcome_timeout_handler = setTimeout( get_results_welcome, 2000, vuuid, 2000, 0 );
+               welcome_timeout_handler_uuid = vuuid;
+
+           }
+          } )
+    .fail( function( xhr, status, errorThrown ) {
+
+
+
+
+           $( "#welcome_results" ).html( "<span class=\"warning\"> Failed: " + status + " : '" + xhr.status + ":" + errorThrown + "' on URL ajax/welcome_menu/welcome.php </span>" );
+           $('#welcome_progress').html( "" );
+           if ( welcome_timeout_handler != "unset" )
+           {
+               clearTimeout( welcome_timeout_handler );
+               welcome_timeout_handler = "unset";
+           }
+           ga.ws.unsub( vuuid, "welcome" );
+           eval( welcome_done_eval );
+          } );
+          } else {
+
+          }
+       }
+   });
+} 
+
+welcome_reset = function() {
+    
+    if ( !10 ) {
+        // required to reset scrollheight ... 
+        document.getElementById( "welcome_output_textarea" ).style.height = 0;
+    }
+
+    if ( welcome_timeout_handler != "unset" ) {
+       
+       clearTimeout( welcome_timeout_handler );
+       if ( welcome_timeout_handler_uuid ) {
+           ga.ws.unsub( welcome_timeout_handler_uuid, "welcome" );
+       }
+       welcome_timeout_handler = "unset";
+    }
+    ga.event( "", "welcome", "reset clicked" );
+    ga.valid.clearerrorcounter( "welcome" );
+
+   if ( ga.multistage["welcome"] )
+     {
+       ga.currentstage = 0;
+       ga.value.sethiddenfields(ga.multistage,"welcome");
+       ga.stages["welcome"].length = 0;
+       ga.stages["welcome"] = ga.stagesdefault["welcome"].slice();
+       console.log("Reset: " + ga.stages["welcome"]);
+     }
+
+    //    ga.value.resetDefaultValues( "welcome" );
+    ga.valuen.restore.dflt(  "welcome" );
+    ga.value.resetDefaultValues( "welcome_output", true );
+    
+    eval( input_repeats );
+    return false;
+}
+
+$( "#welcome_reset" ).click( function() {
+   return welcome_reset();
+});
+
+ga.hhelp.set();
+
+
+eval( input_repeats );
+ga.pull.doPull();
+</script>
+</form>
+<div id="welcome_results"></div>
+<script>
+ga.tmp.html = "<hr>";
+ga.tmp.html = "";
+$("#welcome").append( ga.tmp.html );
+</script>
+
+<form id="welcome_output">
+<div id="welcome_output_msgs" class="warning" type="msgs"></div>
+<script>
+ga.value.setLastValueOutput( "welcome_output" );
+ga.value.extra_resets.clear();
+</script>
+
+<span id="welcome_output_airavata"></span>
+
+<table>
+<tr>
+<td colspan="4" style="vertical-align:top"><label hidden id="welcome_output_textarea_label" for="welcome_output_textarea" class="header3 ">Report:</label>
+<textarea readonly hidden id="welcome_output_textarea" rows="10" cols="110" class="help_link"></textarea>
+<span class="help">general textarea help</span>
+</td>
+</tr>
+</table>
+</form>
+
+
+
+
+<script>loaded_welcome = 1; </script>

@@ -1,0 +1,3 @@
+run name already used
+close failed in file object destructor:
+IOError: [Errno 9] Bad file descriptor

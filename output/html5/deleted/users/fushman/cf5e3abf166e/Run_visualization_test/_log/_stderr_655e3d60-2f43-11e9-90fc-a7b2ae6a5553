@@ -1,0 +1,8 @@
+close failed in file object destructor:
+IOError: [Errno 9] Bad file descriptor
+No chain information in the data!Traceback (most recent call last):
+  File "/opt/genapp/rotdif/bin/main_elmdock.py", line 48, in <module>
+    exp_keys = exp_plot(color_list, dyna_flag, elm_flag, elmdock_flag)[1]
+  File "/opt/genapp/rotdif/bin/plot_exp_elmdock.py", line 333, in exp_plot
+    return exp_plotly,exp_keys
+UnboundLocalError: local variable 'exp_plotly' referenced before assignment

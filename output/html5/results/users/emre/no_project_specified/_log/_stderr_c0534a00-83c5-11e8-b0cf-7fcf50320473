@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/opt/genapp/rotdif/bin/main_rotdif.py", line 43, in <module>
+    exp_keys = exp_plot(color_list)[1]
+  File "/opt/genapp/rotdif/bin/plot_exp.py", line 9, in exp_plot
+    iso_output, _, _, _, _, _ = split_data()
+  File "/opt/genapp/rotdif/bin/preprocess_split.py", line 8, in split_data
+    with open('rotdif_log.out') as in_f:
+IOError: [Errno 2] No such file or directory: 'rotdif_log.out'

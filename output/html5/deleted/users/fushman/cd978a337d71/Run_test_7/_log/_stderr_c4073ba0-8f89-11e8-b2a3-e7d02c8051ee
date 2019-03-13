@@ -1,0 +1,8 @@
+close failed in file object destructor:
+IOError: [Errno 9] Bad file descriptor
+Traceback (most recent call last):
+  File "/opt/genapp/rotdif/bin/main_rotdif.py", line 48, in <module>
+    exp_keys = exp_plot(color_list, dyna_flag, elm_flag, elmdock_flag)[1]
+  File "/opt/genapp/rotdif/bin/plot_exp.py", line 55, in exp_plot
+    "x" : list(range(len(rho_exp[i]))),
+IndexError: list index out of range

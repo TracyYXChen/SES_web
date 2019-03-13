@@ -1,0 +1,41 @@
+Options:
+temp = 298.0
+robust = false
+relax =
+elm = true
+axes = false
+axesl = 5.0
+pdb = p50ddhet.pdb
+out = out
+help = false
+nostat = false
+nodynamics = false
+nogui = true
+model = 1
+wr = 1.4
+dock = false
+sr = 2.2
+
+Parsing pdb file....done.
+Predicting tensor...done.
+
+Dx = 2.04218 *(10^7) 1/s
+Dy = 2.15855 *(10^7) 1/s
+Dz = 2.85705 *(10^7) 1/s
+alpha = 66.19 deg
+beta = 111.46 deg
+gamma = 47.91 deg
+TAUc = 7.08439 ns
+anisotropy = 1.36026
+rhombicity = 0.23069
+
+====Diffusion Tensor====
+    [ 2.18673  0.23028 -0.15250]
+D = [ 0.23028  2.66426 -0.21214] *(10^7) 1/s
+    [-0.15250 -0.21214  2.20678]
+
+====Diffusion Tensor Sorted Eigendecomposition====
+    [ -0.7780   -0.5035    0.3757][  2.0422    0.0000    0.0000][ -0.7780    0.0753   -0.6238]
+D = [  0.0753    0.5190    0.8514][  0.0000    2.1585    0.0000][ -0.5035    0.5190    0.6907] *(10^7) 1/s
+    [ -0.6238    0.6907   -0.3659][  0.0000    0.0000    2.8570][  0.3757    0.8514   -0.3659]
+

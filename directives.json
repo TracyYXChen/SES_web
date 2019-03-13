@@ -1,0 +1,69 @@
+{
+   #"docsbaseurl" : "https://drive.google.com/file/d/1kJJXEVtpoZ-KZ5p_pt1TByJGcBkxHVjc/view",
+   "help_text_color_rgb" : "240,240,210",
+   "logdirectory" : "_log",
+   "button_color_rgb" : "200,128,0",
+   "mongo" : {},
+   "debug" : {},
+   "footersize" : "50px",
+   "appconfig" : "/opt/genapp/ses/appconfig.json",
+   "button_g_color_rgb" : "200,128,0",
+   "button_hover_color_hex" : "FFFFFF",
+   "help_background_color_rgb" : "0,0,75",
+   "helper" : {
+      "pdb" : "rasmol",
+      "txt" : "vi"
+   },
+   "header1_color" : "228,255,250",
+   "button_hover_color_rgb" : "255,255,255",
+   "textarea" : {
+      "verticalalign" : "top",
+      "help" : "general textarea help",
+      "default" : "header3",
+      "label" : "Report:",
+      "cols" : "110",
+      "rows" : "10"
+   },
+   "header2_color" : "228,255,250",
+   "version" : "- Web",
+   "executable_path" : {
+      "qt5" : "/opt/genapp/ses/bin",
+      "qt3" : "/opt/genapp/ses/bin",
+      "qt4" : "/opt/genapp/ses/bin",
+      "java" : "/opt/genapp/ses/bin",
+      "html5" : "/opt/genapp/ses/bin"
+   },
+   "button_hover_g_color_hex" : "FFFFFF",
+   "header4_color" : "C88000",
+   "text_color_rgb" : "0,0,0",
+   "languages" : [
+      "html5"
+   ],
+   "select_color_rgb" : "2E8B57",
+   "style" : {
+      "sidebartextalign" : "left",
+      "sidebarleftpadding" : "10px",
+      "sidebarwidth" : "280px"
+   },
+   "background_color_rgb" : "255,255,255",
+   "button_g_color_hex" : "80AA06",
+   "docroot" : {
+      "qt3" : "/opt/genapp/ses/tmp",
+      "qt5" : "/opt/genapp/ses/tmp",
+      "qt4" : "/opt/genapp/ses/tmp",
+      "html5" : "/var/www/html",
+      "java" : "/opt/genapp/ses/tmp"
+   },
+   "header3_color" : "C88000",
+   "button_color_hex" : "C88000",
+   "application" : "ses",
+   "error_color_rgb" : "255,0,0",
+   "button_hover_g_color_rgb" : "C88000",
+   "footer" : "SES-Web@2019",
+   "title" : "SES",
+   "usews" : "true",
+   "mongojournal" : "true",
+   "css" : "custom.css",
+   "usesplash": "true",
+   "splashdocs":"true"
+}

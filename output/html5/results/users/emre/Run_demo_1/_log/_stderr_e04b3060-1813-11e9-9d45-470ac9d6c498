@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/opt/genapp/rotdif/bin/main_rotdif.py", line 47, in <module>
+    output_res, base_dir, dyna_flag, elm_flag, elmdock_flag = rotdif(to_dock)
+  File "/opt/genapp/rotdif/bin/run_rotdif.py", line 112, in rotdif
+    sock.sendto(doc_string,(UDP_IP,UDP_PORT))
+TypeError: an integer is required

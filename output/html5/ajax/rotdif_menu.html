@@ -1,0 +1,74 @@
+<style>
+#panel_rotdif_menu {
+    position: relative;
+    display: block;  
+}
+</style>
+<p>
+<center>
+
+    <button id="rotdif_menu_rotdif_all" class="help_link">ROTDIF & Dynamics Analysis</button>
+<script>
+    $( "#rotdif_menu_rotdif_all" ).click(function() {
+        var d=$( "#tab_docs > a" );
+        if ( d.length ) { d.attr( "href", "__docsbaseurl__/rotdif_menu/rotdif_all/rotdif_all.html" ); };
+    
+        if ( ga.valuen.lastload && $( "#" + ga.valuen.lastload ).is( ":visible" ) ) { ga.valuen.save( ga.valuen.lastload ); }
+
+        if ( ga.valuen.lastload != "rotdif_all" || !$( "#" + ga.valuen.lastload ).is( ":visible" ) ) {
+            ga.loader.show();
+            $( "#panel_rotdif_menu" ).load( "ajax/rotdif_menu/rotdif_all.html", function() { ga.valuen.save( "rotdif_all", true ); ga.valuen.restore( "rotdif_all" ); ga.valuen.lastload = "rotdif_all"; ga.loader.hide(); });
+        }
+    });
+
+
+
+</script>
+    <button id="rotdif_menu_elm" class="help_link">Diffusion Tensor Prediction</button>
+<script>
+    $( "#rotdif_menu_elm" ).click(function() {
+        var d=$( "#tab_docs > a" );
+        if ( d.length ) { d.attr( "href", "__docsbaseurl__/rotdif_menu/elm/elm.html" ); };
+    
+        if ( ga.valuen.lastload && $( "#" + ga.valuen.lastload ).is( ":visible" ) ) { ga.valuen.save( ga.valuen.lastload ); }
+
+        if ( ga.valuen.lastload != "elm" || !$( "#" + ga.valuen.lastload ).is( ":visible" ) ) {
+            ga.loader.show();
+            $( "#panel_rotdif_menu" ).load( "ajax/rotdif_menu/elm.html", function() { ga.valuen.save( "elm", true ); ga.valuen.restore( "elm" ); ga.valuen.lastload = "elm"; ga.loader.hide(); });
+        }
+    });
+
+
+
+</script>
+    <button id="rotdif_menu_elmdock" class="help_link">Diffusion Tensor-Guided Docking</button>
+<script>
+    $( "#rotdif_menu_elmdock" ).click(function() {
+        var d=$( "#tab_docs > a" );
+        if ( d.length ) { d.attr( "href", "__docsbaseurl__/rotdif_menu/elmdock/elmdock.html" ); };
+    
+        if ( ga.valuen.lastload && $( "#" + ga.valuen.lastload ).is( ":visible" ) ) { ga.valuen.save( ga.valuen.lastload ); }
+
+        if ( ga.valuen.lastload != "elmdock" || !$( "#" + ga.valuen.lastload ).is( ":visible" ) ) {
+            ga.loader.show();
+            $( "#panel_rotdif_menu" ).load( "ajax/rotdif_menu/elmdock.html", function() { ga.valuen.save( "elmdock", true ); ga.valuen.restore( "elmdock" ); ga.valuen.lastload = "elmdock"; ga.loader.hide(); });
+        }
+    });
+
+
+
+</script>
+</center>
+</p>
+
+<div id="panel_rotdif_menu">
+</div>
+
+
+<script>
+    $( "#panel_rotdif_menu" ).text("");
+ga.tmp.bgi = ga.color.data.body.background;
+
+
+$("body").css( { "background": ga.tmp.bgi + " no-repeat center center fixed", "-webkit-background-size" : "cover", "-moz-background-size" : "cover", "-o-background-size" : "cover" , "background-size": "cover"} );
+</script>

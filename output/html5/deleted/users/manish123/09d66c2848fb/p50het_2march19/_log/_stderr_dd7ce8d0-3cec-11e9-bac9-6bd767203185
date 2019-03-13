@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/opt/genapp/rotdif/bin/main_rotdif.py", line 55, in <module>
+    to_dock = dock(old_relax)
+  File "/opt/genapp/rotdif/bin/indicator_chain.py", line 26, in dock
+    digi_resi.extend(re.findall("\d+", list_elem)) 
+  File "/usr/lib/python2.7/re.py", line 181, in findall
+    return _compile(pattern, flags).findall(string)
+TypeError: expected string or buffer

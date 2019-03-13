@@ -1,0 +1,41 @@
+Options:
+temp = 330.0
+robust = false
+relax =
+elm = true
+axes = false
+axesl = 5.0
+pdb = 1AAR_hydr.pdb
+out = out
+help = false
+nostat = false
+nodynamics = false
+nogui = true
+model = 1
+wr = 1.4
+dock = false
+sr = 2.2
+
+Parsing pdb file....done.
+Predicting tensor...done.
+
+Dx = 4.13941 *(10^7) 1/s
+Dy = 5.21186 *(10^7) 1/s
+Dz = 6.02745 *(10^7) 1/s
+alpha = 91.02 deg
+beta = 83.46 deg
+gamma = 147.60 deg
+TAUc = 3.25125 ns
+anisotropy = 0.73660
+rhombicity = 0.82647
+
+====Diffusion Tensor====
+    [ 4.90634 -0.07482  0.47874]
+D = [-0.07482  6.00465  0.18730] *(10^7) 1/s
+    [ 0.47874  0.18730  4.46773]
+
+====Diffusion Tensor Sorted Eigendecomposition====
+    [ -0.5340    0.8453   -0.0177][  4.1394    0.0000    0.0000][ -0.5340   -0.1057    0.8389]
+D = [ -0.1057   -0.0460    0.9933][  0.0000    5.2119    0.0000][  0.8453   -0.0460    0.5323] *(10^7) 1/s
+    [  0.8389    0.5323    0.1139][  0.0000    0.0000    6.0274][ -0.0177    0.9933    0.1139]
+

@@ -1,0 +1,23 @@
+Options:
+temp = 298.0
+robust = false
+relax = K27_relaxdata.txt
+elm = false
+axes = false
+axesl = 5.0
+pdb = 1AAR_dry.pdb
+out = out
+help = false
+nostat = true
+nodynamics = true
+nogui = true
+model = 1
+wr = 1.4
+dock = true
+sr = 2.2
+
+Extracting experimental data....done.
+Parsing pdb file....1AAR is a LEGACY entry - this will most likely not parse correctly.
+done.
+TEST: Computing results....
+ Percent 95.0%

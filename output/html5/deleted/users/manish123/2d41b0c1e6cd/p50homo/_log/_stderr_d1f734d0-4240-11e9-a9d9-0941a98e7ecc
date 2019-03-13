@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/opt/genapp/rotdif/bin/main_rotdif.py", line 55, in <module>
+    to_dock = dock(old_relax)
+  File "/opt/genapp/rotdif/bin/indicator_chain.py", line 21, in dock
+    columns = ["residue","chain","atom 1","atom 2","magnet","T1","T1 error","T2","T2 error","NOE","NOE error"])
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 387, in __init__
+    arrays, columns = _to_arrays(data, columns, dtype=dtype)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 7461, in _to_arrays
+    dtype=dtype)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 7540, in _list_to_arrays
+    coerce_float=coerce_float)
+  File "/usr/local/lib/python2.7/dist-packages/pandas/core/frame.py", line 7598, in _convert_object_array
+    con=len(content)))
+AssertionError: 11 columns passed, passed data had 61 columns

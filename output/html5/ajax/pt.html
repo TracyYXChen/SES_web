@@ -1,0 +1,40 @@
+<style>
+#panel_pt {
+    position: relative;
+    display: block;  
+}
+</style>
+<p>
+<center>
+
+    <button id="pt_pt" class="help_link">Param_m</button>
+<script>
+    $( "#pt_pt" ).click(function() {
+        var d=$( "#tab_docs > a" );
+        if ( d.length ) { d.attr( "href", "__docsbaseurl__/pt/pt/pt.html" ); };
+    
+        if ( ga.valuen.lastload && $( "#" + ga.valuen.lastload ).is( ":visible" ) ) { ga.valuen.save( ga.valuen.lastload ); }
+
+        if ( ga.valuen.lastload != "pt" || !$( "#" + ga.valuen.lastload ).is( ":visible" ) ) {
+            ga.loader.show();
+            $( "#panel_pt" ).load( "ajax/pt/pt.html", function() { ga.valuen.save( "pt", true ); ga.valuen.restore( "pt" ); ga.valuen.lastload = "pt"; ga.loader.hide(); });
+        }
+    });
+$( "#pt_pt" ).trigger( "click" );
+$( "#pt_pt" ).hide();
+
+</script>
+</center>
+</p>
+
+<div id="panel_pt">
+</div>
+
+
+<script>
+    $( "#panel_pt" ).text("");
+ga.tmp.bgi = ga.color.data.body.background;
+
+
+$("body").css( { "background": ga.tmp.bgi + " no-repeat center center fixed", "-webkit-background-size" : "cover", "-moz-background-size" : "cover", "-o-background-size" : "cover" , "background-size": "cover"} );
+</script>

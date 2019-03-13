@@ -1,0 +1,1 @@
+{"progress_text": "ELMDOCK calculation progress: 100%", "elmdock_out": ["results/users/lcoplan/Run_hw10_1_3_Coplan_305K/ELMDOCK"], "progress_output": "1.0", "pdb": ["results/users/lcoplan/Run_hw10_1_3_Coplan_305K/out_dock.pdb"], "outputrotdif": ["results/users/lcoplan/Run_hw10_1_3_Coplan_305K/elmdock_log.out"]}

@@ -1,0 +1,40 @@
+<style>
+#panel_welcome_menu {
+    position: relative;
+    display: block;  
+}
+</style>
+<p>
+<center>
+
+    <button id="welcome_menu_welcome" class="help_link">Welcome</button>
+<script>
+    $( "#welcome_menu_welcome" ).click(function() {
+        var d=$( "#tab_docs > a" );
+        if ( d.length ) { d.attr( "href", "__docsbaseurl__/welcome_menu/welcome/welcome.html" ); };
+    
+        if ( ga.valuen.lastload && $( "#" + ga.valuen.lastload ).is( ":visible" ) ) { ga.valuen.save( ga.valuen.lastload ); }
+
+        if ( ga.valuen.lastload != "welcome" || !$( "#" + ga.valuen.lastload ).is( ":visible" ) ) {
+            ga.loader.show();
+            $( "#panel_welcome_menu" ).load( "ajax/welcome_menu/welcome.html", function() { ga.valuen.save( "welcome", true ); ga.valuen.restore( "welcome" ); ga.valuen.lastload = "welcome"; ga.loader.hide(); });
+        }
+    });
+$( "#welcome_menu_welcome" ).trigger( "click" );
+$( "#welcome_menu_welcome" ).hide();
+
+</script>
+</center>
+</p>
+
+<div id="panel_welcome_menu">
+</div>
+
+
+<script>
+    $( "#panel_welcome_menu" ).text("");
+ga.tmp.bgi = ga.color.data.body.background;
+
+
+$("body").css( { "background": ga.tmp.bgi + " no-repeat center center fixed", "-webkit-background-size" : "cover", "-moz-background-size" : "cover", "-o-background-size" : "cover" , "background-size": "cover"} );
+</script>

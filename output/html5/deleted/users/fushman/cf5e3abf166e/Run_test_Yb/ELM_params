@@ -1,0 +1,17 @@
+Parameters
+temp = 301.0
+robust = false
+relax =
+elm = true
+axes = false
+axesl = 5.0
+pdb = diUb_AB.pdb
+out = out
+help = false
+nostat = false
+nodynamics = false
+nogui = true
+model = 1
+wr = 1.4
+dock = false
+sr = 2.2

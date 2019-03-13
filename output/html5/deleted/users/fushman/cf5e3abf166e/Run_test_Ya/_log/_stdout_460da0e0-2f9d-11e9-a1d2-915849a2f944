@@ -1,0 +1,1 @@
+{"outputpdb": {"file": "results/users/fushman/Run_test_Ya/out_dock.pdb", "script": "ribbon"}, "progress_text": "ELMDOCK calculation progress: 100%", "outputrotdif": ["results/users/fushman/Run_test_Ya/elmdock_log.out"], "elmdock_out": ["results/users/fushman/Run_test_Ya/ELMDOCK"], "progress_output": "1.0", "pdb": ["results/users/fushman/Run_test_Ya/out_dock.pdb"]}

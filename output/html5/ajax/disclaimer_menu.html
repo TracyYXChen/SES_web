@@ -1,0 +1,40 @@
+<style>
+#panel_disclaimer_menu {
+    position: relative;
+    display: block;  
+}
+</style>
+<p>
+<center>
+
+    <button id="disclaimer_menu_disclaimer" class="help_link">Official Disclaimer</button>
+<script>
+    $( "#disclaimer_menu_disclaimer" ).click(function() {
+        var d=$( "#tab_docs > a" );
+        if ( d.length ) { d.attr( "href", "__docsbaseurl__/disclaimer_menu/disclaimer/disclaimer.html" ); };
+    
+        if ( ga.valuen.lastload && $( "#" + ga.valuen.lastload ).is( ":visible" ) ) { ga.valuen.save( ga.valuen.lastload ); }
+
+        if ( ga.valuen.lastload != "disclaimer" || !$( "#" + ga.valuen.lastload ).is( ":visible" ) ) {
+            ga.loader.show();
+            $( "#panel_disclaimer_menu" ).load( "ajax/disclaimer_menu/disclaimer.html", function() { ga.valuen.save( "disclaimer", true ); ga.valuen.restore( "disclaimer" ); ga.valuen.lastload = "disclaimer"; ga.loader.hide(); });
+        }
+    });
+$( "#disclaimer_menu_disclaimer" ).trigger( "click" );
+$( "#disclaimer_menu_disclaimer" ).hide();
+
+</script>
+</center>
+</p>
+
+<div id="panel_disclaimer_menu">
+</div>
+
+
+<script>
+    $( "#panel_disclaimer_menu" ).text("");
+ga.tmp.bgi = ga.color.data.body.background;
+
+
+$("body").css( { "background": ga.tmp.bgi + " no-repeat center center fixed", "-webkit-background-size" : "cover", "-moz-background-size" : "cover", "-o-background-size" : "cover" , "background-size": "cover"} );
+</script>

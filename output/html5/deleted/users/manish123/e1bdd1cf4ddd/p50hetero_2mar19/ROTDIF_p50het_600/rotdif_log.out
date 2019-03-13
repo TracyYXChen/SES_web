@@ -1,0 +1,22 @@
+Options:
+temp = 298.0
+robust = false
+relax = input_600.txt
+elm = false
+axes = true
+axesl = 5.0
+pdb = 1vkx.pdb
+out = out
+help = false
+nostat = true
+nodynamics = true
+nogui = true
+model = 1
+wr = 1.4
+dock = false
+sr = 2.2
+
+Extracting experimental data....done.
+Parsing pdb file....done.
+TEST: Computing results....
+ Percent 95.0%

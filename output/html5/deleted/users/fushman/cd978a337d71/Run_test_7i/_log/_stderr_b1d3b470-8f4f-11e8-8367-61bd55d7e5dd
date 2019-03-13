@@ -1,0 +1,10 @@
+close failed in file object destructor:
+IOError: [Errno 9] Bad file descriptor
+Traceback (most recent call last):
+  File "/opt/genapp/rotdif/bin/main_rotdif.py", line 48, in <module>
+    exp_keys = exp_plot(color_list)[1]
+  File "/opt/genapp/rotdif/bin/plot_exp.py", line 10, in exp_plot
+    iso_output = split_data()[0]
+  File "/opt/genapp/rotdif/bin/preprocess_split.py", line 40, in split_data
+    starter = [iso_start,axi_start,ani_start,diso_start,daxi_start,dani_start, elm_start]
+UnboundLocalError: local variable 'diso_start' referenced before assignment

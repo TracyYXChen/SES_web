@@ -1,0 +1,41 @@
+Options:
+temp = 298.0
+robust = false
+relax =
+elm = true
+axes = false
+axesl = 5.0
+pdb = K27_Ub2_docked_H.pdb
+out = out
+help = false
+nostat = false
+nodynamics = false
+nogui = true
+model = 1
+wr = 1.4
+dock = false
+sr = 2.2
+
+Parsing pdb file....done.
+Predicting tensor...done.
+
+Dx = 1.31164 *(10^7) 1/s
+Dy = 1.72451 *(10^7) 1/s
+Dz = 2.17588 *(10^7) 1/s
+alpha = 2.74 deg
+beta = 89.05 deg
+gamma = 2.27 deg
+TAUc = 9.59319 ns
+anisotropy = 1.43331
+rhombicity = 0.94148
+
+====Diffusion Tensor====
+    [ 2.17463  0.02134  0.01345]
+D = [ 0.02134  1.72488  0.01697] *(10^7) 1/s
+    [ 0.01345  0.01697  1.31252]
+
+====Diffusion Tensor Sorted Eigendecomposition====
+    [  0.0146   -0.0485    0.9987][  1.3116    0.0000    0.0000][  0.0146    0.0403   -0.9991]
+D = [  0.0403    0.9980    0.0479][  0.0000    1.7245    0.0000][ -0.0485    0.9980    0.0395] *(10^7) 1/s
+    [ -0.9991    0.0395    0.0165][  0.0000    0.0000    2.1759][  0.9987    0.0479    0.0165]
+

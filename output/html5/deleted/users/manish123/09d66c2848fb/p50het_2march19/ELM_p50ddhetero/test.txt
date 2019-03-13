@@ -1,0 +1,2 @@
+[u'/var/www/html/rotdif/results/users/manish123/p50het_2march19/ELM_p50ddhetero/ELM_prediction']
+/var/www/html/rotdif/results/users/manish123/p50het_2march19

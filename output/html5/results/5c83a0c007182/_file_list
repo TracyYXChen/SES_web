@@ -1,0 +1,14 @@
+./p50homo/ROTDIF_p50homo3/2d_exp_rho_0
+./p50homo/ROTDIF_p50homo3/2d_fit_lower_0
+./p50homo/ROTDIF_p50homo3/2d_fit_upper_0
+./p50homo/ROTDIF_p50homo3/2d_label_0
+./p50homo/ROTDIF_p50homo3/3d_exp_points_1
+./p50homo/ROTDIF_p50homo3/3d_surface_1
+./p50homo/ROTDIF_p50homo3/bond_vector
+./p50homo/ROTDIF_p50homo3/chi2_data
+./p50homo/ROTDIF_p50homo3/chi2_surface
+./p50homo/ROTDIF_p50homo3/out_ani.py
+./p50homo/ROTDIF_p50homo3/out_axial.py
+./p50homo/ROTDIF_p50homo3/p50ddhomo_800Mhz3.txt
+./p50homo/ROTDIF_p50homo3/p50homo.pdb
+./p50homo/ROTDIF_p50homo3/rotdif_log.out

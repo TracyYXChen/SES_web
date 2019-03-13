@@ -1,0 +1,11 @@
+edu.umd.umiacs.armor.molecule.AtomNotFoundException: Atom not found: [Type=N, Position = [0.0, 0.0, 0.0], Radius=1.55, PrimaryInfo=[ChainID: B, Residue: 248, Name: N]]
+	at edu.umd.umiacs.armor.molecule.BasicMolecule.getAtomPosition(BasicMolecule.java:363)
+	at edu.umd.umiacs.armor.nmr.relax.ModelFreePredictorImpl.createFromMolecule(ModelFreePredictorImpl.java:235)
+	at edu.umd.umiacs.armor.nmr.relax.IsotropicModelFreePredictor.createFromMolecule(IsotropicModelFreePredictor.java:59)
+	at edu.umd.umiacs.armor.nmr.relax.IsotropicRelaxationComputor.createFromMolecule(IsotropicRelaxationComputor.java:251)
+	at edu.umd.umiacs.armor.nmr.relax.IsotropicRelaxationComputor.createFromMolecule(IsotropicRelaxationComputor.java:51)
+	at edu.umd.umiacs.armor.nmr.relax.AbstractModelFreeComputor.getUpdatedPredictors(AbstractModelFreeComputor.java:559)
+	at edu.umd.umiacs.armor.nmr.relax.AbstractModelFreeComputor.solveTensor(AbstractModelFreeComputor.java:868)
+	at edu.umd.umiacs.armor.nmr.relax.RotdifResults.<init>(RotdifResults.java:217)
+	at edu.umd.umiacs.armor.nmr.relax.RotdifMain.mainCommand(RotdifMain.java:305)
+	at edu.umd.umiacs.armor.nmr.relax.RotdifMain.main(RotdifMain.java:210)

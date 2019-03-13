@@ -1,0 +1,10 @@
+close failed in file object destructor:
+IOError: [Errno 9] Bad file descriptor
+Traceback (most recent call last):
+  File "/opt/genapp/rotdif/bin/main_rotdif.py", line 72, in <module>
+    exp_graph,exp_keys,exp_resi,dyna_resi = exp_plot(color_list, dyna_flag, elm_flag, elmdock_flag,old_relax)
+  File "/opt/genapp/rotdif/bin/plot_exp.py", line 10, in exp_plot
+    iso_output = split_data(dyna_flag, elm_flag, elmdock_flag)[0]
+  File "/opt/genapp/rotdif/bin/preprocess_split.py", line 50, in split_data
+    iso_output = preprocess_out(iso_start, iso_end, all_txt,"exp")
+UnboundLocalError: local variable 'iso_start' referenced before assignment

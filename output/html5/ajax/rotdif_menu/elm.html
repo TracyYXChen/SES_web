@@ -1,0 +1,703 @@
+
+
+<form id="elm" >
+<span id="elm_input_area"></span>
+<script>
+
+ga.tmp.bgi = ga.color.data.body.background;
+
+
+
+if ( !0 ) {
+    $("body").css( { "background": ga.tmp.bgi + " no-repeat center center fixed", "-webkit-background-size" : "cover", "-moz-background-size" : "cover", "-o-background-size" : "cover" , "background-size": "cover"} );
+}
+
+input_eval = "";
+input_html = "<table>";
+input_repeats = "";
+input_trees = [];
+skipped_row = 0;
+elm_done_eval = "";
+_jmol_info = {};
+// jmol = "jmol";
+ga.pull.clearPull();
+ga.specproj.clear();
+$('#elm').on("keyup keypress", function(e) { var code = e.keyCode || e.which;  if (code  == 13) { e.preventDefault(); return false; }});
+
+this_html = '<tr><td><hr></td></tr><tr><td><label id="ELM_label_label" class="header4 ">Diffusion Tensor Prediction (ELM)</label>' + 
+'</td>' +
+'<td><div id="ELM_label"></div>' +
+'</td></tr><tr><td><hr></td></tr>';
+this_eval = '';
+
+
+
+
+
+input_html += this_html;
+input_eval += this_eval;
+this_html = '<tr><td><label for="run_name">run name </label></td><td><input type="text" name="run_name" id="run_name" required class="help_link"><span class="help">Enter a name for this task</span><span id="run_name_msg" class="warning field_msg" > </span></td></tr>';
+this_eval = 
+
+
+
+
+'ga.value.registerid("elm","run_name","run name","text");'
++ '$( "#run_name" ).blur( function() { ga.valid.checkText( "#run_name" ); });'
++ 
+'ga.value.setLastValue( "elm", "#run_name" );$( "#run_name" ).keypress( function() { $( "#run_name_msg" ).html( "" ); });';
+if ( skipped_row == 1 ){ this_html = this_html.replace(/^<tr>/, "" ); skipped_row=0;};
+
+
+
+
+
+
+input_html += this_html;
+input_eval += this_eval;
+this_html = '<tr><td><hr></td></tr><tr><td><label id="data_label_label" class=" ">DATA</label>' + 
+'</td>' +
+'<td><div id="data_label"></div>' +
+'</td></tr><tr><td><hr></td></tr>';
+this_eval = '';
+
+
+
+
+
+input_html += this_html;
+input_eval += this_eval;
+this_html = '<tr><td><label for="pdb_location" >PDB Coordinate File </label></td>' +
+'<td><input type="file" name="pdb_location" id="pdb_location" data-add="pdb_location_altval" accept=".pdb" class="help_link"><span class="help">Upload PDB file</span>' +
+' or <button id="pdb_location_button" name="pdb_location_button" data-type="lrfile" class="help_link"><span class="buttontext">Browse server</span></button>' +
+'<span class="help">Upload PDB file</span>' +
+' <span id="pdb_location_altval"></span>' +
+'<span id="pdb_location_msg" class="warning field_msg" > </span></td><input type="hidden" name="_selaltval_pdb_location" value="pdb_location_altval"</input></tr>';
+
+this_eval = 'ga.value.setLastValue( "elm", "#pdb_location" );' +
+'ga.altfile("elm","pdb_location","pdb_location_altval");' +
+
+'$( "#pdb_location" ).change( function(){$("#pdb_location_altval").html( "<i>Local</i>: " + $("#pdb_location").val().replace(/^C:.fakepath./,""));$("#pdb_location_msg").html("");});' +
+'ga.altfile.button("elm","pdb_location","PDB Coordinate File","rfile",function(v){ga.altfile.button.lrfile(v,"elm","pdb_location");},"lrfile");' +
+'$("#pdb_location_button").on("click",function(){return ga.altfile.button.call("elm","pdb_location");});' +
+
+'';
+
+// var s = $(v).jstree("get_selected", true),r="";$.each(s,function(){r=r+$.base64.decode(this.id).substr(2)+" "});$("#pdb_location_altval").html( r.length ? "<i>Server</i>: " + r : "");r.length?$("#pdb_location").val(""):""});' +
+
+if ( skipped_row == 1 ){ this_html = this_html.replace(/^<tr>/, "" ); skipped_row=0;};
+
+
+
+
+
+input_html += this_html;
+input_eval += this_eval;
+this_html = '<tr><td><label for="model">PDB File model </label></td><td><input type="text" name="model" id="model" value="1" required><span id="model_msg" class="warning field_msg" > </span></td></tr>';
+this_eval = 
+
+
+
+
+'ga.value.registerid("elm","model","PDB File model","text");'
++ '$( "#model" ).blur( function() { ga.valid.checkText( "#model" ); });'
++ 
+'ga.value.setLastValue( "elm", "#model" );$( "#model" ).keypress( function() { $( "#model_msg" ).html( "" ); });';
+if ( skipped_row == 1 ){ this_html = this_html.replace(/^<tr>/, "" ); skipped_row=0;};
+
+
+
+
+
+
+input_html += this_html;
+input_eval += this_eval;
+this_html = '<tr><td><hr></td></tr><tr><td><label id="runmenu_label_label" class=" ">RUN MENU</label>' + 
+'</td>' +
+'<td><div id="runmenu_label"></div>' +
+'</td></tr><tr><td><hr></td></tr>';
+this_eval = '';
+
+
+
+
+
+input_html += this_html;
+input_eval += this_eval;
+this_html = '<tr><td><label for="temperature">Temperature(K) </label></td><td><input type="text" name="temperature" id="temperature" value="298" required><span id="temperature_msg" class="warning field_msg" > </span></td></tr>';
+this_eval = 
+
+
+
+
+'ga.value.registerid("elm","temperature","Temperature(K)","text");'
++ '$( "#temperature" ).blur( function() { ga.valid.checkText( "#temperature" ); });'
++ 
+'ga.value.setLastValue( "elm", "#temperature" );$( "#temperature" ).keypress( function() { $( "#temperature_msg" ).html( "" ); });';
+if ( skipped_row == 1 ){ this_html = this_html.replace(/^<tr>/, "" ); skipped_row=0;};
+
+
+
+
+
+
+input_html += this_html;
+input_eval += this_eval;
+this_html = '<tr id="adv_option_tr"><td><label for="adv_option" class="highlight">check box to enable advanced model </label></td><td><input type="checkbox" name="adv_option" id="adv_option" data-repeater="checkbox"></td></tr>'
++ '<tr><td></td><td colspan="4"><table id="adv_option-repeater"></table></td></tr>'
+;
+this_eval = 
+'ga.value.setLastValue( "elm", "#adv_option" );'
+
+
+
+
+
+ + 'ga.repeat.repeater( "elm", "adv_option", "checkbox" );$( "#adv_option" ).change( function() { ga.repeat.change( "elm", "adv_option" ); } );'
+
+
+
+ input_repeats += 'ga.repeat.change( "elm", "adv_option", 1 );';
+
+if ( skipped_row == 1 ){ this_html = this_html.replace(/^<tr id="adv_option_tr">/, "" ); skipped_row=0;};
+
+
+
+
+
+input_html += this_html;
+input_eval += this_eval;
+this_html = '<tr><td><label for="hydro">Hydration layer thickness(Angstrom) </label></td><td><input type="text" name="hydro" id="hydro" value="2.2" required><span id="hydro_msg" class="warning field_msg" > </span></td></tr>';
+this_eval = 
+
+
+
+
+'ga.value.registerid("elm","hydro","Hydration layer thickness(Angstrom)","text");'
++ '$( "#hydro" ).blur( function() { ga.valid.checkText( "#hydro" ); });'
++ 
+'ga.value.setLastValue( "elm", "#hydro" );$( "#hydro" ).keypress( function() { $( "#hydro_msg" ).html( "" ); });';
+if ( skipped_row == 1 ){ this_html = this_html.replace(/^<tr>/, "" ); skipped_row=0;};
+
+
+
+this_html = ga.repeat.repeat( "elm", "hydro", this_html, this_eval );
+this_eval = 'ga.repeat.repeatOn("elm", "hydro", "adv_option" );';
+
+input_html += this_html;
+input_eval += this_eval;
+this_html = '<tr><td><label for="water">Water radius(Angstrom) </label></td><td><input type="text" name="water" id="water" value="1.4" required><span id="water_msg" class="warning field_msg" > </span></td></tr>';
+this_eval = 
+
+
+
+
+'ga.value.registerid("elm","water","Water radius(Angstrom)","text");'
++ '$( "#water" ).blur( function() { ga.valid.checkText( "#water" ); });'
++ 
+'ga.value.setLastValue( "elm", "#water" );$( "#water" ).keypress( function() { $( "#water_msg" ).html( "" ); });';
+if ( skipped_row == 1 ){ this_html = this_html.replace(/^<tr>/, "" ); skipped_row=0;};
+
+
+
+this_html = ga.repeat.repeat( "elm", "water", this_html, this_eval );
+this_eval = 'ga.repeat.repeatOn("elm", "water", "adv_option" );';
+
+input_html += this_html;
+input_eval += this_eval;
+if( skipped_row == 1 ){ input_html += "</tr>"; }
+input_html += '</table>';
+$( '#elm_input_area' ).html( input_html );
+eval( input_eval );
+</script>
+<p><button id="elm_submit" class="help_link"><span class="buttontext">Submit</span></button>
+
+<button id="elm_reset" class="help_link"><span class="buttontext">Reset to default values</span></button>
+
+
+</p>
+<span id="elm_progress"></span>
+<script>
+
+
+
+
+
+
+var elm_output_msgs = $("#elm_output_msgs");
+elm_output_msgs.text( "" );
+
+var elm_timeout_handler = "unset";
+var elm_timeout_handler_uuid;
+
+function get_results_elm( id, last_timeout, getlastmsg, getinput )
+{
+
+//             url:"ajax/get_results.php?_window=" +  window.name + "&_logon=" +$( "#_state" ).data( "_logon" ) + '&_uuid=' + id,
+    var job_status = "";
+    
+    $.getJSON( 
+             "ajax/get_results.php",
+             {
+                tagmode: "any",
+                format: "json",
+                _window : window.name,
+                _logon : $( "#_state" ).data( "_logon" ),
+                _uuid : id,
+                _getlastmsg : getlastmsg,
+                _getinput : getinput ? true : false
+             } )
+    .done( function( data, status, xhr ) {
+
+           var do_refresh = 1;
+
+           if ( do_refresh ) {
+              ga.fc.clear( $.base64.encode( "./" + $( "#_state" ).data( "_project" ) ) );
+              ga.jc.clear_leaf( id );
+           }
+
+           job_status = ga.data.update( "elm", data ).job_status;
+           if ( job_status == "complete" ||
+                job_status == "cancelled" ||
+                job_status == "failed" )
+           {
+              if ( elm_timeout_handler != "unset" )
+              {
+                  clearTimeout( elm_timeout_handler );
+                  elm_timeout_handler = "unset";
+              }
+              ga.ws.unsub( id, "elm" );
+              eval( elm_done_eval );
+           } else {
+               if ( !last_timeout || last_timeout < 2000 )
+               { 
+                  last_timeout = 2000;
+               } else {
+                  if ( last_timeout < 16000 )
+                  {
+                      last_timeout *= 2;
+                  } else {
+                      last_timeout = 16000;
+                  }
+               }
+
+               elm_timeout_handler =  setTimeout( get_results_elm, last_timeout, id, last_timeout, 0 );
+               elm_timeout_handler_uuid = id;
+           }
+          } )
+    .fail( function( xhr, status, errorThrown ) {
+
+           $( "#elm_results" ).html( "<span class=\"warning\"> Failed: " + status + " : '" + xhr.status + ":" + errorThrown + "' on URL ajax/tools/center.php </span>" );
+           $('#elm_progress').html( "" );
+           if ( elm_timeout_handler != "unset" )
+           {
+               clearTimeout( elm_timeout_handler );
+               elm_timeout_handler = "unset";
+           }
+           ga.ws.unsub( id, "elm" );
+           eval( elm_done_eval );
+          } );
+    return false;
+};
+
+function msg_elm ( id, data )
+{
+   ga.data.update( "elm", data, get_results_elm, id );
+};
+
+$( "#elm_submit" ).click( function( e ) {
+   e.preventDefault();
+   e.returnValue = false;
+   $( "#elm" ).find( ".toclear" ).remove();   
+   if ( elm_timeout_handler != "unset" ) {
+       
+       clearTimeout( elm_timeout_handler );
+       if ( elm_timeout_handler_uuid ) {
+           ga.ws.unsub( elm_timeout_handler_uuid, "elm" );
+       }
+       elm_timeout_handler = "unset";
+   }
+   ga.value.resetDefaultValues( "elm_output", true );
+
+   
+   return ga.xsede.select( "__resource__", do_elm_submit, $(this) );
+   //   return do_elm_submit( $(this) );
+});
+
+function do_elm_submit( $form, airavataresource, skipcached ) {
+
+   var $ok = 0;
+   
+   
+
+   ga.event( "", "elm", "submit clicked" );
+
+   
+
+
+
+
+
+   if ( !ga.valid.checksubmit( "elm" ) ) {
+       ga.valid.showerrormessage( "elm" );
+       return false;
+   }
+
+   if ( ga.specproj.data.length ) {
+      if ( $( "#_state" ).data( '_logon' ) &&
+           $( "#_state" ).data( '_logon' ).length ) {
+          $( "#sel_project" ).html( ga.specproj.gname() );
+          $( "#_state" ).data( '_project', ga.specproj.gname() );
+          
+      }
+   }  
+
+//   if ( 0 && !xsedeproject) {
+//      
+//      switch( project = ga.xsede.select( "__resource__", do_elm_submit, $form ) ) {
+//      case "deferred" : return false; break;
+//      case "abort"    : return false; break;
+//      case "notused"  : break;
+//      }
+      
+      
+
+   if ( !airavataresource ) {
+      
+      switch( airavataresource = ga.airavata.select( "__resource__", "__airavataselect__", do_elm_submit, $form ) ) {
+      case "deferred" : return false; break;
+      case "abort"    : return false; break;
+      case "notused"  : break;
+      }
+      
+   }
+   
+
+   $.ajax({
+       type: 'get'
+       ,url: "ajax/sys_config/sys_joblocked.php?_window=" +  window.name + "&_logon=" + $( "#_state" ).data( "_logon" )
+ + "&_submitpolicy=login"
+
+
+       ,context: $form
+       ,success: function( data ) { // your success handler
+
+          if ( !$ok )
+          {
+          switch ( data )
+          {
+             case "1" :
+             {
+                 ga.msg.box( { icon:"warning.png", text:"This project directory is currently locked by another project.\nYou can wait until it completes, change the project in user configuration or clear the lock in the job manager." } );
+                 return;
+             } break;
+             case "2" :
+             {
+                 ga.msg.box( { icon:"warning.png", text:"You must be logged in to submit this module." } );
+                 return;
+             } break;
+             case "0" :
+             {
+
+                 $ok = 1;
+             } break;
+             default : 
+             {
+                if ( /^Your job/.test( data ) ) {
+                   ga.msg.box( { icon : "warning.png",
+                                 text : data } );
+                   return;
+                }
+                
+                if ( skipcached ) {
+                    $ok = 1;
+                } else {
+                    return ga.cache.msg( "", "", get_results_elm, do_elm_submit, data, $form, airavataresource );
+                }
+             } break;
+          }
+          }
+       }
+       ,error: function() { // your error handler
+          ga.msg.box( { icon:"toast.png", text:"Checking the project lock failed. This is possibly a server or network issue" } );
+       }
+       ,complete: function() { 
+          this.off('submit');
+          if ( $ok )
+          {
+
+
+              $( "#elm_results" ).text( "" );
+
+              ga.value.saveLastValues( "elm" );
+              ga.value.resetDefaultValues( "elm_output", true );
+
+              var found_errors = 0;
+              $("#elm").find("input").each(function(i){
+                 if ( $(this).attr( 'required' ) && $(this).val().length == 0 )
+                 {
+                    var tag =  "#elm " + "#" + $(this).attr('id') + "_msg";
+
+                    $( tag ).html( "missing required field" );
+                    found_errors = 1;
+                 }
+              });
+              if ( found_errors ) {
+                  return;
+              }
+
+    var tree_html = "";
+    $( "._hidden_tree_selects" ).remove( );
+    $.each( input_trees, function( k, v ){
+
+        $( 'input[type=hidden][name="' + v + '[]"]' ).remove();
+        var selectedElms = $('#' + v).jstree("get_selected", true);
+        var i = 0;
+        $.each(selectedElms, function() {
+           tree_html += '<input type="hidden" name="' + v + '[]" value="' + this.id + '" class="_hidden_tree_selects"/>';
+
+        });
+    });
+
+    $( this ).append( tree_html );
+
+
+    var logonadd = $("<input>").attr("type", "hidden").attr("name", "_logon").val( $( "#_state" ).data( "_logon" ) );$( this ).append($(logonadd));
+    var projectadd = $("<input>").attr("type", "hidden").attr("name", "_project").val( $( "#_state" ).data( "_project" ) );$( this ).append($(projectadd));
+    var windowadd = $("<input>").attr("type", "hidden").attr("name", "_window").val( window.name );$( this ).append($(windowadd));
+    
+    var vuuid = uuid.v1();
+
+
+
+
+
+
+
+    if ( airavataresource != "notused" ) {
+        $( this ).append( $("<input>").attr("type", "hidden").attr("name", "_airavataresource").val( airavataresource ) );
+    }
+
+    var uuidadd = $("<input>").attr("type", "hidden").attr("name", "_uuid").val( vuuid );$( this ).append($(uuidadd));
+//    ga.altfile.add( "elm" );
+    ga.valuen.addhtml( "elm" );
+
+    ga.extrahidden( "elm" );
+
+    ga.ws.sub( vuuid, msg_elm, "elm" );
+
+    var formData = new FormData($('#elm')[0]);
+    
+     
+     
+    
+     
+     
+
+     
+     if ( ga.multistage["elm"] )
+      {
+        ga.value.modifyformdata(ga.multistage, "elm", formData, ga.stages["elm"], ga.currentstage);
+      }
+
+
+
+    $('#elm_progress').html( "Uploading:<progress></progress>" );
+
+    var job_status = "";
+
+    ga.event( "", "elm", "submit: passed submit checks, submitting" );
+
+
+    // var url - coditional based on module's .json setting, and use it in ajax call
+
+    $.ajax( {
+             dataType: "json",
+             cache:false,
+//             timeout:3000,  // for testing
+             type:"POST",
+             url:"ajax/rotdif_menu/elm.php",
+             data: formData,
+             xhr: function() {  // Custom XMLHttpRequest
+                 var myXhr = $.ajaxSettings.xhr();
+                 if(myXhr.upload){ // Check if upload property exists
+                     myXhr.upload.addEventListener('progress',
+                         function(e) {
+                         if(e.lengthComputable){
+                           $('#elm_progress progress').attr({value:e.loaded,max:e.total});
+                         } }
+//                     progressHandlingFunction
+                    , false);
+                 }
+                 return myXhr;
+             },
+             contentType: false,
+             processData: false
+            } )
+    .done( function( data, status, xhr ) {
+    
+    if ( ga.multistage["elm"] )
+      {
+        ga.value.showfields(ga.multistage, "elm", ga.stages["elm"], ga.currentstage);
+    	delete ga.stages["elm"][ga.currentstage]; 
+    	++ga.currentstage;	
+      }	
+
+
+
+
+// refresh cache for this project
+           $('#elm_progress').html( "" );
+   
+           var do_refresh = 1;
+
+           if ( do_refresh ) {
+              ga.fc.clear( $.base64.encode( "./" + $( "#_state" ).data( "_project" ) ) );
+              ga.jc.clear_leaf( vuuid );
+           }
+           
+// loop through data pairs
+           elm_output_msgs.text( "" );
+           job_status = ga.data.update( "elm", data ).job_status;
+
+           if ( job_status == "complete" ||
+                job_status == "cancelled" ||
+                job_status == "failed" )
+           {
+               if ( elm_timeout_handler != "unset" )
+               {
+                   clearTimeout( elm_timeout_handler );
+                   elm_timeout_handler = "unset";
+               }
+               ga.ws.unsub( vuuid, "elm" );
+               eval( elm_done_eval );
+           } else {
+               elm_timeout_handler = setTimeout( get_results_elm, 2000, vuuid, 2000, 0 );
+               elm_timeout_handler_uuid = vuuid;
+
+           }
+          } )
+    .fail( function( xhr, status, errorThrown ) {
+
+
+
+
+           $( "#elm_results" ).html( "<span class=\"warning\"> Failed: " + status + " : '" + xhr.status + ":" + errorThrown + "' on URL ajax/rotdif_menu/elm.php </span>" );
+           $('#elm_progress').html( "" );
+           if ( elm_timeout_handler != "unset" )
+           {
+               clearTimeout( elm_timeout_handler );
+               elm_timeout_handler = "unset";
+           }
+           ga.ws.unsub( vuuid, "elm" );
+           eval( elm_done_eval );
+          } );
+          } else {
+
+          }
+       }
+   });
+} 
+
+elm_reset = function() {
+    
+    if ( !10 ) {
+        // required to reset scrollheight ... 
+        document.getElementById( "elm_output_textarea" ).style.height = 0;
+    }
+
+    if ( elm_timeout_handler != "unset" ) {
+       
+       clearTimeout( elm_timeout_handler );
+       if ( elm_timeout_handler_uuid ) {
+           ga.ws.unsub( elm_timeout_handler_uuid, "elm" );
+       }
+       elm_timeout_handler = "unset";
+    }
+    ga.event( "", "elm", "reset clicked" );
+    ga.valid.clearerrorcounter( "elm" );
+
+   if ( ga.multistage["elm"] )
+     {
+       ga.currentstage = 0;
+       ga.value.sethiddenfields(ga.multistage,"elm");
+       ga.stages["elm"].length = 0;
+       ga.stages["elm"] = ga.stagesdefault["elm"].slice();
+       console.log("Reset: " + ga.stages["elm"]);
+     }
+
+    //    ga.value.resetDefaultValues( "elm" );
+    ga.valuen.restore.dflt(  "elm" );
+    ga.value.resetDefaultValues( "elm_output", true );
+    
+    eval( input_repeats );
+    return false;
+}
+
+$( "#elm_reset" ).click( function() {
+   return elm_reset();
+});
+
+ga.hhelp.set();
+
+
+eval( input_repeats );
+ga.pull.doPull();
+</script>
+</form>
+<div id="elm_results"></div>
+<script>
+ga.tmp.html = "<hr>";
+
+$("#elm").append( ga.tmp.html );
+</script>
+
+<form id="elm_output">
+<div id="elm_output_msgs" class="warning" type="msgs"></div>
+<script>
+ga.value.setLastValueOutput( "elm_output" );
+ga.value.extra_resets.clear();
+</script>
+
+<span id="elm_output_airavata"></span>
+
+<table>
+<tr>
+<td colspan="4" style="vertical-align:top"><label hidden id="elm_output_textarea_label" for="elm_output_textarea" class="header3 ">Report:</label>
+<textarea readonly hidden id="elm_output_textarea" rows="10" cols="110" class="help_link"></textarea>
+<span class="help">general textarea help</span>
+</td>
+</tr>
+<tr><td><label for="progress_output">Progress:  </label></td><td><progress name="progress_output" id="progress_output" value="0" max="1"></progress></td></tr>
+<script>
+ga.value.setLastValue( "elm_output", "#progress_output" );
+</script>
+<tr><td><label for="progress_text">Calculation Report:  </label></td><td><textarea name="progress_text" id="progress_text" cols="40" readonly></textarea>
+</td></tr>
+<script>
+
+ga.value.setLastValue( "elm_output", "#progress_text" );
+</script>
+<tr><td><label for="elm_out">Download ELM prediction &nbsp </label>
+</td>
+<td><div id="elm_out" type="filelinkm" readonly><span id="elm_out_filelink"></span></div>
+</td></tr>
+<script>
+ga.value.setLastValue( "elm_output", "#elm_out" );
+ga.value.extra_resets( "elm_out" );
+</script>
+<tr><td><label for="elm_params">Download ELM parameters &nbsp </label>
+</td>
+<td><div id="elm_params" type="filelinkm" readonly><span id="elm_params_filelink"></span></div>
+</td></tr>
+<script>
+ga.value.setLastValue( "elm_output", "#elm_params" );
+ga.value.extra_resets( "elm_params" );
+</script>
+</table>
+</form>
+
+
+
+
+<script>loaded_elm = 1; </script>

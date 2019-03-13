@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/opt/genapp/rotdif/bin/main_rotdif.py", line 54, in <module>
+    output_res, base_dir, dyna_flag, elm_flag, elmdock_flag = rotdif(to_dock)
+TypeError: rotdif() takes exactly 2 arguments (1 given)

@@ -1,0 +1,516 @@
+
+
+<form id="plotly" >
+<span id="plotly_input_area"></span>
+<script>
+
+ga.tmp.bgi = ga.color.data.body.background;
+
+
+
+if ( !0 ) {
+    $("body").css( { "background": ga.tmp.bgi + " no-repeat center center fixed", "-webkit-background-size" : "cover", "-moz-background-size" : "cover", "-o-background-size" : "cover" , "background-size": "cover"} );
+}
+
+input_eval = "";
+input_html = "<table>";
+input_repeats = "";
+input_trees = [];
+skipped_row = 0;
+plotly_done_eval = "";
+_jmol_info = {};
+// jmol = "jmol";
+ga.pull.clearPull();
+ga.specproj.clear();
+$('#plotly').on("keyup keypress", function(e) { var code = e.keyCode || e.which;  if (code  == 13) { e.preventDefault(); return false; }});
+
+if( skipped_row == 1 ){ input_html += "</tr>"; }
+input_html += '</table>';
+$( '#plotly_input_area' ).html( input_html );
+eval( input_eval );
+</script>
+<p><button id="plotly_submit" class="help_link"><span class="buttontext">Submit</span></button>
+<span class="help">this is help for the submit button</span>
+<button id="plotly_reset" class="help_link"><span class="buttontext">Reset to default values</span></button>
+<span class="help">this is help for the reset to default values button</span>
+
+</p>
+<span id="plotly_progress"></span>
+<script>
+
+
+
+
+
+
+var plotly_output_msgs = $("#plotly_output_msgs");
+plotly_output_msgs.text( "" );
+
+var plotly_timeout_handler = "unset";
+var plotly_timeout_handler_uuid;
+
+function get_results_plotly( id, last_timeout, getlastmsg, getinput )
+{
+
+//             url:"ajax/get_results.php?_window=" +  window.name + "&_logon=" +$( "#_state" ).data( "_logon" ) + '&_uuid=' + id,
+    var job_status = "";
+    
+    $.getJSON( 
+             "ajax/get_results.php",
+             {
+                tagmode: "any",
+                format: "json",
+                _window : window.name,
+                _logon : $( "#_state" ).data( "_logon" ),
+                _uuid : id,
+                _getlastmsg : getlastmsg,
+                _getinput : getinput ? true : false
+             } )
+    .done( function( data, status, xhr ) {
+
+           var do_refresh = 1;
+
+           if ( do_refresh ) {
+              ga.fc.clear( $.base64.encode( "./" + $( "#_state" ).data( "_project" ) ) );
+              ga.jc.clear_leaf( id );
+           }
+
+           job_status = ga.data.update( "plotly", data ).job_status;
+           if ( job_status == "complete" ||
+                job_status == "cancelled" ||
+                job_status == "failed" )
+           {
+              if ( plotly_timeout_handler != "unset" )
+              {
+                  clearTimeout( plotly_timeout_handler );
+                  plotly_timeout_handler = "unset";
+              }
+              ga.ws.unsub( id, "plotly" );
+              eval( plotly_done_eval );
+           } else {
+               if ( !last_timeout || last_timeout < 2000 )
+               { 
+                  last_timeout = 2000;
+               } else {
+                  if ( last_timeout < 16000 )
+                  {
+                      last_timeout *= 2;
+                  } else {
+                      last_timeout = 16000;
+                  }
+               }
+
+               plotly_timeout_handler =  setTimeout( get_results_plotly, last_timeout, id, last_timeout, 0 );
+               plotly_timeout_handler_uuid = id;
+           }
+          } )
+    .fail( function( xhr, status, errorThrown ) {
+
+           $( "#plotly_results" ).html( "<span class=\"warning\"> Failed: " + status + " : '" + xhr.status + ":" + errorThrown + "' on URL ajax/tools/center.php </span>" );
+           $('#plotly_progress').html( "" );
+           if ( plotly_timeout_handler != "unset" )
+           {
+               clearTimeout( plotly_timeout_handler );
+               plotly_timeout_handler = "unset";
+           }
+           ga.ws.unsub( id, "plotly" );
+           eval( plotly_done_eval );
+          } );
+    return false;
+};
+
+function msg_plotly ( id, data )
+{
+   ga.data.update( "plotly", data, get_results_plotly, id );
+};
+
+$( "#plotly_submit" ).click( function( e ) {
+   e.preventDefault();
+   e.returnValue = false;
+   $( "#plotly" ).find( ".toclear" ).remove();   
+   if ( plotly_timeout_handler != "unset" ) {
+       
+       clearTimeout( plotly_timeout_handler );
+       if ( plotly_timeout_handler_uuid ) {
+           ga.ws.unsub( plotly_timeout_handler_uuid, "plotly" );
+       }
+       plotly_timeout_handler = "unset";
+   }
+   ga.value.resetDefaultValues( "plotly_output", true );
+
+   
+   return ga.xsede.select( "__resource__", do_plotly_submit, $(this) );
+   //   return do_plotly_submit( $(this) );
+});
+
+function do_plotly_submit( $form, airavataresource, skipcached ) {
+
+   var $ok = 0;
+   
+   
+
+   ga.event( "", "plotly", "submit clicked" );
+
+   
+
+
+
+
+
+   if ( !ga.valid.checksubmit( "plotly" ) ) {
+       ga.valid.showerrormessage( "plotly" );
+       return false;
+   }
+
+   if ( ga.specproj.data.length ) {
+      if ( $( "#_state" ).data( '_logon' ) &&
+           $( "#_state" ).data( '_logon' ).length ) {
+          $( "#sel_project" ).html( ga.specproj.gname() );
+          $( "#_state" ).data( '_project', ga.specproj.gname() );
+          
+      }
+   }  
+
+//   if ( 0 && !xsedeproject) {
+//      
+//      switch( project = ga.xsede.select( "__resource__", do_plotly_submit, $form ) ) {
+//      case "deferred" : return false; break;
+//      case "abort"    : return false; break;
+//      case "notused"  : break;
+//      }
+      
+      
+
+   if ( !airavataresource ) {
+      
+      switch( airavataresource = ga.airavata.select( "__resource__", "__airavataselect__", do_plotly_submit, $form ) ) {
+      case "deferred" : return false; break;
+      case "abort"    : return false; break;
+      case "notused"  : break;
+      }
+      
+   }
+   
+
+   $.ajax({
+       type: 'get'
+       ,url: "ajax/sys_config/sys_joblocked.php?_window=" +  window.name + "&_logon=" + $( "#_state" ).data( "_logon" )
+
+
+
+       ,context: $form
+       ,success: function( data ) { // your success handler
+
+          if ( !$ok )
+          {
+          switch ( data )
+          {
+             case "1" :
+             {
+                 ga.msg.box( { icon:"warning.png", text:"This project directory is currently locked by another project.\nYou can wait until it completes, change the project in user configuration or clear the lock in the job manager." } );
+                 return;
+             } break;
+             case "2" :
+             {
+                 ga.msg.box( { icon:"warning.png", text:"You must be logged in to submit this module." } );
+                 return;
+             } break;
+             case "0" :
+             {
+
+                 $ok = 1;
+             } break;
+             default : 
+             {
+                if ( /^Your job/.test( data ) ) {
+                   ga.msg.box( { icon : "warning.png",
+                                 text : data } );
+                   return;
+                }
+                
+                if ( skipcached ) {
+                    $ok = 1;
+                } else {
+                    return ga.cache.msg( "", "", get_results_plotly, do_plotly_submit, data, $form, airavataresource );
+                }
+             } break;
+          }
+          }
+       }
+       ,error: function() { // your error handler
+          ga.msg.box( { icon:"toast.png", text:"Checking the project lock failed. This is possibly a server or network issue" } );
+       }
+       ,complete: function() { 
+          this.off('submit');
+          if ( $ok )
+          {
+
+
+              $( "#plotly_results" ).text( "" );
+
+              ga.value.saveLastValues( "plotly" );
+              ga.value.resetDefaultValues( "plotly_output", true );
+
+              var found_errors = 0;
+              $("#plotly").find("input").each(function(i){
+                 if ( $(this).attr( 'required' ) && $(this).val().length == 0 )
+                 {
+                    var tag =  "#plotly " + "#" + $(this).attr('id') + "_msg";
+
+                    $( tag ).html( "missing required field" );
+                    found_errors = 1;
+                 }
+              });
+              if ( found_errors ) {
+                  return;
+              }
+
+    var tree_html = "";
+    $( "._hidden_tree_selects" ).remove( );
+    $.each( input_trees, function( k, v ){
+
+        $( 'input[type=hidden][name="' + v + '[]"]' ).remove();
+        var selectedElms = $('#' + v).jstree("get_selected", true);
+        var i = 0;
+        $.each(selectedElms, function() {
+           tree_html += '<input type="hidden" name="' + v + '[]" value="' + this.id + '" class="_hidden_tree_selects"/>';
+
+        });
+    });
+
+    $( this ).append( tree_html );
+
+
+    var logonadd = $("<input>").attr("type", "hidden").attr("name", "_logon").val( $( "#_state" ).data( "_logon" ) );$( this ).append($(logonadd));
+    var projectadd = $("<input>").attr("type", "hidden").attr("name", "_project").val( $( "#_state" ).data( "_project" ) );$( this ).append($(projectadd));
+    var windowadd = $("<input>").attr("type", "hidden").attr("name", "_window").val( window.name );$( this ).append($(windowadd));
+    
+    var vuuid = uuid.v1();
+
+
+
+
+
+
+
+    if ( airavataresource != "notused" ) {
+        $( this ).append( $("<input>").attr("type", "hidden").attr("name", "_airavataresource").val( airavataresource ) );
+    }
+
+    var uuidadd = $("<input>").attr("type", "hidden").attr("name", "_uuid").val( vuuid );$( this ).append($(uuidadd));
+//    ga.altfile.add( "plotly" );
+    ga.valuen.addhtml( "plotly" );
+
+    ga.extrahidden( "plotly" );
+
+    ga.ws.sub( vuuid, msg_plotly, "plotly" );
+
+    var formData = new FormData($('#plotly')[0]);
+    
+     
+     
+    
+     
+     
+
+     
+     if ( ga.multistage["plotly"] )
+      {
+        ga.value.modifyformdata(ga.multistage, "plotly", formData, ga.stages["plotly"], ga.currentstage);
+      }
+
+
+
+    $('#plotly_progress').html( "Uploading:<progress></progress>" );
+
+    var job_status = "";
+
+    ga.event( "", "plotly", "submit: passed submit checks, submitting" );
+
+
+    // var url - coditional based on module's .json setting, and use it in ajax call
+
+    $.ajax( {
+             dataType: "json",
+             cache:false,
+//             timeout:3000,  // for testing
+             type:"POST",
+             url:"ajax/plotly_menu/plotly.php",
+             data: formData,
+             xhr: function() {  // Custom XMLHttpRequest
+                 var myXhr = $.ajaxSettings.xhr();
+                 if(myXhr.upload){ // Check if upload property exists
+                     myXhr.upload.addEventListener('progress',
+                         function(e) {
+                         if(e.lengthComputable){
+                           $('#plotly_progress progress').attr({value:e.loaded,max:e.total});
+                         } }
+//                     progressHandlingFunction
+                    , false);
+                 }
+                 return myXhr;
+             },
+             contentType: false,
+             processData: false
+            } )
+    .done( function( data, status, xhr ) {
+    
+    if ( ga.multistage["plotly"] )
+      {
+        ga.value.showfields(ga.multistage, "plotly", ga.stages["plotly"], ga.currentstage);
+    	delete ga.stages["plotly"][ga.currentstage]; 
+    	++ga.currentstage;	
+      }	
+
+
+
+
+// refresh cache for this project
+           $('#plotly_progress').html( "" );
+   
+           var do_refresh = 1;
+
+           if ( do_refresh ) {
+              ga.fc.clear( $.base64.encode( "./" + $( "#_state" ).data( "_project" ) ) );
+              ga.jc.clear_leaf( vuuid );
+           }
+           
+// loop through data pairs
+           plotly_output_msgs.text( "" );
+           job_status = ga.data.update( "plotly", data ).job_status;
+
+           if ( job_status == "complete" ||
+                job_status == "cancelled" ||
+                job_status == "failed" )
+           {
+               if ( plotly_timeout_handler != "unset" )
+               {
+                   clearTimeout( plotly_timeout_handler );
+                   plotly_timeout_handler = "unset";
+               }
+               ga.ws.unsub( vuuid, "plotly" );
+               eval( plotly_done_eval );
+           } else {
+               plotly_timeout_handler = setTimeout( get_results_plotly, 2000, vuuid, 2000, 0 );
+               plotly_timeout_handler_uuid = vuuid;
+
+           }
+          } )
+    .fail( function( xhr, status, errorThrown ) {
+
+
+
+
+           $( "#plotly_results" ).html( "<span class=\"warning\"> Failed: " + status + " : '" + xhr.status + ":" + errorThrown + "' on URL ajax/plotly_menu/plotly.php </span>" );
+           $('#plotly_progress').html( "" );
+           if ( plotly_timeout_handler != "unset" )
+           {
+               clearTimeout( plotly_timeout_handler );
+               plotly_timeout_handler = "unset";
+           }
+           ga.ws.unsub( vuuid, "plotly" );
+           eval( plotly_done_eval );
+          } );
+          } else {
+
+          }
+       }
+   });
+} 
+
+plotly_reset = function() {
+    
+    if ( !10 ) {
+        // required to reset scrollheight ... 
+        document.getElementById( "plotly_output_textarea" ).style.height = 0;
+    }
+
+    if ( plotly_timeout_handler != "unset" ) {
+       
+       clearTimeout( plotly_timeout_handler );
+       if ( plotly_timeout_handler_uuid ) {
+           ga.ws.unsub( plotly_timeout_handler_uuid, "plotly" );
+       }
+       plotly_timeout_handler = "unset";
+    }
+    ga.event( "", "plotly", "reset clicked" );
+    ga.valid.clearerrorcounter( "plotly" );
+
+   if ( ga.multistage["plotly"] )
+     {
+       ga.currentstage = 0;
+       ga.value.sethiddenfields(ga.multistage,"plotly");
+       ga.stages["plotly"].length = 0;
+       ga.stages["plotly"] = ga.stagesdefault["plotly"].slice();
+       console.log("Reset: " + ga.stages["plotly"]);
+     }
+
+    //    ga.value.resetDefaultValues( "plotly" );
+    ga.valuen.restore.dflt(  "plotly" );
+    ga.value.resetDefaultValues( "plotly_output", true );
+    
+    eval( input_repeats );
+    return false;
+}
+
+$( "#plotly_reset" ).click( function() {
+   return plotly_reset();
+});
+
+ga.hhelp.set();
+
+
+eval( input_repeats );
+ga.pull.doPull();
+</script>
+</form>
+<div id="plotly_results"></div>
+<script>
+ga.tmp.html = "<hr>";
+
+$("#plotly").append( ga.tmp.html );
+</script>
+
+<form id="plotly_output">
+<div id="plotly_output_msgs" class="warning" type="msgs"></div>
+<script>
+ga.value.setLastValueOutput( "plotly_output" );
+ga.value.extra_resets.clear();
+</script>
+
+<span id="plotly_output_airavata"></span>
+
+<table>
+<tr>
+<td colspan="4" style="vertical-align:top"><label hidden id="plotly_output_textarea_label" for="plotly_output_textarea" class="header3 ">Report:</label>
+<textarea readonly hidden id="plotly_output_textarea" rows="10" cols="110" class="help_link"></textarea>
+<span class="help">general textarea help</span>
+</td>
+</tr>
+</table>
+
+
+<p>
+
+<label for="subplot">Example subplot</label></tr><tr>
+
+</p>
+
+<div name="subplot" id="subplot" type="plotly"></div>
+
+
+<script>
+ga.value.setLastValue( "plotly_output", "#subplot" );
+ga.value.extra_resets( "subplot" );
+</script>
+
+
+ 
+
+<table></table>
+</form>
+
+
+
+
+<script>loaded_plotly = 1; </script>

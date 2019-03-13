@@ -1,0 +1,41 @@
+Options:
+temp = 298.0
+robust = false
+relax =
+elm = true
+axes = false
+axesl = 5.0
+pdb = cUb2_AB_test.pdb
+out = out
+help = false
+nostat = false
+nodynamics = false
+nogui = true
+model = 1
+wr = 1.4
+dock = false
+sr = 2.2
+
+Parsing pdb file....done.
+Predicting tensor...done.
+
+Dx = 1.47243 *(10^7) 1/s
+Dy = 1.48099 *(10^7) 1/s
+Dz = 2.09958 *(10^7) 1/s
+alpha = 120.32 deg
+beta = 123.19 deg
+gamma = 131.25 deg
+TAUc = 9.89512 ns
+anisotropy = 1.42180
+rhombicity = 0.02062
+
+====Diffusion Tensor====
+    [ 1.58550 -0.18928  0.14700]
+D = [-0.18928  1.80375 -0.24430] *(10^7) 1/s
+    [ 0.14700 -0.24430  1.66375]
+
+====Diffusion Tensor Sorted Eigendecomposition====
+    [ -0.8312    0.3614   -0.4225][  1.4724    0.0000    0.0000][ -0.8312   -0.0680    0.5518]
+D = [ -0.0680    0.6881    0.7224][  0.0000    1.4810    0.0000][  0.3614    0.6881    0.6292] *(10^7) 1/s
+    [  0.5518    0.6292   -0.5474][  0.0000    0.0000    2.0996][ -0.4225    0.7224   -0.5474]
+

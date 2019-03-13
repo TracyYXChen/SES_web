@@ -1,0 +1,40 @@
+<style>
+#panel_ses_menu {
+    position: relative;
+    display: block;  
+}
+</style>
+<p>
+<center>
+
+    <button id="ses_menu_ses_all" class="help_link">Sparse Ensemble Selection(SES)</button>
+<script>
+    $( "#ses_menu_ses_all" ).click(function() {
+        var d=$( "#tab_docs > a" );
+        if ( d.length ) { d.attr( "href", "__docsbaseurl__/ses_menu/ses_all/ses_all.html" ); };
+    
+        if ( ga.valuen.lastload && $( "#" + ga.valuen.lastload ).is( ":visible" ) ) { ga.valuen.save( ga.valuen.lastload ); }
+
+        if ( ga.valuen.lastload != "ses_all" || !$( "#" + ga.valuen.lastload ).is( ":visible" ) ) {
+            ga.loader.show();
+            $( "#panel_ses_menu" ).load( "ajax/ses_menu/ses_all.html", function() { ga.valuen.save( "ses_all", true ); ga.valuen.restore( "ses_all" ); ga.valuen.lastload = "ses_all"; ga.loader.hide(); });
+        }
+    });
+
+
+
+</script>
+</center>
+</p>
+
+<div id="panel_ses_menu">
+</div>
+
+
+<script>
+    $( "#panel_ses_menu" ).text("");
+ga.tmp.bgi = ga.color.data.body.background;
+
+
+$("body").css( { "background": ga.tmp.bgi + " no-repeat center center fixed", "-webkit-background-size" : "cover", "-moz-background-size" : "cover", "-o-background-size" : "cover" , "background-size": "cover"} );
+</script>

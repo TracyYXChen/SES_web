@@ -1,0 +1,495 @@
+Options:
+temp = 298.0
+robust = false
+relax = GB3_600_Curated_wo41.txt
+elm = false
+axes = true
+axesl = 5.0
+pdb = 1P7F.pdb
+out = out
+help = false
+nostat = true
+nodynamics = true
+nogui = true
+model = 1
+wr = 1.4
+dock = false
+sr = 2.2
+
+Extracting experimental data....done.
+Parsing pdb file....done.
+TEST: Computing results....
+ Percent 95.0%
+done.
+=====ROBUST REGRESSION: Off=====
+
+=====ORIENTATION SAMPLING=====
+Number of rigid bonds = 44
+Sampling Param Xi = 0.156 Vectors are uniformly distributed.
+Sampling Tensor Components = [0.393, -0.169, -0.225].
+
+=====ISOTROPIC MODEL=====
+Diso = 5.01 +/- NaN *(10^7) 1/s
+TAUc = 3.33 +/- NaN ns
+Q = 0.720  chi^2 = 373.294  chi^2/df = 8.681 (Rigid Only)
+Akaike Information Criterion (AIC): Value = 375.294
+
+=====AXIALLY-SYMMETRIC MODEL (PROLATE)=====
+D_perp = 4.45 +/- NaN *(10^7) 1/s
+D_parallel = 6.06 +/- NaN *(10^7) 1/s
+alpha = 97 +/- NaN  deg
+beta = 63 +/- NaN  deg
+Orientational Uncertainty = NaN deg
+TAUc = 3.34 +/- NaN ns
+anisotropy = 1.36 +/- NaN
+Q = 0.240  R = 0.942  chi^2 = 39.541  chi^2/df = 0.989 (Rigid Only)
+Inertia Tensor Unique Axis Difference = 8 deg
+ELM Predicted Tensor Unique Axis Difference = 7 deg
+F-test (0.05): Axially-Symmetric model better than Isotropic? true, P = 1.54e-19, F = 112.54
+Akaike Information Criterion (AIC): Value = 47.541,
+   =>Axially-Symmetric model better than Isotropic? true
+
+==Axially-Symmetric Diffusion Tensor==
+    [  4.471  -0.154  -0.079]     [    NaN     NaN     NaN]
+D = [ -0.154   5.711   0.643] +/- [    NaN     NaN     NaN] *(10^7) 1/s
+    [ -0.079   0.643   4.780]     [    NaN     NaN     NaN]
+
+==Axially-Symmetric Diffusion Tensor Sorted Eigendecomposition==
+    [  -0.993     0.055    -0.109][   4.452     0.000     0.000][  -0.993    -0.122    -0.000]
+D = [  -0.122    -0.449     0.885][   0.000     4.452     0.000][   0.055    -0.449     0.892] *(10^7) 1/s
+    [  -0.000     0.892     0.452][   0.000     0.000     6.058][  -0.109     0.885     0.452]
+
+=====FULLY ANISOTROPIC MODEL=====
+Dx = 4.45 +/- NaN *(10^7) 1/s
+Dy = 4.45 +/- NaN *(10^7) 1/s
+Dz = 6.06 +/- NaN *(10^7) 1/s
+alpha = 97 +/- NaN  deg
+beta = 63 +/- NaN  deg
+gamma = 90 +/- NaN deg
+Orientational Uncertainty = NaN deg
+TAUc = 3.34 +/- NaN ns
+anisotropy = 1.36 +/- NaN
+rhombicity = 0.00 +/- NaN
+Q = 0.240  R = 0.942  chi^2 = 39.541  chi^2/df = 1.041 (Rigid Only)
+Axially-Symmetric Tensor Primary Axis Difference = NaN deg
+Inertia Tensor Primary Axis Difference = 8 deg
+Inertia Tensor Orientational Difference = 24 deg
+ELM Predicted Tensor Primary Axis Difference = 7 deg
+ELM Predicted Tensor Orientational Difference = 16 deg
+F-test (0.05): Anisotropic model better than Isotropic? true, P = 1.74e-17, F = 64.15
+F-test (0.05): Anisotropic model better than Axially-Symmetric? false, P = NaN, F = -0.00
+Akaike Information Criterion (AIC): Value = 51.541,
+   =>Anisotropic model better than Isotropic? true
+   =>Anisotropic model better than Axially-Symmteric? false
+
+==Anistropic Diffusion Tensor==
+    [  4.471  -0.154  -0.079]     [    NaN     NaN     NaN]
+D = [ -0.154   5.711   0.643] +/- [    NaN     NaN     NaN] *(10^7) 1/s
+    [ -0.079   0.643   4.780]     [    NaN     NaN     NaN]
+
+==Anistropic Diffusion Tensor Sorted Eigendecomposition==
+    [  -0.993     0.055    -0.109][   4.452     0.000     0.000][  -0.993    -0.122    -0.000]
+D = [  -0.122    -0.449     0.885][   0.000     4.452     0.000][   0.055    -0.449     0.892] *(10^7) 1/s
+    [  -0.000     0.892     0.452][   0.000     0.000     6.058][  -0.109     0.885     0.452]
+
+====Full Rotdif Results: Isotropic Solution====
+<residue><chain><atom1><atom2><freq><rho_exp><rho_pred><rho_error>
+   2 A N     H      600.00   3.524   3.487   0.085
+   3 A N     H      600.00   3.296   3.487   0.061
+   4 A N     H      600.00   3.433   3.487   0.053
+   5 A N     H      600.00   3.461   3.487   0.099
+   6 A N     H      600.00   3.358   3.487   0.059
+   7 A N     H      600.00   3.291   3.487   0.084
+   8 A N     H      600.00   3.410   3.487   0.057
+   9 A N     H      600.00   3.381   3.487   0.051
+  10 A N     H      600.00   3.433   3.487   0.043
+  11 A N     H      600.00   3.577   3.487   0.051
+  12 A N     H      600.00   3.172   3.487   0.037
+  13 A N     H      600.00   3.505   3.487   0.056
+  14 A N     H      600.00   3.252   3.487   0.153
+  16 A N     H      600.00   3.334   3.487   0.164
+  17 A N     H      600.00   3.400   3.487   0.066
+  18 A N     H      600.00   3.390   3.487   0.146
+  19 A N     H      600.00   3.341   3.487   0.054
+  20 A N     H      600.00   3.233   3.487   0.091
+  21 A N     H      600.00   3.447   3.487   0.037
+  22 A N     H      600.00   3.738   3.487   0.191
+  23 A N     H      600.00   3.641   3.487   0.072
+  24 A N     H      600.00   3.896   3.487   0.121
+  26 A N     H      600.00   3.535   3.487   0.186
+  28 A N     H      600.00   3.955   3.487   0.286
+  29 A N     H      600.00   3.882   3.487   0.246
+  30 A N     H      600.00   3.770   3.487   0.159
+  31 A N     H      600.00   4.209   3.487   0.161
+  32 A N     H      600.00   4.009   3.487   0.173
+  33 A N     H      600.00   3.706   3.487   0.172
+  34 A N     H      600.00   3.800   3.487   0.046
+  36 A N     H      600.00   4.051   3.487   0.170
+  37 A N     H      600.00   3.649   3.487   0.075
+  38 A N     H      600.00   3.638   3.487   0.042
+  39 A N     H      600.00   4.171   3.487   0.044
+  40 A N     H      600.00   3.866   3.487   0.037
+  41 A N     H      600.00   3.310   3.487   0.065
+  42 A N     H      600.00   3.465   3.487   0.108
+  43 A N     H      600.00   3.516   3.487   0.088
+  44 A N     H      600.00   3.353   3.487   0.049
+  45 A N     H      600.00   3.302   3.487   0.040
+  46 A N     H      600.00   3.191   3.487   0.098
+  47 A N     H      600.00   3.344   3.487   0.036
+  48 A N     H      600.00   3.589   3.487   0.030
+  49 A N     H      600.00   3.479   3.487   0.048
+  50 A N     H      600.00   3.354   3.487   0.047
+  51 A N     H      600.00   3.329   3.487   0.077
+  52 A N     H      600.00   3.490   3.487   0.184
+  53 A N     H      600.00   3.380   3.487   0.081
+  54 A N     H      600.00   3.381   3.487   0.051
+  55 A N     H      600.00   3.402   3.487   0.116
+  56 A N     H      600.00   3.539   3.487   0.038
+
+
+====Full Rotdif Results: Axially-Symmetric Solution====
+<residue><chain><atom1><atom2><freq><rho_exp><rho_pred><rho_error>
+   2 A N     H      600.00   3.524   3.454   0.085
+   3 A N     H      600.00   3.296   3.341   0.061
+   4 A N     H      600.00   3.433   3.379   0.053
+   5 A N     H      600.00   3.461   3.338   0.099
+   6 A N     H      600.00   3.358   3.406   0.059
+   7 A N     H      600.00   3.291   3.336   0.084
+   8 A N     H      600.00   3.410   3.466   0.057
+   9 A N     H      600.00   3.381   3.368   0.051
+  10 A N     H      600.00   3.433   3.392   0.043
+  11 A N     H      600.00   3.577   3.598   0.051
+  12 A N     H      600.00   3.172   3.354   0.037
+  13 A N     H      600.00   3.505   3.442   0.056
+  14 A N     H      600.00   3.252   3.371   0.153
+  16 A N     H      600.00   3.334   3.369   0.164
+  17 A N     H      600.00   3.400   3.360   0.066
+  18 A N     H      600.00   3.390   3.386   0.146
+  19 A N     H      600.00   3.341   3.370   0.054
+  20 A N     H      600.00   3.233   3.368   0.091
+  21 A N     H      600.00   3.447   3.356   0.037
+  22 A N     H      600.00   3.738   3.643   0.191
+  23 A N     H      600.00   3.641   3.615   0.072
+  24 A N     H      600.00   3.896   3.964   0.121
+  26 A N     H      600.00   3.535   3.656   0.186
+  28 A N     H      600.00   3.955   4.018   0.286
+  29 A N     H      600.00   3.882   3.774   0.246
+  30 A N     H      600.00   3.770   3.758   0.159
+  31 A N     H      600.00   4.209   3.972   0.161
+  32 A N     H      600.00   4.009   4.010   0.173
+  33 A N     H      600.00   3.706   3.852   0.172
+  34 A N     H      600.00   3.800   3.835   0.046
+  36 A N     H      600.00   4.051   3.976   0.170
+  37 A N     H      600.00   3.649   3.634   0.075
+  38 A N     H      600.00   3.638   3.699   0.042
+  39 A N     H      600.00   4.171   3.793   0.044
+  40 A N     H      600.00   3.866   3.790   0.037
+  41 A N     H      600.00   3.310   3.841   0.065
+  42 A N     H      600.00   3.465   3.572   0.108
+  43 A N     H      600.00   3.516   3.345   0.088
+  44 A N     H      600.00   3.353   3.384   0.049
+  45 A N     H      600.00   3.302   3.337   0.040
+  46 A N     H      600.00   3.191   3.375   0.098
+  47 A N     H      600.00   3.344   3.347   0.036
+  48 A N     H      600.00   3.589   3.604   0.030
+  49 A N     H      600.00   3.479   3.534   0.048
+  50 A N     H      600.00   3.354   3.396   0.047
+  51 A N     H      600.00   3.329   3.358   0.077
+  52 A N     H      600.00   3.490   3.336   0.184
+  53 A N     H      600.00   3.380   3.389   0.081
+  54 A N     H      600.00   3.381   3.354   0.051
+  55 A N     H      600.00   3.402   3.456   0.116
+  56 A N     H      600.00   3.539   3.348   0.038
+
+
+====Full Rotdif Results: Anisotropic Solution====
+<residue><chain><atom1><atom2><freq><rho_exp><rho_pred><rho_error>
+   2 A N     H      600.00   3.524   3.454   0.085
+   3 A N     H      600.00   3.296   3.341   0.061
+   4 A N     H      600.00   3.433   3.379   0.053
+   5 A N     H      600.00   3.461   3.338   0.099
+   6 A N     H      600.00   3.358   3.406   0.059
+   7 A N     H      600.00   3.291   3.336   0.084
+   8 A N     H      600.00   3.410   3.466   0.057
+   9 A N     H      600.00   3.381   3.368   0.051
+  10 A N     H      600.00   3.433   3.392   0.043
+  11 A N     H      600.00   3.577   3.598   0.051
+  12 A N     H      600.00   3.172   3.354   0.037
+  13 A N     H      600.00   3.505   3.442   0.056
+  14 A N     H      600.00   3.252   3.371   0.153
+  16 A N     H      600.00   3.334   3.369   0.164
+  17 A N     H      600.00   3.400   3.360   0.066
+  18 A N     H      600.00   3.390   3.386   0.146
+  19 A N     H      600.00   3.341   3.370   0.054
+  20 A N     H      600.00   3.233   3.368   0.091
+  21 A N     H      600.00   3.447   3.356   0.037
+  22 A N     H      600.00   3.738   3.643   0.191
+  23 A N     H      600.00   3.641   3.615   0.072
+  24 A N     H      600.00   3.896   3.964   0.121
+  26 A N     H      600.00   3.535   3.656   0.186
+  28 A N     H      600.00   3.955   4.018   0.286
+  29 A N     H      600.00   3.882   3.774   0.246
+  30 A N     H      600.00   3.770   3.758   0.159
+  31 A N     H      600.00   4.209   3.972   0.161
+  32 A N     H      600.00   4.009   4.010   0.173
+  33 A N     H      600.00   3.706   3.852   0.172
+  34 A N     H      600.00   3.800   3.835   0.046
+  36 A N     H      600.00   4.051   3.976   0.170
+  37 A N     H      600.00   3.649   3.634   0.075
+  38 A N     H      600.00   3.638   3.699   0.042
+  39 A N     H      600.00   4.171   3.793   0.044
+  40 A N     H      600.00   3.866   3.790   0.037
+  41 A N     H      600.00   3.310   3.841   0.065
+  42 A N     H      600.00   3.465   3.572   0.108
+  43 A N     H      600.00   3.516   3.345   0.088
+  44 A N     H      600.00   3.353   3.384   0.049
+  45 A N     H      600.00   3.302   3.337   0.040
+  46 A N     H      600.00   3.191   3.375   0.098
+  47 A N     H      600.00   3.344   3.347   0.036
+  48 A N     H      600.00   3.589   3.604   0.030
+  49 A N     H      600.00   3.479   3.534   0.048
+  50 A N     H      600.00   3.354   3.396   0.047
+  51 A N     H      600.00   3.329   3.358   0.077
+  52 A N     H      600.00   3.490   3.336   0.184
+  53 A N     H      600.00   3.380   3.389   0.081
+  54 A N     H      600.00   3.381   3.354   0.051
+  55 A N     H      600.00   3.402   3.456   0.116
+  56 A N     H      600.00   3.539   3.348   0.038
+
+=====ROBUST REGRESSION: Off=====
+
+=====ORIENTATION SAMPLING=====
+Number of rigid bonds = 44
+Sampling Param Xi = 0.156 Vectors are uniformly distributed.
+Sampling Tensor Components = [0.393, -0.169, -0.225].
+
+=====ISOTROPIC MODEL=====
+Diso = 5.01 +/- NaN *(10^7) 1/s
+TAUc = 3.33 +/- NaN ns
+Q = 0.720  chi^2 = 373.294  chi^2/df = 8.681 (Rigid Only)
+Akaike Information Criterion (AIC): Value = 375.294
+
+=====AXIALLY-SYMMETRIC MODEL (PROLATE)=====
+D_perp = 4.45 +/- NaN *(10^7) 1/s
+D_parallel = 6.06 +/- NaN *(10^7) 1/s
+alpha = 97 +/- NaN  deg
+beta = 63 +/- NaN  deg
+Orientational Uncertainty = NaN deg
+TAUc = 3.34 +/- NaN ns
+anisotropy = 1.36 +/- NaN
+Q = 0.240  R = 0.942  chi^2 = 39.541  chi^2/df = 0.989 (Rigid Only)
+Inertia Tensor Unique Axis Difference = 8 deg
+ELM Predicted Tensor Unique Axis Difference = 7 deg
+F-test (0.05): Axially-Symmetric model better than Isotropic? true, P = 1.54e-19, F = 112.54
+Akaike Information Criterion (AIC): Value = 47.541,
+   =>Axially-Symmetric model better than Isotropic? true
+
+==Axially-Symmetric Diffusion Tensor==
+    [  4.471  -0.154  -0.079]     [    NaN     NaN     NaN]
+D = [ -0.154   5.711   0.643] +/- [    NaN     NaN     NaN] *(10^7) 1/s
+    [ -0.079   0.643   4.780]     [    NaN     NaN     NaN]
+
+==Axially-Symmetric Diffusion Tensor Sorted Eigendecomposition==
+    [  -0.993     0.055    -0.109][   4.452     0.000     0.000][  -0.993    -0.122    -0.000]
+D = [  -0.122    -0.449     0.885][   0.000     4.452     0.000][   0.055    -0.449     0.892] *(10^7) 1/s
+    [  -0.000     0.892     0.452][   0.000     0.000     6.058][  -0.109     0.885     0.452]
+
+=====FULLY ANISOTROPIC MODEL=====
+Dx = 4.45 +/- NaN *(10^7) 1/s
+Dy = 4.45 +/- NaN *(10^7) 1/s
+Dz = 6.06 +/- NaN *(10^7) 1/s
+alpha = 97 +/- NaN  deg
+beta = 63 +/- NaN  deg
+gamma = 90 +/- NaN deg
+Orientational Uncertainty = NaN deg
+TAUc = 3.34 +/- NaN ns
+anisotropy = 1.36 +/- NaN
+rhombicity = 0.00 +/- NaN
+Q = 0.240  R = 0.942  chi^2 = 39.541  chi^2/df = 1.041 (Rigid Only)
+Axially-Symmetric Tensor Primary Axis Difference = NaN deg
+Inertia Tensor Primary Axis Difference = 8 deg
+Inertia Tensor Orientational Difference = 24 deg
+ELM Predicted Tensor Primary Axis Difference = 7 deg
+ELM Predicted Tensor Orientational Difference = 16 deg
+F-test (0.05): Anisotropic model better than Isotropic? true, P = 1.74e-17, F = 64.15
+F-test (0.05): Anisotropic model better than Axially-Symmetric? false, P = NaN, F = -0.00
+Akaike Information Criterion (AIC): Value = 51.541,
+   =>Anisotropic model better than Isotropic? true
+   =>Anisotropic model better than Axially-Symmteric? false
+
+==Anistropic Diffusion Tensor==
+    [  4.471  -0.154  -0.079]     [    NaN     NaN     NaN]
+D = [ -0.154   5.711   0.643] +/- [    NaN     NaN     NaN] *(10^7) 1/s
+    [ -0.079   0.643   4.780]     [    NaN     NaN     NaN]
+
+==Anistropic Diffusion Tensor Sorted Eigendecomposition==
+    [  -0.993     0.055    -0.109][   4.452     0.000     0.000][  -0.993    -0.122    -0.000]
+D = [  -0.122    -0.449     0.885][   0.000     4.452     0.000][   0.055    -0.449     0.892] *(10^7) 1/s
+    [  -0.000     0.892     0.452][   0.000     0.000     6.058][  -0.109     0.885     0.452]
+
+====Full Rotdif Results: Isotropic Solution====
+<residue><chain><atom1><atom2><freq><rho_exp><rho_pred><rho_error>
+   2 A N     H      600.00   3.524   3.487   0.085
+   3 A N     H      600.00   3.296   3.487   0.061
+   4 A N     H      600.00   3.433   3.487   0.053
+   5 A N     H      600.00   3.461   3.487   0.099
+   6 A N     H      600.00   3.358   3.487   0.059
+   7 A N     H      600.00   3.291   3.487   0.084
+   8 A N     H      600.00   3.410   3.487   0.057
+   9 A N     H      600.00   3.381   3.487   0.051
+  10 A N     H      600.00   3.433   3.487   0.043
+  11 A N     H      600.00   3.577   3.487   0.051
+  12 A N     H      600.00   3.172   3.487   0.037
+  13 A N     H      600.00   3.505   3.487   0.056
+  14 A N     H      600.00   3.252   3.487   0.153
+  16 A N     H      600.00   3.334   3.487   0.164
+  17 A N     H      600.00   3.400   3.487   0.066
+  18 A N     H      600.00   3.390   3.487   0.146
+  19 A N     H      600.00   3.341   3.487   0.054
+  20 A N     H      600.00   3.233   3.487   0.091
+  21 A N     H      600.00   3.447   3.487   0.037
+  22 A N     H      600.00   3.738   3.487   0.191
+  23 A N     H      600.00   3.641   3.487   0.072
+  24 A N     H      600.00   3.896   3.487   0.121
+  26 A N     H      600.00   3.535   3.487   0.186
+  28 A N     H      600.00   3.955   3.487   0.286
+  29 A N     H      600.00   3.882   3.487   0.246
+  30 A N     H      600.00   3.770   3.487   0.159
+  31 A N     H      600.00   4.209   3.487   0.161
+  32 A N     H      600.00   4.009   3.487   0.173
+  33 A N     H      600.00   3.706   3.487   0.172
+  34 A N     H      600.00   3.800   3.487   0.046
+  36 A N     H      600.00   4.051   3.487   0.170
+  37 A N     H      600.00   3.649   3.487   0.075
+  38 A N     H      600.00   3.638   3.487   0.042
+  39 A N     H      600.00   4.171   3.487   0.044
+  40 A N     H      600.00   3.866   3.487   0.037
+  41 A N     H      600.00   3.310   3.487   0.065
+  42 A N     H      600.00   3.465   3.487   0.108
+  43 A N     H      600.00   3.516   3.487   0.088
+  44 A N     H      600.00   3.353   3.487   0.049
+  45 A N     H      600.00   3.302   3.487   0.040
+  46 A N     H      600.00   3.191   3.487   0.098
+  47 A N     H      600.00   3.344   3.487   0.036
+  48 A N     H      600.00   3.589   3.487   0.030
+  49 A N     H      600.00   3.479   3.487   0.048
+  50 A N     H      600.00   3.354   3.487   0.047
+  51 A N     H      600.00   3.329   3.487   0.077
+  52 A N     H      600.00   3.490   3.487   0.184
+  53 A N     H      600.00   3.380   3.487   0.081
+  54 A N     H      600.00   3.381   3.487   0.051
+  55 A N     H      600.00   3.402   3.487   0.116
+  56 A N     H      600.00   3.539   3.487   0.038
+
+
+====Full Rotdif Results: Axially-Symmetric Solution====
+<residue><chain><atom1><atom2><freq><rho_exp><rho_pred><rho_error>
+   2 A N     H      600.00   3.524   3.454   0.085
+   3 A N     H      600.00   3.296   3.341   0.061
+   4 A N     H      600.00   3.433   3.379   0.053
+   5 A N     H      600.00   3.461   3.338   0.099
+   6 A N     H      600.00   3.358   3.406   0.059
+   7 A N     H      600.00   3.291   3.336   0.084
+   8 A N     H      600.00   3.410   3.466   0.057
+   9 A N     H      600.00   3.381   3.368   0.051
+  10 A N     H      600.00   3.433   3.392   0.043
+  11 A N     H      600.00   3.577   3.598   0.051
+  12 A N     H      600.00   3.172   3.354   0.037
+  13 A N     H      600.00   3.505   3.442   0.056
+  14 A N     H      600.00   3.252   3.371   0.153
+  16 A N     H      600.00   3.334   3.369   0.164
+  17 A N     H      600.00   3.400   3.360   0.066
+  18 A N     H      600.00   3.390   3.386   0.146
+  19 A N     H      600.00   3.341   3.370   0.054
+  20 A N     H      600.00   3.233   3.368   0.091
+  21 A N     H      600.00   3.447   3.356   0.037
+  22 A N     H      600.00   3.738   3.643   0.191
+  23 A N     H      600.00   3.641   3.615   0.072
+  24 A N     H      600.00   3.896   3.964   0.121
+  26 A N     H      600.00   3.535   3.656   0.186
+  28 A N     H      600.00   3.955   4.018   0.286
+  29 A N     H      600.00   3.882   3.774   0.246
+  30 A N     H      600.00   3.770   3.758   0.159
+  31 A N     H      600.00   4.209   3.972   0.161
+  32 A N     H      600.00   4.009   4.010   0.173
+  33 A N     H      600.00   3.706   3.852   0.172
+  34 A N     H      600.00   3.800   3.835   0.046
+  36 A N     H      600.00   4.051   3.976   0.170
+  37 A N     H      600.00   3.649   3.634   0.075
+  38 A N     H      600.00   3.638   3.699   0.042
+  39 A N     H      600.00   4.171   3.793   0.044
+  40 A N     H      600.00   3.866   3.790   0.037
+  41 A N     H      600.00   3.310   3.841   0.065
+  42 A N     H      600.00   3.465   3.572   0.108
+  43 A N     H      600.00   3.516   3.345   0.088
+  44 A N     H      600.00   3.353   3.384   0.049
+  45 A N     H      600.00   3.302   3.337   0.040
+  46 A N     H      600.00   3.191   3.375   0.098
+  47 A N     H      600.00   3.344   3.347   0.036
+  48 A N     H      600.00   3.589   3.604   0.030
+  49 A N     H      600.00   3.479   3.534   0.048
+  50 A N     H      600.00   3.354   3.396   0.047
+  51 A N     H      600.00   3.329   3.358   0.077
+  52 A N     H      600.00   3.490   3.336   0.184
+  53 A N     H      600.00   3.380   3.389   0.081
+  54 A N     H      600.00   3.381   3.354   0.051
+  55 A N     H      600.00   3.402   3.456   0.116
+  56 A N     H      600.00   3.539   3.348   0.038
+
+
+====Full Rotdif Results: Anisotropic Solution====
+<residue><chain><atom1><atom2><freq><rho_exp><rho_pred><rho_error>
+   2 A N     H      600.00   3.524   3.454   0.085
+   3 A N     H      600.00   3.296   3.341   0.061
+   4 A N     H      600.00   3.433   3.379   0.053
+   5 A N     H      600.00   3.461   3.338   0.099
+   6 A N     H      600.00   3.358   3.406   0.059
+   7 A N     H      600.00   3.291   3.336   0.084
+   8 A N     H      600.00   3.410   3.466   0.057
+   9 A N     H      600.00   3.381   3.368   0.051
+  10 A N     H      600.00   3.433   3.392   0.043
+  11 A N     H      600.00   3.577   3.598   0.051
+  12 A N     H      600.00   3.172   3.354   0.037
+  13 A N     H      600.00   3.505   3.442   0.056
+  14 A N     H      600.00   3.252   3.371   0.153
+  16 A N     H      600.00   3.334   3.369   0.164
+  17 A N     H      600.00   3.400   3.360   0.066
+  18 A N     H      600.00   3.390   3.386   0.146
+  19 A N     H      600.00   3.341   3.370   0.054
+  20 A N     H      600.00   3.233   3.368   0.091
+  21 A N     H      600.00   3.447   3.356   0.037
+  22 A N     H      600.00   3.738   3.643   0.191
+  23 A N     H      600.00   3.641   3.615   0.072
+  24 A N     H      600.00   3.896   3.964   0.121
+  26 A N     H      600.00   3.535   3.656   0.186
+  28 A N     H      600.00   3.955   4.018   0.286
+  29 A N     H      600.00   3.882   3.774   0.246
+  30 A N     H      600.00   3.770   3.758   0.159
+  31 A N     H      600.00   4.209   3.972   0.161
+  32 A N     H      600.00   4.009   4.010   0.173
+  33 A N     H      600.00   3.706   3.852   0.172
+  34 A N     H      600.00   3.800   3.835   0.046
+  36 A N     H      600.00   4.051   3.976   0.170
+  37 A N     H      600.00   3.649   3.634   0.075
+  38 A N     H      600.00   3.638   3.699   0.042
+  39 A N     H      600.00   4.171   3.793   0.044
+  40 A N     H      600.00   3.866   3.790   0.037
+  41 A N     H      600.00   3.310   3.841   0.065
+  42 A N     H      600.00   3.465   3.572   0.108
+  43 A N     H      600.00   3.516   3.345   0.088
+  44 A N     H      600.00   3.353   3.384   0.049
+  45 A N     H      600.00   3.302   3.337   0.040
+  46 A N     H      600.00   3.191   3.375   0.098
+  47 A N     H      600.00   3.344   3.347   0.036
+  48 A N     H      600.00   3.589   3.604   0.030
+  49 A N     H      600.00   3.479   3.534   0.048
+  50 A N     H      600.00   3.354   3.396   0.047
+  51 A N     H      600.00   3.329   3.358   0.077
+  52 A N     H      600.00   3.490   3.336   0.184
+  53 A N     H      600.00   3.380   3.389   0.081
+  54 A N     H      600.00   3.381   3.354   0.051
+  55 A N     H      600.00   3.402   3.456   0.116
+  56 A N     H      600.00   3.539   3.348   0.038
+
+Saving anisotropic tensor axes, if computed, to "/opt/genapp/rotdif/output/html5/results/users/fushman/Run_test_plot2/out_ani.py" and
+	axially symmetric tensor, if computed, axes to "/opt/genapp/rotdif/output/html5/results/users/fushman/Run_test_plot2/out_axial.py"...done.

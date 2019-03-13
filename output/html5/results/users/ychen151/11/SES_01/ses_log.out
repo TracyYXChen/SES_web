@@ -1,0 +1,123 @@
+Number of Threads: 2
+Options:
+outalign = 0
+storejava = false
+data = K48_y.txt
+precond = 1
+maxsum = Infinity
+l0max = 2147483647
+best = false
+K = 100000
+matrix = K48_small_A.txt
+align = CA
+pdb =
+out = ./
+help = false
+reltol = 5.0E-4
+top = 0.005
+rmsd = 4.0
+
+
+Loading input...
+
+Reading Data...[28  2] done.
+Reading Matrix...[28  2000] done.
+
+Models processed...2000...2000...done.
+Starting computation...
+
+
+Solver Iteration: 0...1...2...3...done.
+
+Computation Finished: 3.735 seconds.
+
+Adjusting chi^2 fit in case of a non-linear problem...done.
+
+Recording solutions...done.
+
+Best solutions by l0-norm (column index starts at 1):
+l0-norm=1: Relative Error=0.04148847248672485, Columns=[44 ], Weights=[1.0222555043507522 ]
+l0-norm=2: Relative Error=0.029224734387062332, Columns=[1584 876 ], Weights=[0.8546738846705142 0.22523572100157171 ]
+l0-norm=3: Relative Error=0.02916288660319174, Columns=[1584 876 1648 ], Weights=[0.8178694628584022 0.21996004451428772 0.039306835092681805 ]
+
+L-curve: [0.04148847248672485, 0.029224734387062332, 0.02916288660319174]
+
+Storing Solutions to /opt/genapp/ses/output/html5/results/users/ychen151/11/SES_01/./general_solutions.dat...done.
+
+
+===Best L0=1 Solution===
+Relative Error: 0.04148847248672485
+Chi2: 164.27336915236233
+L: 28, Chi2/L: 5.866906041155798
+<index><exp data info><exp. value><pred. value><relative err.><*-outlier>
+    1		     0.096	     0.098	  1.850
+    2		     0.083	     0.084	  2.941
+    3		     0.069	     0.070	  2.353
+    4		     0.056	     0.056	  0.775
+    5		     0.045	     0.044	 -1.450
+    6		     0.035	     0.034	 -1.963
+    7		     0.028	     0.027	 -2.057
+    8		     0.022	     0.021	 -1.503
+    9		     0.018	     0.018	 -0.837
+   10		     0.014	     0.015	  0.611
+   11		     0.012	     0.013	  0.231
+   12		     0.011	     0.011	 -0.677
+   13		 9.950e-03	 9.406e-03	 -1.564
+   14		 8.750e-03	 8.168e-03	 -1.748
+   15		 8.909e-03	 7.132e-03	 -4.828 ***
+   16		 7.654e-03	 6.286e-03	 -4.371
+   17		 7.040e-03	 5.591e-03	 -4.572 *
+   18		 6.437e-03	 4.996e-03	 -4.381
+   19		 5.666e-03	 4.444e-03	 -3.563
+   20		 4.572e-03	 3.895e-03	 -1.980
+   21		 4.092e-03	 3.333e-03	 -2.176
+   22		 3.354e-03	 2.767e-03	 -1.512
+   23		 2.234e-03	 2.223e-03	 -0.029
+   24		 1.832e-03	 1.731e-03	 -0.258
+   25		 8.110e-04	 1.313e-03	  1.363
+   26		 1.030e-04	 9.803e-04	  2.216
+   27		 1.000e-06	 7.330e-04	  1.882
+   28		-7.060e-04	 5.561e-04	  3.163
+[1.960*sigma (95% rigid conf. interv.), 2.576*sigma (99% rigid conf. interv.)] [abs max] relative errors: [4.571, 6.007] [4.828]
+
+
+===Best L0=2 Solution===
+Relative Error: 0.029224734387062332
+Chi2: 81.51047407314388
+L: 28, Chi2/L: 2.9110883597551385
+<index><exp data info><exp. value><pred. value><relative err.><*-outlier>
+    1		     0.096	     0.100	  3.811 ***
+    2		     0.083	     0.084	  2.315
+    3		     0.069	     0.069	 -0.002
+    4		     0.056	     0.055	 -1.692
+    5		     0.045	     0.044	 -2.390
+    6		     0.035	     0.035	 -0.837
+    7		     0.028	     0.028	  0.183
+    8		     0.022	     0.022	  0.771
+    9		     0.018	     0.018	 -0.033
+   10		     0.014	     0.014	 -0.327
+   11		     0.012	     0.012	 -1.664
+   12		     0.011	     0.010	 -2.472
+   13		 9.950e-03	 9.230e-03	 -2.068
+   14		 8.750e-03	 8.610e-03	 -0.421
+   15		 8.909e-03	 8.087e-03	 -2.233
+   16		 7.654e-03	 7.481e-03	 -0.552
+   17		 7.040e-03	 6.736e-03	 -0.958
+   18		 6.437e-03	 5.892e-03	 -1.657
+   19		 5.666e-03	 5.029e-03	 -1.856
+   20		 4.572e-03	 4.217e-03	 -1.039
+   21		 4.092e-03	 3.486e-03	 -1.737
+   22		 3.354e-03	 2.837e-03	 -1.333
+   23		 2.234e-03	 2.261e-03	  0.074
+   24		 1.832e-03	 1.753e-03	 -0.200
+   25		 8.110e-04	 1.322e-03	  1.389
+   26		 1.030e-04	 9.765e-04	  2.206
+   27		 1.000e-06	 7.199e-04	  1.848
+   28		-7.060e-04	 5.402e-04	  3.123
+[1.960*sigma (95% rigid conf. interv.), 2.576*sigma (99% rigid conf. interv.)] [abs max] relative errors: [3.360, 4.416] [3.811]
+
+Generating the output complex up to size 2...
+l0-norm=1: found 4 solutions, PDB files for clustered ensemble of size 1 not found. Cluster not saved.
+l0-norm=2: found 108 solutions, PDB files for clustered ensemble of size 2 not found. Cluster not saved.
+
+Program Finished. Success!

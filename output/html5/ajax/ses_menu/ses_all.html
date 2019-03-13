@@ -1,0 +1,621 @@
+
+
+<form id="ses_all" >
+<span id="ses_all_input_area"></span>
+<script>
+
+ga.tmp.bgi = ga.color.data.body.background;
+
+
+
+if ( !0 ) {
+    $("body").css( { "background": ga.tmp.bgi + " no-repeat center center fixed", "-webkit-background-size" : "cover", "-moz-background-size" : "cover", "-o-background-size" : "cover" , "background-size": "cover"} );
+}
+
+input_eval = "";
+input_html = "<table>";
+input_repeats = "";
+input_trees = [];
+skipped_row = 0;
+ses_all_done_eval = "";
+_jmol_info = {};
+// jmol = "jmol";
+ga.pull.clearPull();
+ga.specproj.clear();
+$('#ses_all').on("keyup keypress", function(e) { var code = e.keyCode || e.which;  if (code  == 13) { e.preventDefault(); return false; }});
+
+this_html = '<tr><td><hr></td></tr><tr><td><label id="ses_label_label" class="header4 ">Sparse Ensemble Selection(SES)</label>' + 
+'</td>' +
+'<td><div id="ses_label"></div>' +
+'</td></tr><tr><td><hr></td></tr>';
+this_eval = '';
+
+
+
+
+
+input_html += this_html;
+input_eval += this_eval;
+this_html = '<tr><td><label for="run_name">run name </label></td><td><input type="text" name="run_name" id="run_name" required class="help_link"><span class="help">Enter a name to run this task</span><span id="run_name_msg" class="warning field_msg" > </span></td></tr>';
+this_eval = 
+
+
+
+
+'ga.value.registerid("ses_all","run_name","run name","text");'
++ '$( "#run_name" ).blur( function() { ga.valid.checkText( "#run_name" ); });'
++ 
+'ga.value.setLastValue( "ses_all", "#run_name" );$( "#run_name" ).keypress( function() { $( "#run_name_msg" ).html( "" ); });';
+if ( skipped_row == 1 ){ this_html = this_html.replace(/^<tr>/, "" ); skipped_row=0;};
+
+
+
+
+
+
+input_html += this_html;
+input_eval += this_eval;
+this_html = '<tr><td><hr></td></tr><tr><td><label id="data_label_label" class=" ">DATA</label>' + 
+'</td>' +
+'<td><div id="data_label"></div>' +
+'</td></tr><tr><td><hr></td></tr>';
+this_eval = '';
+
+
+
+
+
+input_html += this_html;
+input_eval += this_eval;
+this_html = '<tr><td><label for="exp_location" >Experiment Data File </label></td>' +
+'<td><input type="file" name="exp_location" id="exp_location" data-add="exp_location_altval" accept=".txt" class="help_link"><span class="help">Upload experiment data file</span>' +
+' or <button id="exp_location_button" name="exp_location_button" data-type="lrfile" class="help_link"><span class="buttontext">Browse server</span></button>' +
+'<span class="help">Upload experiment data file</span>' +
+' <span id="exp_location_altval"></span>' +
+'<span id="exp_location_msg" class="warning field_msg" > </span></td><input type="hidden" name="_selaltval_exp_location" value="exp_location_altval"</input></tr>';
+
+this_eval = 'ga.value.setLastValue( "ses_all", "#exp_location" );' +
+'ga.altfile("ses_all","exp_location","exp_location_altval");' +
+
+'$( "#exp_location" ).change( function(){$("#exp_location_altval").html( "<i>Local</i>: " + $("#exp_location").val().replace(/^C:.fakepath./,""));$("#exp_location_msg").html("");});' +
+'ga.altfile.button("ses_all","exp_location","Experiment Data File","rfile",function(v){ga.altfile.button.lrfile(v,"ses_all","exp_location");},"lrfile");' +
+'$("#exp_location_button").on("click",function(){return ga.altfile.button.call("ses_all","exp_location");});' +
+
+'';
+
+// var s = $(v).jstree("get_selected", true),r="";$.each(s,function(){r=r+$.base64.decode(this.id).substr(2)+" "});$("#exp_location_altval").html( r.length ? "<i>Server</i>: " + r : "");r.length?$("#exp_location").val(""):""});' +
+
+if ( skipped_row == 1 ){ this_html = this_html.replace(/^<tr>/, "" ); skipped_row=0;};
+
+
+
+
+
+input_html += this_html;
+input_eval += this_eval;
+this_html = '<tr><td><label for="mat_location" >Ensemble Matrix File </label></td>' +
+'<td><input type="file" name="mat_location" id="mat_location" data-add="mat_location_altval" accept=".txt" class="help_link"><span class="help">Upload ensemble matrix file</span>' +
+' or <button id="mat_location_button" name="mat_location_button" data-type="lrfile" class="help_link"><span class="buttontext">Browse server</span></button>' +
+'<span class="help">Upload ensemble matrix file</span>' +
+' <span id="mat_location_altval"></span>' +
+'<span id="mat_location_msg" class="warning field_msg" > </span></td><input type="hidden" name="_selaltval_mat_location" value="mat_location_altval"</input></tr>';
+
+this_eval = 'ga.value.setLastValue( "ses_all", "#mat_location" );' +
+'ga.altfile("ses_all","mat_location","mat_location_altval");' +
+
+'$( "#mat_location" ).change( function(){$("#mat_location_altval").html( "<i>Local</i>: " + $("#mat_location").val().replace(/^C:.fakepath./,""));$("#mat_location_msg").html("");});' +
+'ga.altfile.button("ses_all","mat_location","Ensemble Matrix File","rfile",function(v){ga.altfile.button.lrfile(v,"ses_all","mat_location");},"lrfile");' +
+'$("#mat_location_button").on("click",function(){return ga.altfile.button.call("ses_all","mat_location");});' +
+
+'';
+
+// var s = $(v).jstree("get_selected", true),r="";$.each(s,function(){r=r+$.base64.decode(this.id).substr(2)+" "});$("#mat_location_altval").html( r.length ? "<i>Server</i>: " + r : "");r.length?$("#mat_location").val(""):""});' +
+
+if ( skipped_row == 1 ){ this_html = this_html.replace(/^<tr>/, "" ); skipped_row=0;};
+
+
+
+
+
+input_html += this_html;
+input_eval += this_eval;
+this_html = '<tr><td><hr></td></tr><tr><td><label id="runmenu_label_label" class=" ">RUN MENU</label>' + 
+'</td>' +
+'<td><div id="runmenu_label"></div>' +
+'</td></tr><tr><td><hr></td></tr>';
+this_eval = '';
+
+
+
+
+
+input_html += this_html;
+input_eval += this_eval;
+if( skipped_row == 1 ){ input_html += "</tr>"; }
+input_html += '</table>';
+$( '#ses_all_input_area' ).html( input_html );
+eval( input_eval );
+</script>
+<p><button id="ses_all_submit" class="help_link"><span class="buttontext">Submit</span></button>
+
+<button id="ses_all_reset" class="help_link"><span class="buttontext">Reset to default values</span></button>
+
+
+</p>
+<span id="ses_all_progress"></span>
+<script>
+
+
+
+
+
+
+var ses_all_output_msgs = $("#ses_all_output_msgs");
+ses_all_output_msgs.text( "" );
+
+var ses_all_timeout_handler = "unset";
+var ses_all_timeout_handler_uuid;
+
+function get_results_ses_all( id, last_timeout, getlastmsg, getinput )
+{
+
+//             url:"ajax/get_results.php?_window=" +  window.name + "&_logon=" +$( "#_state" ).data( "_logon" ) + '&_uuid=' + id,
+    var job_status = "";
+    
+    $.getJSON( 
+             "ajax/get_results.php",
+             {
+                tagmode: "any",
+                format: "json",
+                _window : window.name,
+                _logon : $( "#_state" ).data( "_logon" ),
+                _uuid : id,
+                _getlastmsg : getlastmsg,
+                _getinput : getinput ? true : false
+             } )
+    .done( function( data, status, xhr ) {
+
+           var do_refresh = 1;
+
+           if ( do_refresh ) {
+              ga.fc.clear( $.base64.encode( "./" + $( "#_state" ).data( "_project" ) ) );
+              ga.jc.clear_leaf( id );
+           }
+
+           job_status = ga.data.update( "ses_all", data ).job_status;
+           if ( job_status == "complete" ||
+                job_status == "cancelled" ||
+                job_status == "failed" )
+           {
+              if ( ses_all_timeout_handler != "unset" )
+              {
+                  clearTimeout( ses_all_timeout_handler );
+                  ses_all_timeout_handler = "unset";
+              }
+              ga.ws.unsub( id, "ses_all" );
+              eval( ses_all_done_eval );
+           } else {
+               if ( !last_timeout || last_timeout < 2000 )
+               { 
+                  last_timeout = 2000;
+               } else {
+                  if ( last_timeout < 16000 )
+                  {
+                      last_timeout *= 2;
+                  } else {
+                      last_timeout = 16000;
+                  }
+               }
+
+               ses_all_timeout_handler =  setTimeout( get_results_ses_all, last_timeout, id, last_timeout, 0 );
+               ses_all_timeout_handler_uuid = id;
+           }
+          } )
+    .fail( function( xhr, status, errorThrown ) {
+
+           $( "#ses_all_results" ).html( "<span class=\"warning\"> Failed: " + status + " : '" + xhr.status + ":" + errorThrown + "' on URL ajax/tools/center.php </span>" );
+           $('#ses_all_progress').html( "" );
+           if ( ses_all_timeout_handler != "unset" )
+           {
+               clearTimeout( ses_all_timeout_handler );
+               ses_all_timeout_handler = "unset";
+           }
+           ga.ws.unsub( id, "ses_all" );
+           eval( ses_all_done_eval );
+          } );
+    return false;
+};
+
+function msg_ses_all ( id, data )
+{
+   ga.data.update( "ses_all", data, get_results_ses_all, id );
+};
+
+$( "#ses_all_submit" ).click( function( e ) {
+   e.preventDefault();
+   e.returnValue = false;
+   $( "#ses_all" ).find( ".toclear" ).remove();   
+   if ( ses_all_timeout_handler != "unset" ) {
+       
+       clearTimeout( ses_all_timeout_handler );
+       if ( ses_all_timeout_handler_uuid ) {
+           ga.ws.unsub( ses_all_timeout_handler_uuid, "ses_all" );
+       }
+       ses_all_timeout_handler = "unset";
+   }
+   ga.value.resetDefaultValues( "ses_all_output", true );
+
+   
+   return ga.xsede.select( "__resource__", do_ses_all_submit, $(this) );
+   //   return do_ses_all_submit( $(this) );
+});
+
+function do_ses_all_submit( $form, airavataresource, skipcached ) {
+
+   var $ok = 0;
+   
+   
+
+   ga.event( "", "ses_all", "submit clicked" );
+
+   
+
+
+
+
+
+   if ( !ga.valid.checksubmit( "ses_all" ) ) {
+       ga.valid.showerrormessage( "ses_all" );
+       return false;
+   }
+
+   if ( ga.specproj.data.length ) {
+      if ( $( "#_state" ).data( '_logon' ) &&
+           $( "#_state" ).data( '_logon' ).length ) {
+          $( "#sel_project" ).html( ga.specproj.gname() );
+          $( "#_state" ).data( '_project', ga.specproj.gname() );
+          
+      }
+   }  
+
+//   if ( 0 && !xsedeproject) {
+//      
+//      switch( project = ga.xsede.select( "__resource__", do_ses_all_submit, $form ) ) {
+//      case "deferred" : return false; break;
+//      case "abort"    : return false; break;
+//      case "notused"  : break;
+//      }
+      
+      
+
+   if ( !airavataresource ) {
+      
+      switch( airavataresource = ga.airavata.select( "__resource__", "__airavataselect__", do_ses_all_submit, $form ) ) {
+      case "deferred" : return false; break;
+      case "abort"    : return false; break;
+      case "notused"  : break;
+      }
+      
+   }
+   
+
+   $.ajax({
+       type: 'get'
+       ,url: "ajax/sys_config/sys_joblocked.php?_window=" +  window.name + "&_logon=" + $( "#_state" ).data( "_logon" )
+ + "&_submitpolicy=login"
+
+
+       ,context: $form
+       ,success: function( data ) { // your success handler
+
+          if ( !$ok )
+          {
+          switch ( data )
+          {
+             case "1" :
+             {
+                 ga.msg.box( { icon:"warning.png", text:"This project directory is currently locked by another project.\nYou can wait until it completes, change the project in user configuration or clear the lock in the job manager." } );
+                 return;
+             } break;
+             case "2" :
+             {
+                 ga.msg.box( { icon:"warning.png", text:"You must be logged in to submit this module." } );
+                 return;
+             } break;
+             case "0" :
+             {
+
+                 $ok = 1;
+             } break;
+             default : 
+             {
+                if ( /^Your job/.test( data ) ) {
+                   ga.msg.box( { icon : "warning.png",
+                                 text : data } );
+                   return;
+                }
+                
+                if ( skipcached ) {
+                    $ok = 1;
+                } else {
+                    return ga.cache.msg( "", "", get_results_ses_all, do_ses_all_submit, data, $form, airavataresource );
+                }
+             } break;
+          }
+          }
+       }
+       ,error: function() { // your error handler
+          ga.msg.box( { icon:"toast.png", text:"Checking the project lock failed. This is possibly a server or network issue" } );
+       }
+       ,complete: function() { 
+          this.off('submit');
+          if ( $ok )
+          {
+
+
+              $( "#ses_all_results" ).text( "" );
+
+              ga.value.saveLastValues( "ses_all" );
+              ga.value.resetDefaultValues( "ses_all_output", true );
+
+              var found_errors = 0;
+              $("#ses_all").find("input").each(function(i){
+                 if ( $(this).attr( 'required' ) && $(this).val().length == 0 )
+                 {
+                    var tag =  "#ses_all " + "#" + $(this).attr('id') + "_msg";
+
+                    $( tag ).html( "missing required field" );
+                    found_errors = 1;
+                 }
+              });
+              if ( found_errors ) {
+                  return;
+              }
+
+    var tree_html = "";
+    $( "._hidden_tree_selects" ).remove( );
+    $.each( input_trees, function( k, v ){
+
+        $( 'input[type=hidden][name="' + v + '[]"]' ).remove();
+        var selectedElms = $('#' + v).jstree("get_selected", true);
+        var i = 0;
+        $.each(selectedElms, function() {
+           tree_html += '<input type="hidden" name="' + v + '[]" value="' + this.id + '" class="_hidden_tree_selects"/>';
+
+        });
+    });
+
+    $( this ).append( tree_html );
+
+
+    var logonadd = $("<input>").attr("type", "hidden").attr("name", "_logon").val( $( "#_state" ).data( "_logon" ) );$( this ).append($(logonadd));
+    var projectadd = $("<input>").attr("type", "hidden").attr("name", "_project").val( $( "#_state" ).data( "_project" ) );$( this ).append($(projectadd));
+    var windowadd = $("<input>").attr("type", "hidden").attr("name", "_window").val( window.name );$( this ).append($(windowadd));
+    
+    var vuuid = uuid.v1();
+
+
+
+
+
+
+
+    if ( airavataresource != "notused" ) {
+        $( this ).append( $("<input>").attr("type", "hidden").attr("name", "_airavataresource").val( airavataresource ) );
+    }
+
+    var uuidadd = $("<input>").attr("type", "hidden").attr("name", "_uuid").val( vuuid );$( this ).append($(uuidadd));
+//    ga.altfile.add( "ses_all" );
+    ga.valuen.addhtml( "ses_all" );
+
+    ga.extrahidden( "ses_all" );
+
+    ga.ws.sub( vuuid, msg_ses_all, "ses_all" );
+
+    var formData = new FormData($('#ses_all')[0]);
+    
+     
+     
+    
+     
+     
+
+     
+     if ( ga.multistage["ses_all"] )
+      {
+        ga.value.modifyformdata(ga.multistage, "ses_all", formData, ga.stages["ses_all"], ga.currentstage);
+      }
+
+
+
+    $('#ses_all_progress').html( "Uploading:<progress></progress>" );
+
+    var job_status = "";
+
+    ga.event( "", "ses_all", "submit: passed submit checks, submitting" );
+
+
+    // var url - coditional based on module's .json setting, and use it in ajax call
+
+    $.ajax( {
+             dataType: "json",
+             cache:false,
+//             timeout:3000,  // for testing
+             type:"POST",
+             url:"ajax/ses_menu/ses_all.php",
+             data: formData,
+             xhr: function() {  // Custom XMLHttpRequest
+                 var myXhr = $.ajaxSettings.xhr();
+                 if(myXhr.upload){ // Check if upload property exists
+                     myXhr.upload.addEventListener('progress',
+                         function(e) {
+                         if(e.lengthComputable){
+                           $('#ses_all_progress progress').attr({value:e.loaded,max:e.total});
+                         } }
+//                     progressHandlingFunction
+                    , false);
+                 }
+                 return myXhr;
+             },
+             contentType: false,
+             processData: false
+            } )
+    .done( function( data, status, xhr ) {
+    
+    if ( ga.multistage["ses_all"] )
+      {
+        ga.value.showfields(ga.multistage, "ses_all", ga.stages["ses_all"], ga.currentstage);
+    	delete ga.stages["ses_all"][ga.currentstage]; 
+    	++ga.currentstage;	
+      }	
+
+
+
+
+// refresh cache for this project
+           $('#ses_all_progress').html( "" );
+   
+           var do_refresh = 1;
+
+           if ( do_refresh ) {
+              ga.fc.clear( $.base64.encode( "./" + $( "#_state" ).data( "_project" ) ) );
+              ga.jc.clear_leaf( vuuid );
+           }
+           
+// loop through data pairs
+           ses_all_output_msgs.text( "" );
+           job_status = ga.data.update( "ses_all", data ).job_status;
+
+           if ( job_status == "complete" ||
+                job_status == "cancelled" ||
+                job_status == "failed" )
+           {
+               if ( ses_all_timeout_handler != "unset" )
+               {
+                   clearTimeout( ses_all_timeout_handler );
+                   ses_all_timeout_handler = "unset";
+               }
+               ga.ws.unsub( vuuid, "ses_all" );
+               eval( ses_all_done_eval );
+           } else {
+               ses_all_timeout_handler = setTimeout( get_results_ses_all, 2000, vuuid, 2000, 0 );
+               ses_all_timeout_handler_uuid = vuuid;
+
+           }
+          } )
+    .fail( function( xhr, status, errorThrown ) {
+
+
+
+
+           $( "#ses_all_results" ).html( "<span class=\"warning\"> Failed: " + status + " : '" + xhr.status + ":" + errorThrown + "' on URL ajax/ses_menu/ses_all.php </span>" );
+           $('#ses_all_progress').html( "" );
+           if ( ses_all_timeout_handler != "unset" )
+           {
+               clearTimeout( ses_all_timeout_handler );
+               ses_all_timeout_handler = "unset";
+           }
+           ga.ws.unsub( vuuid, "ses_all" );
+           eval( ses_all_done_eval );
+          } );
+          } else {
+
+          }
+       }
+   });
+} 
+
+ses_all_reset = function() {
+    
+    if ( !10 ) {
+        // required to reset scrollheight ... 
+        document.getElementById( "ses_all_output_textarea" ).style.height = 0;
+    }
+
+    if ( ses_all_timeout_handler != "unset" ) {
+       
+       clearTimeout( ses_all_timeout_handler );
+       if ( ses_all_timeout_handler_uuid ) {
+           ga.ws.unsub( ses_all_timeout_handler_uuid, "ses_all" );
+       }
+       ses_all_timeout_handler = "unset";
+    }
+    ga.event( "", "ses_all", "reset clicked" );
+    ga.valid.clearerrorcounter( "ses_all" );
+
+   if ( ga.multistage["ses_all"] )
+     {
+       ga.currentstage = 0;
+       ga.value.sethiddenfields(ga.multistage,"ses_all");
+       ga.stages["ses_all"].length = 0;
+       ga.stages["ses_all"] = ga.stagesdefault["ses_all"].slice();
+       console.log("Reset: " + ga.stages["ses_all"]);
+     }
+
+    //    ga.value.resetDefaultValues( "ses_all" );
+    ga.valuen.restore.dflt(  "ses_all" );
+    ga.value.resetDefaultValues( "ses_all_output", true );
+    
+    eval( input_repeats );
+    return false;
+}
+
+$( "#ses_all_reset" ).click( function() {
+   return ses_all_reset();
+});
+
+ga.hhelp.set();
+
+
+eval( input_repeats );
+ga.pull.doPull();
+</script>
+</form>
+<div id="ses_all_results"></div>
+<script>
+ga.tmp.html = "<hr>";
+
+$("#ses_all").append( ga.tmp.html );
+</script>
+
+<form id="ses_all_output">
+<div id="ses_all_output_msgs" class="warning" type="msgs"></div>
+<script>
+ga.value.setLastValueOutput( "ses_all_output" );
+ga.value.extra_resets.clear();
+</script>
+
+<span id="ses_all_output_airavata"></span>
+
+<table>
+<tr>
+<td colspan="4" style="vertical-align:top"><label hidden id="ses_all_output_textarea_label" for="ses_all_output_textarea" class="header3 ">Report:</label>
+<textarea readonly hidden id="ses_all_output_textarea" rows="10" cols="110" class="help_link"></textarea>
+<span class="help">general textarea help</span>
+</td>
+</tr>
+<tr><td><label for="progress_output">Progress:  </label></td><td><progress name="progress_output" id="progress_output" value="0" max="1"></progress></td></tr>
+<script>
+ga.value.setLastValue( "ses_all_output", "#progress_output" );
+</script>
+<tr><td><label for="progress_text">Calculation Report:  </label></td><td><textarea name="progress_text" id="progress_text" cols="40" readonly></textarea>
+</td></tr>
+<script>
+
+ga.value.setLastValue( "ses_all_output", "#progress_text" );
+</script>
+<tr><td><label for="output_ses">SES Results File:  </label>
+</td>
+<td><div id="output_ses" type="filelinkm" readonly><span id="output_ses_filelink"></span></div>
+</td></tr>
+<script>
+ga.value.setLastValue( "ses_all_output", "#output_ses" );
+ga.value.extra_resets( "output_ses" );
+</script>
+</table>
+</form>
+
+
+
+
+<script>loaded_ses_all = 1; </script>

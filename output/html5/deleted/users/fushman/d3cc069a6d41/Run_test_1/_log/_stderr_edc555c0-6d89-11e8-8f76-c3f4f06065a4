@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/opt/genapp/rotdif/bin/rotdif.py", line 23, in <module>
+    from matplotlib import cm, colors
+ImportError: No module named matplotlib

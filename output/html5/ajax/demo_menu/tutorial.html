@@ -1,0 +1,498 @@
+
+
+<form id="tutorial" >
+<span id="tutorial_input_area"></span>
+<script>
+
+ga.tmp.bgi = ga.color.data.body.background;
+
+
+
+if ( !0 ) {
+    $("body").css( { "background": ga.tmp.bgi + " no-repeat center center fixed", "-webkit-background-size" : "cover", "-moz-background-size" : "cover", "-o-background-size" : "cover" , "background-size": "cover"} );
+}
+
+input_eval = "";
+input_html = "<table>";
+input_repeats = "";
+input_trees = [];
+skipped_row = 0;
+tutorial_done_eval = "";
+_jmol_info = {};
+// jmol = "jmol";
+ga.pull.clearPull();
+ga.specproj.clear();
+$('#tutorial').on("keyup keypress", function(e) { var code = e.keyCode || e.which;  if (code  == 13) { e.preventDefault(); return false; }});
+
+this_html = '<tr><td colspan=5 id="text1">        <div>             <p> Hello, this is the test file             </p>             <p>                 <a name="_GoBack"> </a> <img style="width:75%" src="files/tutorial_tutorial_files/rId4.png" title="" alt="" align="" /></p> </div> </td></tr>';
+input_html += this_html;
+if( skipped_row == 1 ){ input_html += "</tr>"; }
+input_html += '</table>';
+$( '#tutorial_input_area' ).html( input_html );
+eval( input_eval );
+</script>
+<p><button id="tutorial_submit" class="help_link"><span class="buttontext">Submit</span></button>
+<span class="help">this is help for the submit button</span>
+<button id="tutorial_reset" class="help_link"><span class="buttontext">Reset to default values</span></button>
+<span class="help">this is help for the reset to default values button</span>
+
+</p>
+<span id="tutorial_progress"></span>
+<script>
+$( "#tutorial_reset" ).remove();
+
+$( "#tutorial_submit" ).remove();
+
+
+
+var tutorial_output_msgs = $("#tutorial_output_msgs");
+tutorial_output_msgs.text( "" );
+
+var tutorial_timeout_handler = "unset";
+var tutorial_timeout_handler_uuid;
+
+function get_results_tutorial( id, last_timeout, getlastmsg, getinput )
+{
+
+//             url:"ajax/get_results.php?_window=" +  window.name + "&_logon=" +$( "#_state" ).data( "_logon" ) + '&_uuid=' + id,
+    var job_status = "";
+    
+    $.getJSON( 
+             "ajax/get_results.php",
+             {
+                tagmode: "any",
+                format: "json",
+                _window : window.name,
+                _logon : $( "#_state" ).data( "_logon" ),
+                _uuid : id,
+                _getlastmsg : getlastmsg,
+                _getinput : getinput ? true : false
+             } )
+    .done( function( data, status, xhr ) {
+
+           var do_refresh = 1;
+
+           if ( do_refresh ) {
+              ga.fc.clear( $.base64.encode( "./" + $( "#_state" ).data( "_project" ) ) );
+              ga.jc.clear_leaf( id );
+           }
+
+           job_status = ga.data.update( "tutorial", data ).job_status;
+           if ( job_status == "complete" ||
+                job_status == "cancelled" ||
+                job_status == "failed" )
+           {
+              if ( tutorial_timeout_handler != "unset" )
+              {
+                  clearTimeout( tutorial_timeout_handler );
+                  tutorial_timeout_handler = "unset";
+              }
+              ga.ws.unsub( id, "tutorial" );
+              eval( tutorial_done_eval );
+           } else {
+               if ( !last_timeout || last_timeout < 2000 )
+               { 
+                  last_timeout = 2000;
+               } else {
+                  if ( last_timeout < 16000 )
+                  {
+                      last_timeout *= 2;
+                  } else {
+                      last_timeout = 16000;
+                  }
+               }
+
+               tutorial_timeout_handler =  setTimeout( get_results_tutorial, last_timeout, id, last_timeout, 0 );
+               tutorial_timeout_handler_uuid = id;
+           }
+          } )
+    .fail( function( xhr, status, errorThrown ) {
+
+           $( "#tutorial_results" ).html( "<span class=\"warning\"> Failed: " + status + " : '" + xhr.status + ":" + errorThrown + "' on URL ajax/tools/center.php </span>" );
+           $('#tutorial_progress').html( "" );
+           if ( tutorial_timeout_handler != "unset" )
+           {
+               clearTimeout( tutorial_timeout_handler );
+               tutorial_timeout_handler = "unset";
+           }
+           ga.ws.unsub( id, "tutorial" );
+           eval( tutorial_done_eval );
+          } );
+    return false;
+};
+
+function msg_tutorial ( id, data )
+{
+   ga.data.update( "tutorial", data, get_results_tutorial, id );
+};
+
+$( "#tutorial_submit" ).click( function( e ) {
+   e.preventDefault();
+   e.returnValue = false;
+   $( "#tutorial" ).find( ".toclear" ).remove();   
+   if ( tutorial_timeout_handler != "unset" ) {
+       
+       clearTimeout( tutorial_timeout_handler );
+       if ( tutorial_timeout_handler_uuid ) {
+           ga.ws.unsub( tutorial_timeout_handler_uuid, "tutorial" );
+       }
+       tutorial_timeout_handler = "unset";
+   }
+   ga.value.resetDefaultValues( "tutorial_output", true );
+
+   
+   return ga.xsede.select( "__resource__", do_tutorial_submit, $(this) );
+   //   return do_tutorial_submit( $(this) );
+});
+
+function do_tutorial_submit( $form, airavataresource, skipcached ) {
+
+   var $ok = 0;
+   
+   
+
+   ga.event( "", "tutorial", "submit clicked" );
+
+   
+
+
+
+
+
+   if ( !ga.valid.checksubmit( "tutorial" ) ) {
+       ga.valid.showerrormessage( "tutorial" );
+       return false;
+   }
+
+   if ( ga.specproj.data.length ) {
+      if ( $( "#_state" ).data( '_logon' ) &&
+           $( "#_state" ).data( '_logon' ).length ) {
+          $( "#sel_project" ).html( ga.specproj.gname() );
+          $( "#_state" ).data( '_project', ga.specproj.gname() );
+          
+      }
+   }  
+
+//   if ( 0 && !xsedeproject) {
+//      
+//      switch( project = ga.xsede.select( "__resource__", do_tutorial_submit, $form ) ) {
+//      case "deferred" : return false; break;
+//      case "abort"    : return false; break;
+//      case "notused"  : break;
+//      }
+      
+      
+
+   if ( !airavataresource ) {
+      
+      switch( airavataresource = ga.airavata.select( "__resource__", "__airavataselect__", do_tutorial_submit, $form ) ) {
+      case "deferred" : return false; break;
+      case "abort"    : return false; break;
+      case "notused"  : break;
+      }
+      
+   }
+   
+
+   $.ajax({
+       type: 'get'
+       ,url: "ajax/sys_config/sys_joblocked.php?_window=" +  window.name + "&_logon=" + $( "#_state" ).data( "_logon" )
+
+
+
+       ,context: $form
+       ,success: function( data ) { // your success handler
+
+          if ( !$ok )
+          {
+          switch ( data )
+          {
+             case "1" :
+             {
+                 ga.msg.box( { icon:"warning.png", text:"This project directory is currently locked by another project.\nYou can wait until it completes, change the project in user configuration or clear the lock in the job manager." } );
+                 return;
+             } break;
+             case "2" :
+             {
+                 ga.msg.box( { icon:"warning.png", text:"You must be logged in to submit this module." } );
+                 return;
+             } break;
+             case "0" :
+             {
+
+                 $ok = 1;
+             } break;
+             default : 
+             {
+                if ( /^Your job/.test( data ) ) {
+                   ga.msg.box( { icon : "warning.png",
+                                 text : data } );
+                   return;
+                }
+                
+                if ( skipcached ) {
+                    $ok = 1;
+                } else {
+                    return ga.cache.msg( "", "", get_results_tutorial, do_tutorial_submit, data, $form, airavataresource );
+                }
+             } break;
+          }
+          }
+       }
+       ,error: function() { // your error handler
+          ga.msg.box( { icon:"toast.png", text:"Checking the project lock failed. This is possibly a server or network issue" } );
+       }
+       ,complete: function() { 
+          this.off('submit');
+          if ( $ok )
+          {
+
+
+              $( "#tutorial_results" ).text( "" );
+
+              ga.value.saveLastValues( "tutorial" );
+              ga.value.resetDefaultValues( "tutorial_output", true );
+
+              var found_errors = 0;
+              $("#tutorial").find("input").each(function(i){
+                 if ( $(this).attr( 'required' ) && $(this).val().length == 0 )
+                 {
+                    var tag =  "#tutorial " + "#" + $(this).attr('id') + "_msg";
+
+                    $( tag ).html( "missing required field" );
+                    found_errors = 1;
+                 }
+              });
+              if ( found_errors ) {
+                  return;
+              }
+
+    var tree_html = "";
+    $( "._hidden_tree_selects" ).remove( );
+    $.each( input_trees, function( k, v ){
+
+        $( 'input[type=hidden][name="' + v + '[]"]' ).remove();
+        var selectedElms = $('#' + v).jstree("get_selected", true);
+        var i = 0;
+        $.each(selectedElms, function() {
+           tree_html += '<input type="hidden" name="' + v + '[]" value="' + this.id + '" class="_hidden_tree_selects"/>';
+
+        });
+    });
+
+    $( this ).append( tree_html );
+
+
+    var logonadd = $("<input>").attr("type", "hidden").attr("name", "_logon").val( $( "#_state" ).data( "_logon" ) );$( this ).append($(logonadd));
+    var projectadd = $("<input>").attr("type", "hidden").attr("name", "_project").val( $( "#_state" ).data( "_project" ) );$( this ).append($(projectadd));
+    var windowadd = $("<input>").attr("type", "hidden").attr("name", "_window").val( window.name );$( this ).append($(windowadd));
+    
+    var vuuid = uuid.v1();
+
+
+
+
+
+
+
+    if ( airavataresource != "notused" ) {
+        $( this ).append( $("<input>").attr("type", "hidden").attr("name", "_airavataresource").val( airavataresource ) );
+    }
+
+    var uuidadd = $("<input>").attr("type", "hidden").attr("name", "_uuid").val( vuuid );$( this ).append($(uuidadd));
+//    ga.altfile.add( "tutorial" );
+    ga.valuen.addhtml( "tutorial" );
+
+    ga.extrahidden( "tutorial" );
+
+    ga.ws.sub( vuuid, msg_tutorial, "tutorial" );
+
+    var formData = new FormData($('#tutorial')[0]);
+    
+     
+     
+    
+     
+     
+
+     
+     if ( ga.multistage["tutorial"] )
+      {
+        ga.value.modifyformdata(ga.multistage, "tutorial", formData, ga.stages["tutorial"], ga.currentstage);
+      }
+
+
+
+    $('#tutorial_progress').html( "Uploading:<progress></progress>" );
+
+    var job_status = "";
+
+    ga.event( "", "tutorial", "submit: passed submit checks, submitting" );
+
+
+    // var url - coditional based on module's .json setting, and use it in ajax call
+
+    $.ajax( {
+             dataType: "json",
+             cache:false,
+//             timeout:3000,  // for testing
+             type:"POST",
+             url:"ajax/demo_menu/tutorial.php",
+             data: formData,
+             xhr: function() {  // Custom XMLHttpRequest
+                 var myXhr = $.ajaxSettings.xhr();
+                 if(myXhr.upload){ // Check if upload property exists
+                     myXhr.upload.addEventListener('progress',
+                         function(e) {
+                         if(e.lengthComputable){
+                           $('#tutorial_progress progress').attr({value:e.loaded,max:e.total});
+                         } }
+//                     progressHandlingFunction
+                    , false);
+                 }
+                 return myXhr;
+             },
+             contentType: false,
+             processData: false
+            } )
+    .done( function( data, status, xhr ) {
+    
+    if ( ga.multistage["tutorial"] )
+      {
+        ga.value.showfields(ga.multistage, "tutorial", ga.stages["tutorial"], ga.currentstage);
+    	delete ga.stages["tutorial"][ga.currentstage]; 
+    	++ga.currentstage;	
+      }	
+
+
+
+
+// refresh cache for this project
+           $('#tutorial_progress').html( "" );
+   
+           var do_refresh = 1;
+
+           if ( do_refresh ) {
+              ga.fc.clear( $.base64.encode( "./" + $( "#_state" ).data( "_project" ) ) );
+              ga.jc.clear_leaf( vuuid );
+           }
+           
+// loop through data pairs
+           tutorial_output_msgs.text( "" );
+           job_status = ga.data.update( "tutorial", data ).job_status;
+
+           if ( job_status == "complete" ||
+                job_status == "cancelled" ||
+                job_status == "failed" )
+           {
+               if ( tutorial_timeout_handler != "unset" )
+               {
+                   clearTimeout( tutorial_timeout_handler );
+                   tutorial_timeout_handler = "unset";
+               }
+               ga.ws.unsub( vuuid, "tutorial" );
+               eval( tutorial_done_eval );
+           } else {
+               tutorial_timeout_handler = setTimeout( get_results_tutorial, 2000, vuuid, 2000, 0 );
+               tutorial_timeout_handler_uuid = vuuid;
+
+           }
+          } )
+    .fail( function( xhr, status, errorThrown ) {
+
+
+
+
+           $( "#tutorial_results" ).html( "<span class=\"warning\"> Failed: " + status + " : '" + xhr.status + ":" + errorThrown + "' on URL ajax/demo_menu/tutorial.php </span>" );
+           $('#tutorial_progress').html( "" );
+           if ( tutorial_timeout_handler != "unset" )
+           {
+               clearTimeout( tutorial_timeout_handler );
+               tutorial_timeout_handler = "unset";
+           }
+           ga.ws.unsub( vuuid, "tutorial" );
+           eval( tutorial_done_eval );
+          } );
+          } else {
+
+          }
+       }
+   });
+} 
+
+tutorial_reset = function() {
+    
+    if ( !10 ) {
+        // required to reset scrollheight ... 
+        document.getElementById( "tutorial_output_textarea" ).style.height = 0;
+    }
+
+    if ( tutorial_timeout_handler != "unset" ) {
+       
+       clearTimeout( tutorial_timeout_handler );
+       if ( tutorial_timeout_handler_uuid ) {
+           ga.ws.unsub( tutorial_timeout_handler_uuid, "tutorial" );
+       }
+       tutorial_timeout_handler = "unset";
+    }
+    ga.event( "", "tutorial", "reset clicked" );
+    ga.valid.clearerrorcounter( "tutorial" );
+
+   if ( ga.multistage["tutorial"] )
+     {
+       ga.currentstage = 0;
+       ga.value.sethiddenfields(ga.multistage,"tutorial");
+       ga.stages["tutorial"].length = 0;
+       ga.stages["tutorial"] = ga.stagesdefault["tutorial"].slice();
+       console.log("Reset: " + ga.stages["tutorial"]);
+     }
+
+    //    ga.value.resetDefaultValues( "tutorial" );
+    ga.valuen.restore.dflt(  "tutorial" );
+    ga.value.resetDefaultValues( "tutorial_output", true );
+    
+    eval( input_repeats );
+    return false;
+}
+
+$( "#tutorial_reset" ).click( function() {
+   return tutorial_reset();
+});
+
+ga.hhelp.set();
+
+
+eval( input_repeats );
+ga.pull.doPull();
+</script>
+</form>
+<div id="tutorial_results"></div>
+<script>
+ga.tmp.html = "<hr>";
+ga.tmp.html = "";
+$("#tutorial").append( ga.tmp.html );
+</script>
+
+<form id="tutorial_output">
+<div id="tutorial_output_msgs" class="warning" type="msgs"></div>
+<script>
+ga.value.setLastValueOutput( "tutorial_output" );
+ga.value.extra_resets.clear();
+</script>
+
+<span id="tutorial_output_airavata"></span>
+
+<table>
+<tr>
+<td colspan="4" style="vertical-align:top"><label hidden id="tutorial_output_textarea_label" for="tutorial_output_textarea" class="header3 ">Report:</label>
+<textarea readonly hidden id="tutorial_output_textarea" rows="10" cols="110" class="help_link"></textarea>
+<span class="help">general textarea help</span>
+</td>
+</tr>
+</table>
+</form>
+
+
+
+
+<script>loaded_tutorial = 1; </script>

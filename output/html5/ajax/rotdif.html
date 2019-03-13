@@ -1,0 +1,40 @@
+<style>
+#panel_rotdif {
+    position: relative;
+    display: block;  
+}
+</style>
+<p>
+<center>
+
+    <button id="rotdif_rotdif_local" class="help_link">Param_m</button>
+<script>
+    $( "#rotdif_rotdif_local" ).click(function() {
+        var d=$( "#tab_docs > a" );
+        if ( d.length ) { d.attr( "href", "__docsbaseurl__/rotdif/rotdif_local/rotdif_local.html" ); };
+    
+        if ( ga.valuen.lastload && $( "#" + ga.valuen.lastload ).is( ":visible" ) ) { ga.valuen.save( ga.valuen.lastload ); }
+
+        if ( ga.valuen.lastload != "rotdif_local" || !$( "#" + ga.valuen.lastload ).is( ":visible" ) ) {
+            ga.loader.show();
+            $( "#panel_rotdif" ).load( "ajax/rotdif/rotdif_local.html", function() { ga.valuen.save( "rotdif_local", true ); ga.valuen.restore( "rotdif_local" ); ga.valuen.lastload = "rotdif_local"; ga.loader.hide(); });
+        }
+    });
+$( "#rotdif_rotdif_local" ).trigger( "click" );
+$( "#rotdif_rotdif_local" ).hide();
+
+</script>
+</center>
+</p>
+
+<div id="panel_rotdif">
+</div>
+
+
+<script>
+    $( "#panel_rotdif" ).text("");
+ga.tmp.bgi = ga.color.data.body.background;
+
+
+$("body").css( { "background": ga.tmp.bgi + " no-repeat center center fixed", "-webkit-background-size" : "cover", "-moz-background-size" : "cover", "-o-background-size" : "cover" , "background-size": "cover"} );
+</script>

@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/opt/genapp/rotdif/bin/main_elmdock.py", line 46, in <module>
+    to_dock = dock()
+  File "/opt/genapp/rotdif/bin/indicator_chain.py", line 13, in dock
+    with open(exp_file) as in_f:
+UnboundLocalError: local variable 'exp_file' referenced before assignment

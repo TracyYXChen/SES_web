@@ -1,0 +1,2 @@
+[u'/var/www/html/rotdif/results/users/manish123/no_project_specified/ELM_p50hetero_2mar19/ELM_prediction']
+/var/www/html/rotdif/results/users/manish123/no_project_specified

@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/opt/genapp/rotdif/bin/main_rotdif.py", line 64, in <module>
+    os.mkdir(sub_dir)
+OSError: [Errno 2] No such file or directory: 'ROTDIF_p50het_9/3/19'

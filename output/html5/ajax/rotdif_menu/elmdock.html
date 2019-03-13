@@ -1,0 +1,786 @@
+
+
+<form id="elmdock" >
+<span id="elmdock_input_area"></span>
+<script>
+
+ga.tmp.bgi = ga.color.data.body.background;
+
+
+
+if ( !0 ) {
+    $("body").css( { "background": ga.tmp.bgi + " no-repeat center center fixed", "-webkit-background-size" : "cover", "-moz-background-size" : "cover", "-o-background-size" : "cover" , "background-size": "cover"} );
+}
+
+input_eval = "";
+input_html = "<table>";
+input_repeats = "";
+input_trees = [];
+skipped_row = 0;
+elmdock_done_eval = "";
+_jmol_info = {};
+// jmol = "jmol";
+ga.pull.clearPull();
+ga.specproj.clear();
+$('#elmdock').on("keyup keypress", function(e) { var code = e.keyCode || e.which;  if (code  == 13) { e.preventDefault(); return false; }});
+
+this_html = '<tr><td><hr></td></tr><tr><td><label id="ELMDOCK_label_label" class="header4 ">Diffusion Tensor-Guided Docking (ELMDOCK)</label>' + 
+'</td>' +
+'<td><div id="ELMDOCK_label"></div>' +
+'</td></tr><tr><td><hr></td></tr>';
+this_eval = '';
+
+
+
+
+
+input_html += this_html;
+input_eval += this_eval;
+this_html = '<tr><td><label for="run_name">run name </label></td><td><input type="text" name="run_name" id="run_name" required class="help_link"><span class="help">Enter a name to run this task</span><span id="run_name_msg" class="warning field_msg" > </span></td></tr>';
+this_eval = 
+
+
+
+
+'ga.value.registerid("elmdock","run_name","run name","text");'
++ '$( "#run_name" ).blur( function() { ga.valid.checkText( "#run_name" ); });'
++ 
+'ga.value.setLastValue( "elmdock", "#run_name" );$( "#run_name" ).keypress( function() { $( "#run_name_msg" ).html( "" ); });';
+if ( skipped_row == 1 ){ this_html = this_html.replace(/^<tr>/, "" ); skipped_row=0;};
+
+
+
+
+
+
+input_html += this_html;
+input_eval += this_eval;
+this_html = '<tr><td><hr></td></tr><tr><td><label id="data_label_label" class=" ">DATA (ONLY available for 2-domain proteins)</label>' + 
+'</td>' +
+'<td><div id="data_label"></div>' +
+'</td></tr><tr><td><hr></td></tr>';
+this_eval = '';
+
+
+
+
+
+input_html += this_html;
+input_eval += this_eval;
+this_html = '<tr><td><label for="relax_location" >Relaxation Data File </label></td>' +
+'<td><input type="file" name="relax_location" id="relax_location" data-add="relax_location_altval" accept=".txt" class="help_link"><span class="help">Upload relaxation file</span>' +
+' or <button id="relax_location_button" name="relax_location_button" data-type="lrfile" class="help_link"><span class="buttontext">Browse server</span></button>' +
+'<span class="help">Upload relaxation file</span>' +
+' <span id="relax_location_altval"></span>' +
+'<span id="relax_location_msg" class="warning field_msg" > </span></td><input type="hidden" name="_selaltval_relax_location" value="relax_location_altval"</input></tr>';
+
+this_eval = 'ga.value.setLastValue( "elmdock", "#relax_location" );' +
+'ga.altfile("elmdock","relax_location","relax_location_altval");' +
+
+'$( "#relax_location" ).change( function(){$("#relax_location_altval").html( "<i>Local</i>: " + $("#relax_location").val().replace(/^C:.fakepath./,""));$("#relax_location_msg").html("");});' +
+'ga.altfile.button("elmdock","relax_location","Relaxation Data File","rfile",function(v){ga.altfile.button.lrfile(v,"elmdock","relax_location");});' +
+'$("#relax_location_button").on("click",function(){return ga.altfile.button.call("elmdock","relax_location");});' +
+
+'';
+
+// var s = $(v).jstree("get_selected", true),r="";$.each(s,function(){r=r+$.base64.decode(this.id).substr(2)+" "});$("#relax_location_altval").html( r.length ? "<i>Server</i>: " + r : "");r.length?$("#relax_location").val(""):""});' +
+
+if ( skipped_row == 1 ){ this_html = this_html.replace(/^<tr>/, "" ); skipped_row=0;};
+
+
+
+
+
+input_html += this_html;
+input_eval += this_eval;
+this_html = '<tr><td><label for="pdb_location" >PDB Coordinate File </label></td>' +
+'<td><input type="file" name="pdb_location" id="pdb_location" data-add="pdb_location_altval" accept=".pdb" class="help_link"><span class="help">Upload PDB file</span>' +
+' or <button id="pdb_location_button" name="pdb_location_button" data-type="lrfile" class="help_link"><span class="buttontext">Browse server</span></button>' +
+'<span class="help">Upload PDB file</span>' +
+' <span id="pdb_location_altval"></span>' +
+'<span id="pdb_location_msg" class="warning field_msg" > </span></td><input type="hidden" name="_selaltval_pdb_location" value="pdb_location_altval"</input></tr>';
+
+this_eval = 'ga.value.setLastValue( "elmdock", "#pdb_location" );' +
+'ga.altfile("elmdock","pdb_location","pdb_location_altval");' +
+
+'$( "#pdb_location" ).change( function(){$("#pdb_location_altval").html( "<i>Local</i>: " + $("#pdb_location").val().replace(/^C:.fakepath./,""));$("#pdb_location_msg").html("");});' +
+'ga.altfile.button("elmdock","pdb_location","PDB Coordinate File","rfile",function(v){ga.altfile.button.lrfile(v,"elmdock","pdb_location");},"lrfile");' +
+'$("#pdb_location_button").on("click",function(){return ga.altfile.button.call("elmdock","pdb_location");});' +
+
+'';
+
+// var s = $(v).jstree("get_selected", true),r="";$.each(s,function(){r=r+$.base64.decode(this.id).substr(2)+" "});$("#pdb_location_altval").html( r.length ? "<i>Server</i>: " + r : "");r.length?$("#pdb_location").val(""):""});' +
+
+if ( skipped_row == 1 ){ this_html = this_html.replace(/^<tr>/, "" ); skipped_row=0;};
+
+
+
+
+
+input_html += this_html;
+input_eval += this_eval;
+this_html = '<tr><td><label for="model">PDB File model </label></td><td><input type="text" name="model" id="model" value="1" required><span id="model_msg" class="warning field_msg" > </span></td></tr>';
+this_eval = 
+
+
+
+
+'ga.value.registerid("elmdock","model","PDB File model","text");'
++ '$( "#model" ).blur( function() { ga.valid.checkText( "#model" ); });'
++ 
+'ga.value.setLastValue( "elmdock", "#model" );$( "#model" ).keypress( function() { $( "#model_msg" ).html( "" ); });';
+if ( skipped_row == 1 ){ this_html = this_html.replace(/^<tr>/, "" ); skipped_row=0;};
+
+
+
+
+
+
+input_html += this_html;
+input_eval += this_eval;
+this_html = '<tr><td><hr></td></tr><tr><td><label id="runmenu_label_label" class=" ">RUN MENU</label>' + 
+'</td>' +
+'<td><div id="runmenu_label"></div>' +
+'</td></tr><tr><td><hr></td></tr>';
+this_eval = '';
+
+
+
+
+
+input_html += this_html;
+input_eval += this_eval;
+this_html = '<tr id="optimization_method_tr"><td><label for="optimization_method">Optimization Method </label></td><td><select id="optimization_method" name="optimization_method" data-repeater="listbox" class="help_link"><option value="leastsq">Least Squares</option><option value="robust">Robust Least Squares (3.0sig)</option></select>'
++ '<span class="help">Choose optimization method</span>'
++ '</td></tr>'
++ '<tr><td></td><td colspan="4"><table id="optimization_method-repeater"></table></td></tr>' 
+;
+
+this_eval = 
+'ga.repeat.repeater( "elmdock", "optimization_method", "listbox" );' +
+'$("#optimization_method option[value=\'leastsq\']").prop("selected", "true");' +
+'$( "#optimization_method" ).prop( "value", $( "#optimization_method" ).val() );' +
+'ga.value.setLastValue( "elmdock", "#optimization_method", "leastsq" );'
++ 'ga.repeat.change( "elmdock", "optimization_method" );$( "#optimization_method" ).change( function() { ga.repeat.change( "elmdock", "optimization_method" ); } );'
+
+
+;
+
+ input_repeats += 'ga.repeat.change( "elmdock", "optimization_method", 1 );';
+
+if ( skipped_row == 1 ){ this_html = this_html.replace(/^<tr>/, "" ); skipped_row=0;};
+
+
+
+
+
+input_html += this_html;
+input_eval += this_eval;
+this_html = '<tr><td><label for="temperature">Temperature(K) </label></td><td><input type="text" name="temperature" id="temperature" value="298" required><span id="temperature_msg" class="warning field_msg" > </span></td></tr>';
+this_eval = 
+
+
+
+
+'ga.value.registerid("elmdock","temperature","Temperature(K)","text");'
++ '$( "#temperature" ).blur( function() { ga.valid.checkText( "#temperature" ); });'
++ 
+'ga.value.setLastValue( "elmdock", "#temperature" );$( "#temperature" ).keypress( function() { $( "#temperature_msg" ).html( "" ); });';
+if ( skipped_row == 1 ){ this_html = this_html.replace(/^<tr>/, "" ); skipped_row=0;};
+
+
+
+
+
+
+input_html += this_html;
+input_eval += this_eval;
+this_html = '<tr id="adv_option_tr"><td><label for="adv_option" class="highlight">check box to enable advanced model </label></td><td><input type="checkbox" name="adv_option" id="adv_option" data-repeater="checkbox"></td></tr>'
++ '<tr><td></td><td colspan="4"><table id="adv_option-repeater"></table></td></tr>'
+;
+this_eval = 
+'ga.value.setLastValue( "elmdock", "#adv_option" );'
+
+
+
+
+
+ + 'ga.repeat.repeater( "elmdock", "adv_option", "checkbox" );$( "#adv_option" ).change( function() { ga.repeat.change( "elmdock", "adv_option" ); } );'
+
+
+
+ input_repeats += 'ga.repeat.change( "elmdock", "adv_option", 1 );';
+
+if ( skipped_row == 1 ){ this_html = this_html.replace(/^<tr id="adv_option_tr">/, "" ); skipped_row=0;};
+
+
+
+
+
+input_html += this_html;
+input_eval += this_eval;
+this_html = '<tr><td><label for="hydro">Hydration layer thickness(Angstrom) </label></td><td><input type="text" name="hydro" id="hydro" value="2.2" required><span id="hydro_msg" class="warning field_msg" > </span></td></tr>';
+this_eval = 
+
+
+
+
+'ga.value.registerid("elmdock","hydro","Hydration layer thickness(Angstrom)","text");'
++ '$( "#hydro" ).blur( function() { ga.valid.checkText( "#hydro" ); });'
++ 
+'ga.value.setLastValue( "elmdock", "#hydro" );$( "#hydro" ).keypress( function() { $( "#hydro_msg" ).html( "" ); });';
+if ( skipped_row == 1 ){ this_html = this_html.replace(/^<tr>/, "" ); skipped_row=0;};
+
+
+
+this_html = ga.repeat.repeat( "elmdock", "hydro", this_html, this_eval );
+this_eval = 'ga.repeat.repeatOn("elmdock", "hydro", "adv_option" );';
+
+input_html += this_html;
+input_eval += this_eval;
+this_html = '<tr><td><label for="water">Water radius(Angstrom) </label></td><td><input type="text" name="water" id="water" value="1.4" required><span id="water_msg" class="warning field_msg" > </span></td></tr>';
+this_eval = 
+
+
+
+
+'ga.value.registerid("elmdock","water","Water radius(Angstrom)","text");'
++ '$( "#water" ).blur( function() { ga.valid.checkText( "#water" ); });'
++ 
+'ga.value.setLastValue( "elmdock", "#water" );$( "#water" ).keypress( function() { $( "#water_msg" ).html( "" ); });';
+if ( skipped_row == 1 ){ this_html = this_html.replace(/^<tr>/, "" ); skipped_row=0;};
+
+
+
+this_html = ga.repeat.repeat( "elmdock", "water", this_html, this_eval );
+this_eval = 'ga.repeat.repeatOn("elmdock", "water", "adv_option" );';
+
+input_html += this_html;
+input_eval += this_eval;
+if( skipped_row == 1 ){ input_html += "</tr>"; }
+input_html += '</table>';
+$( '#elmdock_input_area' ).html( input_html );
+eval( input_eval );
+</script>
+<p><button id="elmdock_submit" class="help_link"><span class="buttontext">Submit</span></button>
+
+<button id="elmdock_reset" class="help_link"><span class="buttontext">Reset to default values</span></button>
+
+
+</p>
+<span id="elmdock_progress"></span>
+<script>
+
+
+
+
+
+
+var elmdock_output_msgs = $("#elmdock_output_msgs");
+elmdock_output_msgs.text( "" );
+
+var elmdock_timeout_handler = "unset";
+var elmdock_timeout_handler_uuid;
+
+function get_results_elmdock( id, last_timeout, getlastmsg, getinput )
+{
+
+//             url:"ajax/get_results.php?_window=" +  window.name + "&_logon=" +$( "#_state" ).data( "_logon" ) + '&_uuid=' + id,
+    var job_status = "";
+    
+    $.getJSON( 
+             "ajax/get_results.php",
+             {
+                tagmode: "any",
+                format: "json",
+                _window : window.name,
+                _logon : $( "#_state" ).data( "_logon" ),
+                _uuid : id,
+                _getlastmsg : getlastmsg,
+                _getinput : getinput ? true : false
+             } )
+    .done( function( data, status, xhr ) {
+
+           var do_refresh = 1;
+
+           if ( do_refresh ) {
+              ga.fc.clear( $.base64.encode( "./" + $( "#_state" ).data( "_project" ) ) );
+              ga.jc.clear_leaf( id );
+           }
+
+           job_status = ga.data.update( "elmdock", data ).job_status;
+           if ( job_status == "complete" ||
+                job_status == "cancelled" ||
+                job_status == "failed" )
+           {
+              if ( elmdock_timeout_handler != "unset" )
+              {
+                  clearTimeout( elmdock_timeout_handler );
+                  elmdock_timeout_handler = "unset";
+              }
+              ga.ws.unsub( id, "elmdock" );
+              eval( elmdock_done_eval );
+           } else {
+               if ( !last_timeout || last_timeout < 2000 )
+               { 
+                  last_timeout = 2000;
+               } else {
+                  if ( last_timeout < 16000 )
+                  {
+                      last_timeout *= 2;
+                  } else {
+                      last_timeout = 16000;
+                  }
+               }
+
+               elmdock_timeout_handler =  setTimeout( get_results_elmdock, last_timeout, id, last_timeout, 0 );
+               elmdock_timeout_handler_uuid = id;
+           }
+          } )
+    .fail( function( xhr, status, errorThrown ) {
+
+           $( "#elmdock_results" ).html( "<span class=\"warning\"> Failed: " + status + " : '" + xhr.status + ":" + errorThrown + "' on URL ajax/tools/center.php </span>" );
+           $('#elmdock_progress').html( "" );
+           if ( elmdock_timeout_handler != "unset" )
+           {
+               clearTimeout( elmdock_timeout_handler );
+               elmdock_timeout_handler = "unset";
+           }
+           ga.ws.unsub( id, "elmdock" );
+           eval( elmdock_done_eval );
+          } );
+    return false;
+};
+
+function msg_elmdock ( id, data )
+{
+   ga.data.update( "elmdock", data, get_results_elmdock, id );
+};
+
+$( "#elmdock_submit" ).click( function( e ) {
+   e.preventDefault();
+   e.returnValue = false;
+   $( "#elmdock" ).find( ".toclear" ).remove();   
+   if ( elmdock_timeout_handler != "unset" ) {
+       
+       clearTimeout( elmdock_timeout_handler );
+       if ( elmdock_timeout_handler_uuid ) {
+           ga.ws.unsub( elmdock_timeout_handler_uuid, "elmdock" );
+       }
+       elmdock_timeout_handler = "unset";
+   }
+   ga.value.resetDefaultValues( "elmdock_output", true );
+
+   
+   return ga.xsede.select( "__resource__", do_elmdock_submit, $(this) );
+   //   return do_elmdock_submit( $(this) );
+});
+
+function do_elmdock_submit( $form, airavataresource, skipcached ) {
+
+   var $ok = 0;
+   
+   
+
+   ga.event( "", "elmdock", "submit clicked" );
+
+   
+
+
+
+
+
+   if ( !ga.valid.checksubmit( "elmdock" ) ) {
+       ga.valid.showerrormessage( "elmdock" );
+       return false;
+   }
+
+   if ( ga.specproj.data.length ) {
+      if ( $( "#_state" ).data( '_logon' ) &&
+           $( "#_state" ).data( '_logon' ).length ) {
+          $( "#sel_project" ).html( ga.specproj.gname() );
+          $( "#_state" ).data( '_project', ga.specproj.gname() );
+          
+      }
+   }  
+
+//   if ( 0 && !xsedeproject) {
+//      
+//      switch( project = ga.xsede.select( "__resource__", do_elmdock_submit, $form ) ) {
+//      case "deferred" : return false; break;
+//      case "abort"    : return false; break;
+//      case "notused"  : break;
+//      }
+      
+      
+
+   if ( !airavataresource ) {
+      
+      switch( airavataresource = ga.airavata.select( "__resource__", "__airavataselect__", do_elmdock_submit, $form ) ) {
+      case "deferred" : return false; break;
+      case "abort"    : return false; break;
+      case "notused"  : break;
+      }
+      
+   }
+   
+
+   $.ajax({
+       type: 'get'
+       ,url: "ajax/sys_config/sys_joblocked.php?_window=" +  window.name + "&_logon=" + $( "#_state" ).data( "_logon" )
+ + "&_submitpolicy=login"
+
+
+       ,context: $form
+       ,success: function( data ) { // your success handler
+
+          if ( !$ok )
+          {
+          switch ( data )
+          {
+             case "1" :
+             {
+                 ga.msg.box( { icon:"warning.png", text:"This project directory is currently locked by another project.\nYou can wait until it completes, change the project in user configuration or clear the lock in the job manager." } );
+                 return;
+             } break;
+             case "2" :
+             {
+                 ga.msg.box( { icon:"warning.png", text:"You must be logged in to submit this module." } );
+                 return;
+             } break;
+             case "0" :
+             {
+
+                 $ok = 1;
+             } break;
+             default : 
+             {
+                if ( /^Your job/.test( data ) ) {
+                   ga.msg.box( { icon : "warning.png",
+                                 text : data } );
+                   return;
+                }
+                
+                if ( skipcached ) {
+                    $ok = 1;
+                } else {
+                    return ga.cache.msg( "", "", get_results_elmdock, do_elmdock_submit, data, $form, airavataresource );
+                }
+             } break;
+          }
+          }
+       }
+       ,error: function() { // your error handler
+          ga.msg.box( { icon:"toast.png", text:"Checking the project lock failed. This is possibly a server or network issue" } );
+       }
+       ,complete: function() { 
+          this.off('submit');
+          if ( $ok )
+          {
+
+
+              $( "#elmdock_results" ).text( "" );
+
+              ga.value.saveLastValues( "elmdock" );
+              ga.value.resetDefaultValues( "elmdock_output", true );
+
+              var found_errors = 0;
+              $("#elmdock").find("input").each(function(i){
+                 if ( $(this).attr( 'required' ) && $(this).val().length == 0 )
+                 {
+                    var tag =  "#elmdock " + "#" + $(this).attr('id') + "_msg";
+
+                    $( tag ).html( "missing required field" );
+                    found_errors = 1;
+                 }
+              });
+              if ( found_errors ) {
+                  return;
+              }
+
+    var tree_html = "";
+    $( "._hidden_tree_selects" ).remove( );
+    $.each( input_trees, function( k, v ){
+
+        $( 'input[type=hidden][name="' + v + '[]"]' ).remove();
+        var selectedElms = $('#' + v).jstree("get_selected", true);
+        var i = 0;
+        $.each(selectedElms, function() {
+           tree_html += '<input type="hidden" name="' + v + '[]" value="' + this.id + '" class="_hidden_tree_selects"/>';
+
+        });
+    });
+
+    $( this ).append( tree_html );
+
+
+    var logonadd = $("<input>").attr("type", "hidden").attr("name", "_logon").val( $( "#_state" ).data( "_logon" ) );$( this ).append($(logonadd));
+    var projectadd = $("<input>").attr("type", "hidden").attr("name", "_project").val( $( "#_state" ).data( "_project" ) );$( this ).append($(projectadd));
+    var windowadd = $("<input>").attr("type", "hidden").attr("name", "_window").val( window.name );$( this ).append($(windowadd));
+    
+    var vuuid = uuid.v1();
+
+
+
+
+
+
+
+    if ( airavataresource != "notused" ) {
+        $( this ).append( $("<input>").attr("type", "hidden").attr("name", "_airavataresource").val( airavataresource ) );
+    }
+
+    var uuidadd = $("<input>").attr("type", "hidden").attr("name", "_uuid").val( vuuid );$( this ).append($(uuidadd));
+//    ga.altfile.add( "elmdock" );
+    ga.valuen.addhtml( "elmdock" );
+
+    ga.extrahidden( "elmdock" );
+
+    ga.ws.sub( vuuid, msg_elmdock, "elmdock" );
+
+    var formData = new FormData($('#elmdock')[0]);
+    
+     
+     
+    
+     
+     
+
+     
+     if ( ga.multistage["elmdock"] )
+      {
+        ga.value.modifyformdata(ga.multistage, "elmdock", formData, ga.stages["elmdock"], ga.currentstage);
+      }
+
+
+
+    $('#elmdock_progress').html( "Uploading:<progress></progress>" );
+
+    var job_status = "";
+
+    ga.event( "", "elmdock", "submit: passed submit checks, submitting" );
+
+
+    // var url - coditional based on module's .json setting, and use it in ajax call
+
+    $.ajax( {
+             dataType: "json",
+             cache:false,
+//             timeout:3000,  // for testing
+             type:"POST",
+             url:"ajax/rotdif_menu/elmdock.php",
+             data: formData,
+             xhr: function() {  // Custom XMLHttpRequest
+                 var myXhr = $.ajaxSettings.xhr();
+                 if(myXhr.upload){ // Check if upload property exists
+                     myXhr.upload.addEventListener('progress',
+                         function(e) {
+                         if(e.lengthComputable){
+                           $('#elmdock_progress progress').attr({value:e.loaded,max:e.total});
+                         } }
+//                     progressHandlingFunction
+                    , false);
+                 }
+                 return myXhr;
+             },
+             contentType: false,
+             processData: false
+            } )
+    .done( function( data, status, xhr ) {
+    
+    if ( ga.multistage["elmdock"] )
+      {
+        ga.value.showfields(ga.multistage, "elmdock", ga.stages["elmdock"], ga.currentstage);
+    	delete ga.stages["elmdock"][ga.currentstage]; 
+    	++ga.currentstage;	
+      }	
+
+
+
+
+// refresh cache for this project
+           $('#elmdock_progress').html( "" );
+   
+           var do_refresh = 1;
+
+           if ( do_refresh ) {
+              ga.fc.clear( $.base64.encode( "./" + $( "#_state" ).data( "_project" ) ) );
+              ga.jc.clear_leaf( vuuid );
+           }
+           
+// loop through data pairs
+           elmdock_output_msgs.text( "" );
+           job_status = ga.data.update( "elmdock", data ).job_status;
+
+           if ( job_status == "complete" ||
+                job_status == "cancelled" ||
+                job_status == "failed" )
+           {
+               if ( elmdock_timeout_handler != "unset" )
+               {
+                   clearTimeout( elmdock_timeout_handler );
+                   elmdock_timeout_handler = "unset";
+               }
+               ga.ws.unsub( vuuid, "elmdock" );
+               eval( elmdock_done_eval );
+           } else {
+               elmdock_timeout_handler = setTimeout( get_results_elmdock, 2000, vuuid, 2000, 0 );
+               elmdock_timeout_handler_uuid = vuuid;
+
+           }
+          } )
+    .fail( function( xhr, status, errorThrown ) {
+
+
+
+
+           $( "#elmdock_results" ).html( "<span class=\"warning\"> Failed: " + status + " : '" + xhr.status + ":" + errorThrown + "' on URL ajax/rotdif_menu/elmdock.php </span>" );
+           $('#elmdock_progress').html( "" );
+           if ( elmdock_timeout_handler != "unset" )
+           {
+               clearTimeout( elmdock_timeout_handler );
+               elmdock_timeout_handler = "unset";
+           }
+           ga.ws.unsub( vuuid, "elmdock" );
+           eval( elmdock_done_eval );
+          } );
+          } else {
+
+          }
+       }
+   });
+} 
+
+elmdock_reset = function() {
+    
+    if ( !10 ) {
+        // required to reset scrollheight ... 
+        document.getElementById( "elmdock_output_textarea" ).style.height = 0;
+    }
+
+    if ( elmdock_timeout_handler != "unset" ) {
+       
+       clearTimeout( elmdock_timeout_handler );
+       if ( elmdock_timeout_handler_uuid ) {
+           ga.ws.unsub( elmdock_timeout_handler_uuid, "elmdock" );
+       }
+       elmdock_timeout_handler = "unset";
+    }
+    ga.event( "", "elmdock", "reset clicked" );
+    ga.valid.clearerrorcounter( "elmdock" );
+
+   if ( ga.multistage["elmdock"] )
+     {
+       ga.currentstage = 0;
+       ga.value.sethiddenfields(ga.multistage,"elmdock");
+       ga.stages["elmdock"].length = 0;
+       ga.stages["elmdock"] = ga.stagesdefault["elmdock"].slice();
+       console.log("Reset: " + ga.stages["elmdock"]);
+     }
+
+    //    ga.value.resetDefaultValues( "elmdock" );
+    ga.valuen.restore.dflt(  "elmdock" );
+    ga.value.resetDefaultValues( "elmdock_output", true );
+    
+    eval( input_repeats );
+    return false;
+}
+
+$( "#elmdock_reset" ).click( function() {
+   return elmdock_reset();
+});
+
+ga.hhelp.set();
+
+
+eval( input_repeats );
+ga.pull.doPull();
+</script>
+</form>
+<div id="elmdock_results"></div>
+<script>
+ga.tmp.html = "<hr>";
+
+$("#elmdock").append( ga.tmp.html );
+</script>
+
+<form id="elmdock_output">
+<div id="elmdock_output_msgs" class="warning" type="msgs"></div>
+<script>
+ga.value.setLastValueOutput( "elmdock_output" );
+ga.value.extra_resets.clear();
+</script>
+
+<span id="elmdock_output_airavata"></span>
+
+<table>
+<tr>
+<td colspan="4" style="vertical-align:top"><label hidden id="elmdock_output_textarea_label" for="elmdock_output_textarea" class="header3 ">Report:</label>
+<textarea readonly hidden id="elmdock_output_textarea" rows="10" cols="110" class="help_link"></textarea>
+<span class="help">general textarea help</span>
+</td>
+</tr>
+<tr><td><label for="progress_output">Progress:  </label></td><td><progress name="progress_output" id="progress_output" value="0" max="1"></progress></td></tr>
+<script>
+ga.value.setLastValue( "elmdock_output", "#progress_output" );
+</script>
+<tr><td><label for="progress_text">Calculation Report:  </label></td><td><textarea name="progress_text" id="progress_text" cols="40" readonly></textarea>
+</td></tr>
+<script>
+
+ga.value.setLastValue( "elmdock_output", "#progress_text" );
+</script>
+<tr><td><label for="outputrotdif">Detailed Results File:  </label>
+</td>
+<td><div id="outputrotdif" type="filelinkm" readonly><span id="outputrotdif_filelink"></span></div>
+</td></tr>
+<script>
+ga.value.setLastValue( "elmdock_output", "#outputrotdif" );
+ga.value.extra_resets( "outputrotdif" );
+</script>
+<tr><td><label for="elmdock_out">ELMDOCK results &nbsp;&nbsp; </label>
+</td>
+<td><div id="elmdock_out" type="filelinkm" readonly><span id="elmdock_out_filelink"></span></div>
+</td></tr>
+<script>
+ga.value.setLastValue( "elmdock_output", "#elmdock_out" );
+ga.value.extra_resets( "elmdock_out" );
+</script>
+<tr><td><label for="pdb">ELMDOCK PDB file  </label>
+</td>
+<td><div id="pdb" type="filelinkm" readonly><span id="pdb_filelink"></span></div>
+</td></tr>
+<script>
+ga.value.setLastValue( "elmdock_output", "#pdb" );
+ga.value.extra_resets( "pdb" );
+</script>
+</table>
+<p><label for="outputpdb">Docking View <div id="outputpdb" type="atomicstructure" ></div>
+</label></p>
+<p><div id="_jmol_panel_outputpdb"></div></p>
+<script>
+
+_jmol_info[ "outputpdb" ] = {
+   width: 850,
+   height: 850,
+        disableJ2SLoadMonitor: true,
+        disableInitialConsole: true,
+	use: "HTML5",
+	j2sPath: "j2s",
+	isSigned: false,
+	addSelectionOptions: false,
+	readyFunction: null,
+	defaultModel: null,
+	debug: false
+};
+ga.value.setLastValue( "elmdock_output", "#outputpdb" );
+ga.value.extra_resets( "outputpdb" );
+</script>
+<table>
+</table>
+</form>
+
+
+
+
+<script>loaded_elmdock = 1; </script>

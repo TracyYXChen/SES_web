@@ -1,0 +1,103 @@
+# this is a module file, any module specific info belongs here
+{
+    "moduleid" : "ses_all",
+    "label"    : "Calculate",
+    #"resource" : "oscluster",
+    "submitpolicy" : "login",
+    #"help"     : "help for Bead Modeller",
+    #"center"   : "true",
+    #"centeroutput" : "true",
+    #"notify"    : "alexsav.science@gmail.com",
+    "notify" : "ychen151@terpmail.umd.edu",
+
+    
+    "fields"   : [
+                  {   
+                   "role"     : "input",  
+                   "id"       : "ses_label",
+                   "label"    : "Sparse Ensemble Selection(SES)",
+                   "type"     : "label",
+                   "prehline" : "true",
+                   "posthline": "true",
+                   "default"  : "header4"
+               },  
+               {
+	            "role"       : "input"
+	            ,"id"         : "run_name"
+	            ,"label"      : "run name"
+	            ,"type"       : "text"
+	            ,"required"   : "true"
+	            ,"help"       : "Enter a name to run this task"
+	        },
+	       { 
+		   "role"     : "input",  
+		   "id"       : "data_label",
+		   "label"    : "DATA",
+		   "type"     : "label",
+		   "prehline" : "true",
+		   "posthline": "true",
+		   "default"  : ""
+	       },
+
+               {
+                   "role"     : "input",
+                   "id"       : "exp_location",
+                   "label"    : "Experiment Data File",
+                   "type"     : "lrfile",
+                   "required" : "true",
+		   "accept"   : ".txt",
+		   "help"     : "Upload experiment data file"
+                   },
+                  {
+                   "role"     : "input",
+                   "id"       : "mat_location",
+                   "label"    : "Ensemble Matrix File",
+                   "type"     : "lrfile",
+                   "required" : "true",
+		   "accept"   : ".txt",
+		   "help"     : "Upload ensemble matrix file"
+                   },
+	       { 
+		   "role"     : "input",  
+		   "id"       : "runmenu_label",
+		   "label"    : "RUN MENU",
+		   "type"     : "label",
+		   "prehline" : "true",
+		   "posthline": "true",
+		   "default"  : ""
+	       },
+ #########################################################################################
+                 {
+		     "role"    : "output",
+		     "id"      : "progress_output",
+		     "label"   : "Progress: ",
+		     "type"    : "progress",
+		     "max"     : 1.0
+		 },	
+                {
+		   "role"    : "output",
+                   "id"      : "progress_text",
+                   "label"   : "Calculation Report: ",
+		   "type"    : "textarea",
+                   #"append"  : "on",
+                   "cols"    : 40
+                  },
+
+#                {
+#		   "role"    : "output",
+#                   "id"      : "live_log",
+#                   "label"   : "Live Log File:  ",
+#		   "type"    : "html"
+#                }, 
+	           {
+                   "role"  : "output",
+                   "id"    : "output_ses",
+                   "label" : "SES Results File: ",
+                   "type"  : "file",
+		   "multiple": "true"    
+                  } 
+            ],
+
+# the executable will take inputs in order and produce output
+    "executable" : "main_ses.py"
+}

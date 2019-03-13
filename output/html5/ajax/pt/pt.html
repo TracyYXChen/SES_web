@@ -1,0 +1,698 @@
+
+
+<form id="pt" >
+<span id="pt_input_area"></span>
+<script>
+
+ga.tmp.bgi = ga.color.data.body.background;
+
+
+
+if ( !0 ) {
+    $("body").css( { "background": ga.tmp.bgi + " no-repeat center center fixed", "-webkit-background-size" : "cover", "-moz-background-size" : "cover", "-o-background-size" : "cover" , "background-size": "cover"} );
+}
+
+input_eval = "";
+input_html = "<table>";
+input_repeats = "";
+input_trees = [];
+skipped_row = 0;
+pt_done_eval = "";
+_jmol_info = {};
+// jmol = "jmol";
+ga.pull.clearPull();
+ga.specproj.clear();
+$('#pt').on("keyup keypress", function(e) { var code = e.keyCode || e.which;  if (code  == 13) { e.preventDefault(); return false; }});
+
+if( skipped_row == 1 ){ input_html += "</tr>"; }
+input_html += '</table>';
+$( '#pt_input_area' ).html( input_html );
+eval( input_eval );
+</script>
+<p><button id="pt_submit" class="help_link"><span class="buttontext">Submit</span></button>
+<span class="help">this is help for the submit button</span>
+<button id="pt_reset" class="help_link"><span class="buttontext">Reset to default values</span></button>
+<span class="help">this is help for the reset to default values button</span>
+
+</p>
+<span id="pt_progress"></span>
+<script>
+
+
+
+
+
+
+var pt_output_msgs = $("#pt_output_msgs");
+pt_output_msgs.text( "" );
+
+var pt_timeout_handler = "unset";
+var pt_timeout_handler_uuid;
+
+function get_results_pt( id, last_timeout, getlastmsg, getinput )
+{
+
+//             url:"ajax/get_results.php?_window=" +  window.name + "&_logon=" +$( "#_state" ).data( "_logon" ) + '&_uuid=' + id,
+    var job_status = "";
+    
+    $.getJSON( 
+             "ajax/get_results.php",
+             {
+                tagmode: "any",
+                format: "json",
+                _window : window.name,
+                _logon : $( "#_state" ).data( "_logon" ),
+                _uuid : id,
+                _getlastmsg : getlastmsg,
+                _getinput : getinput ? true : false
+             } )
+    .done( function( data, status, xhr ) {
+
+           var do_refresh = 1;
+
+           if ( do_refresh ) {
+              ga.fc.clear( $.base64.encode( "./" + $( "#_state" ).data( "_project" ) ) );
+              ga.jc.clear_leaf( id );
+           }
+
+           job_status = ga.data.update( "pt", data ).job_status;
+           if ( job_status == "complete" ||
+                job_status == "cancelled" ||
+                job_status == "failed" )
+           {
+              if ( pt_timeout_handler != "unset" )
+              {
+                  clearTimeout( pt_timeout_handler );
+                  pt_timeout_handler = "unset";
+              }
+              ga.ws.unsub( id, "pt" );
+              eval( pt_done_eval );
+           } else {
+               if ( !last_timeout || last_timeout < 2000 )
+               { 
+                  last_timeout = 2000;
+               } else {
+                  if ( last_timeout < 16000 )
+                  {
+                      last_timeout *= 2;
+                  } else {
+                      last_timeout = 16000;
+                  }
+               }
+
+               pt_timeout_handler =  setTimeout( get_results_pt, last_timeout, id, last_timeout, 0 );
+               pt_timeout_handler_uuid = id;
+           }
+          } )
+    .fail( function( xhr, status, errorThrown ) {
+
+           $( "#pt_results" ).html( "<span class=\"warning\"> Failed: " + status + " : '" + xhr.status + ":" + errorThrown + "' on URL ajax/tools/center.php </span>" );
+           $('#pt_progress').html( "" );
+           if ( pt_timeout_handler != "unset" )
+           {
+               clearTimeout( pt_timeout_handler );
+               pt_timeout_handler = "unset";
+           }
+           ga.ws.unsub( id, "pt" );
+           eval( pt_done_eval );
+          } );
+    return false;
+};
+
+function msg_pt ( id, data )
+{
+   ga.data.update( "pt", data, get_results_pt, id );
+};
+
+$( "#pt_submit" ).click( function( e ) {
+   e.preventDefault();
+   e.returnValue = false;
+   $( "#pt" ).find( ".toclear" ).remove();   
+   if ( pt_timeout_handler != "unset" ) {
+       
+       clearTimeout( pt_timeout_handler );
+       if ( pt_timeout_handler_uuid ) {
+           ga.ws.unsub( pt_timeout_handler_uuid, "pt" );
+       }
+       pt_timeout_handler = "unset";
+   }
+   ga.value.resetDefaultValues( "pt_output", true );
+
+   
+   return ga.xsede.select( "__resource__", do_pt_submit, $(this) );
+   //   return do_pt_submit( $(this) );
+});
+
+function do_pt_submit( $form, airavataresource, skipcached ) {
+
+   var $ok = 0;
+   
+   
+
+   ga.event( "", "pt", "submit clicked" );
+
+   
+
+
+
+
+
+   if ( !ga.valid.checksubmit( "pt" ) ) {
+       ga.valid.showerrormessage( "pt" );
+       return false;
+   }
+
+   if ( ga.specproj.data.length ) {
+      if ( $( "#_state" ).data( '_logon' ) &&
+           $( "#_state" ).data( '_logon' ).length ) {
+          $( "#sel_project" ).html( ga.specproj.gname() );
+          $( "#_state" ).data( '_project', ga.specproj.gname() );
+          
+      }
+   }  
+
+//   if ( 0 && !xsedeproject) {
+//      
+//      switch( project = ga.xsede.select( "__resource__", do_pt_submit, $form ) ) {
+//      case "deferred" : return false; break;
+//      case "abort"    : return false; break;
+//      case "notused"  : break;
+//      }
+      
+      
+
+   if ( !airavataresource ) {
+      
+      switch( airavataresource = ga.airavata.select( "__resource__", "__airavataselect__", do_pt_submit, $form ) ) {
+      case "deferred" : return false; break;
+      case "abort"    : return false; break;
+      case "notused"  : break;
+      }
+      
+   }
+   
+
+   $.ajax({
+       type: 'get'
+       ,url: "ajax/sys_config/sys_joblocked.php?_window=" +  window.name + "&_logon=" + $( "#_state" ).data( "_logon" )
+
+
+
+       ,context: $form
+       ,success: function( data ) { // your success handler
+
+          if ( !$ok )
+          {
+          switch ( data )
+          {
+             case "1" :
+             {
+                 ga.msg.box( { icon:"warning.png", text:"This project directory is currently locked by another project.\nYou can wait until it completes, change the project in user configuration or clear the lock in the job manager." } );
+                 return;
+             } break;
+             case "2" :
+             {
+                 ga.msg.box( { icon:"warning.png", text:"You must be logged in to submit this module." } );
+                 return;
+             } break;
+             case "0" :
+             {
+
+                 $ok = 1;
+             } break;
+             default : 
+             {
+                if ( /^Your job/.test( data ) ) {
+                   ga.msg.box( { icon : "warning.png",
+                                 text : data } );
+                   return;
+                }
+                
+                if ( skipcached ) {
+                    $ok = 1;
+                } else {
+                    return ga.cache.msg( "", "", get_results_pt, do_pt_submit, data, $form, airavataresource );
+                }
+             } break;
+          }
+          }
+       }
+       ,error: function() { // your error handler
+          ga.msg.box( { icon:"toast.png", text:"Checking the project lock failed. This is possibly a server or network issue" } );
+       }
+       ,complete: function() { 
+          this.off('submit');
+          if ( $ok )
+          {
+
+
+              $( "#pt_results" ).text( "" );
+
+              ga.value.saveLastValues( "pt" );
+              ga.value.resetDefaultValues( "pt_output", true );
+
+              var found_errors = 0;
+              $("#pt").find("input").each(function(i){
+                 if ( $(this).attr( 'required' ) && $(this).val().length == 0 )
+                 {
+                    var tag =  "#pt " + "#" + $(this).attr('id') + "_msg";
+
+                    $( tag ).html( "missing required field" );
+                    found_errors = 1;
+                 }
+              });
+              if ( found_errors ) {
+                  return;
+              }
+
+    var tree_html = "";
+    $( "._hidden_tree_selects" ).remove( );
+    $.each( input_trees, function( k, v ){
+
+        $( 'input[type=hidden][name="' + v + '[]"]' ).remove();
+        var selectedElms = $('#' + v).jstree("get_selected", true);
+        var i = 0;
+        $.each(selectedElms, function() {
+           tree_html += '<input type="hidden" name="' + v + '[]" value="' + this.id + '" class="_hidden_tree_selects"/>';
+
+        });
+    });
+
+    $( this ).append( tree_html );
+
+
+    var logonadd = $("<input>").attr("type", "hidden").attr("name", "_logon").val( $( "#_state" ).data( "_logon" ) );$( this ).append($(logonadd));
+    var projectadd = $("<input>").attr("type", "hidden").attr("name", "_project").val( $( "#_state" ).data( "_project" ) );$( this ).append($(projectadd));
+    var windowadd = $("<input>").attr("type", "hidden").attr("name", "_window").val( window.name );$( this ).append($(windowadd));
+    
+    var vuuid = uuid.v1();
+
+
+
+
+
+
+
+    if ( airavataresource != "notused" ) {
+        $( this ).append( $("<input>").attr("type", "hidden").attr("name", "_airavataresource").val( airavataresource ) );
+    }
+
+    var uuidadd = $("<input>").attr("type", "hidden").attr("name", "_uuid").val( vuuid );$( this ).append($(uuidadd));
+//    ga.altfile.add( "pt" );
+    ga.valuen.addhtml( "pt" );
+
+    ga.extrahidden( "pt" );
+
+    ga.ws.sub( vuuid, msg_pt, "pt" );
+
+    var formData = new FormData($('#pt')[0]);
+    
+     
+     
+    
+     
+     
+
+     
+     if ( ga.multistage["pt"] )
+      {
+        ga.value.modifyformdata(ga.multistage, "pt", formData, ga.stages["pt"], ga.currentstage);
+      }
+
+
+
+    $('#pt_progress').html( "Uploading:<progress></progress>" );
+
+    var job_status = "";
+
+    ga.event( "", "pt", "submit: passed submit checks, submitting" );
+
+
+    // var url - coditional based on module's .json setting, and use it in ajax call
+
+    $.ajax( {
+             dataType: "json",
+             cache:false,
+//             timeout:3000,  // for testing
+             type:"POST",
+             url:"ajax/pt/pt.php",
+             data: formData,
+             xhr: function() {  // Custom XMLHttpRequest
+                 var myXhr = $.ajaxSettings.xhr();
+                 if(myXhr.upload){ // Check if upload property exists
+                     myXhr.upload.addEventListener('progress',
+                         function(e) {
+                         if(e.lengthComputable){
+                           $('#pt_progress progress').attr({value:e.loaded,max:e.total});
+                         } }
+//                     progressHandlingFunction
+                    , false);
+                 }
+                 return myXhr;
+             },
+             contentType: false,
+             processData: false
+            } )
+    .done( function( data, status, xhr ) {
+    
+    if ( ga.multistage["pt"] )
+      {
+        ga.value.showfields(ga.multistage, "pt", ga.stages["pt"], ga.currentstage);
+    	delete ga.stages["pt"][ga.currentstage]; 
+    	++ga.currentstage;	
+      }	
+
+
+
+
+// refresh cache for this project
+           $('#pt_progress').html( "" );
+   
+           var do_refresh = 1;
+
+           if ( do_refresh ) {
+              ga.fc.clear( $.base64.encode( "./" + $( "#_state" ).data( "_project" ) ) );
+              ga.jc.clear_leaf( vuuid );
+           }
+           
+// loop through data pairs
+           pt_output_msgs.text( "" );
+           job_status = ga.data.update( "pt", data ).job_status;
+
+           if ( job_status == "complete" ||
+                job_status == "cancelled" ||
+                job_status == "failed" )
+           {
+               if ( pt_timeout_handler != "unset" )
+               {
+                   clearTimeout( pt_timeout_handler );
+                   pt_timeout_handler = "unset";
+               }
+               ga.ws.unsub( vuuid, "pt" );
+               eval( pt_done_eval );
+           } else {
+               pt_timeout_handler = setTimeout( get_results_pt, 2000, vuuid, 2000, 0 );
+               pt_timeout_handler_uuid = vuuid;
+
+           }
+          } )
+    .fail( function( xhr, status, errorThrown ) {
+
+
+
+
+           $( "#pt_results" ).html( "<span class=\"warning\"> Failed: " + status + " : '" + xhr.status + ":" + errorThrown + "' on URL ajax/pt/pt.php </span>" );
+           $('#pt_progress').html( "" );
+           if ( pt_timeout_handler != "unset" )
+           {
+               clearTimeout( pt_timeout_handler );
+               pt_timeout_handler = "unset";
+           }
+           ga.ws.unsub( vuuid, "pt" );
+           eval( pt_done_eval );
+          } );
+          } else {
+
+          }
+       }
+   });
+} 
+
+pt_reset = function() {
+    
+    if ( !10 ) {
+        // required to reset scrollheight ... 
+        document.getElementById( "pt_output_textarea" ).style.height = 0;
+    }
+
+    if ( pt_timeout_handler != "unset" ) {
+       
+       clearTimeout( pt_timeout_handler );
+       if ( pt_timeout_handler_uuid ) {
+           ga.ws.unsub( pt_timeout_handler_uuid, "pt" );
+       }
+       pt_timeout_handler = "unset";
+    }
+    ga.event( "", "pt", "reset clicked" );
+    ga.valid.clearerrorcounter( "pt" );
+
+   if ( ga.multistage["pt"] )
+     {
+       ga.currentstage = 0;
+       ga.value.sethiddenfields(ga.multistage,"pt");
+       ga.stages["pt"].length = 0;
+       ga.stages["pt"] = ga.stagesdefault["pt"].slice();
+       console.log("Reset: " + ga.stages["pt"]);
+     }
+
+    //    ga.value.resetDefaultValues( "pt" );
+    ga.valuen.restore.dflt(  "pt" );
+    ga.value.resetDefaultValues( "pt_output", true );
+    
+    eval( input_repeats );
+    return false;
+}
+
+$( "#pt_reset" ).click( function() {
+   return pt_reset();
+});
+
+ga.hhelp.set();
+
+
+eval( input_repeats );
+ga.pull.doPull();
+</script>
+</form>
+<div id="pt_results"></div>
+<script>
+ga.tmp.html = "<hr>";
+
+$("#pt").append( ga.tmp.html );
+</script>
+
+<form id="pt_output">
+<div id="pt_output_msgs" class="warning" type="msgs"></div>
+<script>
+ga.value.setLastValueOutput( "pt_output" );
+ga.value.extra_resets.clear();
+</script>
+
+<span id="pt_output_airavata"></span>
+
+<table>
+<tr>
+<td colspan="4" style="vertical-align:top"><label hidden id="pt_output_textarea_label" for="pt_output_textarea" class="header3 ">Report:</label>
+<textarea readonly hidden id="pt_output_textarea" rows="10" cols="110" class="help_link"></textarea>
+<span class="help">general textarea help</span>
+</td>
+</tr>
+</table>
+
+
+<p>
+
+<label for="plotout1">plot 1</label></tr><tr>
+
+</p>
+
+<div id="plotout1_div" style="width:800px;">
+<p>
+<table class="help_link">
+<tr>
+   <td></td>
+   <td id="plotout1_title" style="text-align:center" class="header3"></td>
+   <td id="plotout1_xy" class="coord"></td>
+</tr>
+<tr>
+   <td id="plotout1_ylabel" style="text-align:center" ></td>
+   <td id="plotout1" type="plot2d" class="plot2ddef" style="width:800px;height:400px"></td>
+   <td id="plotout1_legend"></td>
+</tr>
+<tr>
+   <td></td>
+   <td id="plotout1_xlabel" style="text-align:center"></td>
+   <td></td>
+</tr>
+</table>
+<span class="help">drag a box to zoom, right click to zoom out</span>
+</p>
+
+
+</div>
+
+<script>
+var tmp = $.plot( $( "#plotout1" ), [[]], gd.data( "_plot_options" ) );
+ga.value.set.plot2d.pan( "#plotout1", 0 );
+ga.value.set.plot2d.zoom( "#plotout1", 0 );
+ga.value.set.plot2d.hover( "#plotout1", 10 );
+ga.value.set.plot2d.selzoom( "#plotout1", 10 );
+ga.value.set.plot2d.backgroundcolor( "#plotout1"," black" );
+ga.value.set.plot2d.pkg( "pt_output", "#plotout1" );
+$("#plotout1").bind("plothover",function(e,p,i){var r=ga.set("plot2d:precision");$("#plotout1_xy").addClass("coordvisible").text("( "+p.x.toPrecision(r)+" , "+p.y.toPrecision(r)+" )");}).on("mouseout", function(){setTimeout(function(){$("#plotout1_xy").removeClass( "coordvisible" );}, 1500 )});
+ga.value.setLastValue( "pt_output", "#plotout1" );
+ga.value.extra_resets( "plotout1" );
+</script>
+
+
+
+
+ 
+
+
+ 
+
+
+
+
+ 
+
+
+<table>
+</table>
+
+
+<p>
+
+<label for="plotout2">plot 2</label></tr><tr>
+
+</p>
+
+<div id="plotout2_div" style="width:800px;">
+<p>
+<table class="help_link">
+<tr>
+   <td></td>
+   <td id="plotout2_title" style="text-align:center" class="header3"></td>
+   <td id="plotout2_xy" class="coord"></td>
+</tr>
+<tr>
+   <td id="plotout2_ylabel" style="text-align:center" ></td>
+   <td id="plotout2" type="plot2d" class="plot2ddef" style="width:800px;height:400px"></td>
+   <td id="plotout2_legend"></td>
+</tr>
+<tr>
+   <td></td>
+   <td id="plotout2_xlabel" style="text-align:center"></td>
+   <td></td>
+</tr>
+</table>
+<span class="help">drag a box to zoom, right click to zoom out</span>
+</p>
+
+
+</div>
+
+<script>
+var tmp = $.plot( $( "#plotout2" ), [[]], gd.data( "_plot_options" ) );
+ga.value.set.plot2d.pan( "#plotout2", 0 );
+ga.value.set.plot2d.zoom( "#plotout2", 0 );
+ga.value.set.plot2d.hover( "#plotout2", 10 );
+ga.value.set.plot2d.selzoom( "#plotout2", 10 );
+ga.value.set.plot2d.backgroundcolor( "#plotout2"," white" );
+ga.value.set.plot2d.pkg( "pt_output", "#plotout2" );
+$("#plotout2").bind("plothover",function(e,p,i){var r=ga.set("plot2d:precision");$("#plotout2_xy").addClass("coordvisible").text("( "+p.x.toPrecision(r)+" , "+p.y.toPrecision(r)+" )");}).on("mouseout", function(){setTimeout(function(){$("#plotout2_xy").removeClass( "coordvisible" );}, 1500 )});
+ga.value.setLastValue( "pt_output", "#plotout2" );
+ga.value.extra_resets( "plotout2" );
+</script>
+
+
+
+
+ 
+
+
+ 
+
+
+
+
+ 
+
+
+<table>
+</table>
+
+
+<p>
+
+<label for="plotout3">plot 3</label></tr><tr>
+
+</p>
+
+<div id="plotout3_div" style="width:800px;">
+<p>
+<table class="help_link">
+<tr>
+   <td></td>
+   <td id="plotout3_title" style="text-align:center" class="header3"></td>
+   <td id="plotout3_xy" class="coord"></td>
+</tr>
+<tr>
+   <td id="plotout3_ylabel" style="text-align:center" ></td>
+   <td id="plotout3" type="plot2d" class="plot2ddef" style="width:800px;height:400px"></td>
+   <td id="plotout3_legend"></td>
+</tr>
+<tr>
+   <td></td>
+   <td id="plotout3_xlabel" style="text-align:center"></td>
+   <td></td>
+</tr>
+</table>
+<span class="help">drag a box to zoom, right click to zoom out</span>
+</p>
+
+
+</div>
+
+<script>
+var tmp = $.plot( $( "#plotout3" ), [[]], gd.data( "_plot_options" ) );
+ga.value.set.plot2d.pan( "#plotout3", 0 );
+ga.value.set.plot2d.zoom( "#plotout3", 0 );
+ga.value.set.plot2d.hover( "#plotout3", 10 );
+ga.value.set.plot2d.selzoom( "#plotout3", 10 );
+ga.value.set.plot2d.backgroundcolor( "#plotout3"," green" );
+ga.value.set.plot2d.pkg( "pt_output", "#plotout3" );
+$("#plotout3").bind("plothover",function(e,p,i){var r=ga.set("plot2d:precision");$("#plotout3_xy").addClass("coordvisible").text("( "+p.x.toPrecision(r)+" , "+p.y.toPrecision(r)+" )");}).on("mouseout", function(){setTimeout(function(){$("#plotout3_xy").removeClass( "coordvisible" );}, 1500 )});
+ga.value.setLastValue( "pt_output", "#plotout3" );
+ga.value.extra_resets( "plotout3" );
+</script>
+
+
+
+
+ 
+
+
+ 
+
+
+
+
+ 
+
+
+<table>
+<tr><td><label for="outputref">input json reference </label>
+</td>
+<td><div id="outputref" type="filelink" readonly><span id="outputref_filelink"></span></div>
+</td></tr>
+<script>
+ga.value.setLastValue( "pt_output", "#outputref" );
+ga.value.extra_resets( "outputref" );
+</script>
+<tr><td><label for="outputres">results json reference </label>
+</td>
+<td><div id="outputres" type="filelink" readonly><span id="outputres_filelink"></span></div>
+</td></tr>
+<script>
+ga.value.setLastValue( "pt_output", "#outputres" );
+ga.value.extra_resets( "outputres" );
+</script>
+</table>
+</form>
+
+
+
+
+<script>loaded_pt = 1; </script>

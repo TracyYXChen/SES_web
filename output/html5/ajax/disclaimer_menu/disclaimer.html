@@ -1,0 +1,498 @@
+
+
+<form id="disclaimer" >
+<span id="disclaimer_input_area"></span>
+<script>
+
+ga.tmp.bgi = ga.color.data.body.background;
+
+
+
+if ( !0 ) {
+    $("body").css( { "background": ga.tmp.bgi + " no-repeat center center fixed", "-webkit-background-size" : "cover", "-moz-background-size" : "cover", "-o-background-size" : "cover" , "background-size": "cover"} );
+}
+
+input_eval = "";
+input_html = "<table>";
+input_repeats = "";
+input_trees = [];
+skipped_row = 0;
+disclaimer_done_eval = "";
+_jmol_info = {};
+// jmol = "jmol";
+ga.pull.clearPull();
+ga.specproj.clear();
+$('#disclaimer').on("keyup keypress", function(e) { var code = e.keyCode || e.which;  if (code  == 13) { e.preventDefault(); return false; }});
+
+this_html = '<tr><td colspan=5 id="text1"><div style="width:850px;margin-left:100px;"> <p><span style="font-weight:bold;font-size:20pt;font-family:\'Avenir\'">Disclaimer</span></p>  <p></p>  <p class="" style= "text-align:justify;margin-bottom:0.0000in;margin-top:0.0000in;margin-right:0.0000in" awml:style="Normal"><span style= "font-style:italic;font-size:16pt;font-family:\'Avenir\'"> ROTDIF</span> <span style= "font-size:16pt;font-family:\'Avenir\'">is distributed "as is", without any warranty, including any implied warranty of merchantability or fitness for a particular use. The authors assume no responsibility for, and shall not be liable for, any special, indirect, or consequential damages, or any damages whatsoever, arising out of or in connection with the use of this software. </p> </div> </td></tr>';
+input_html += this_html;
+if( skipped_row == 1 ){ input_html += "</tr>"; }
+input_html += '</table>';
+$( '#disclaimer_input_area' ).html( input_html );
+eval( input_eval );
+</script>
+<p><button id="disclaimer_submit" class="help_link"><span class="buttontext">Submit</span></button>
+
+<button id="disclaimer_reset" class="help_link"><span class="buttontext">Reset to default values</span></button>
+
+
+</p>
+<span id="disclaimer_progress"></span>
+<script>
+$( "#disclaimer_reset" ).remove();
+
+$( "#disclaimer_submit" ).remove();
+
+
+
+var disclaimer_output_msgs = $("#disclaimer_output_msgs");
+disclaimer_output_msgs.text( "" );
+
+var disclaimer_timeout_handler = "unset";
+var disclaimer_timeout_handler_uuid;
+
+function get_results_disclaimer( id, last_timeout, getlastmsg, getinput )
+{
+
+//             url:"ajax/get_results.php?_window=" +  window.name + "&_logon=" +$( "#_state" ).data( "_logon" ) + '&_uuid=' + id,
+    var job_status = "";
+    
+    $.getJSON( 
+             "ajax/get_results.php",
+             {
+                tagmode: "any",
+                format: "json",
+                _window : window.name,
+                _logon : $( "#_state" ).data( "_logon" ),
+                _uuid : id,
+                _getlastmsg : getlastmsg,
+                _getinput : getinput ? true : false
+             } )
+    .done( function( data, status, xhr ) {
+
+           var do_refresh = 1;
+
+           if ( do_refresh ) {
+              ga.fc.clear( $.base64.encode( "./" + $( "#_state" ).data( "_project" ) ) );
+              ga.jc.clear_leaf( id );
+           }
+
+           job_status = ga.data.update( "disclaimer", data ).job_status;
+           if ( job_status == "complete" ||
+                job_status == "cancelled" ||
+                job_status == "failed" )
+           {
+              if ( disclaimer_timeout_handler != "unset" )
+              {
+                  clearTimeout( disclaimer_timeout_handler );
+                  disclaimer_timeout_handler = "unset";
+              }
+              ga.ws.unsub( id, "disclaimer" );
+              eval( disclaimer_done_eval );
+           } else {
+               if ( !last_timeout || last_timeout < 2000 )
+               { 
+                  last_timeout = 2000;
+               } else {
+                  if ( last_timeout < 16000 )
+                  {
+                      last_timeout *= 2;
+                  } else {
+                      last_timeout = 16000;
+                  }
+               }
+
+               disclaimer_timeout_handler =  setTimeout( get_results_disclaimer, last_timeout, id, last_timeout, 0 );
+               disclaimer_timeout_handler_uuid = id;
+           }
+          } )
+    .fail( function( xhr, status, errorThrown ) {
+
+           $( "#disclaimer_results" ).html( "<span class=\"warning\"> Failed: " + status + " : '" + xhr.status + ":" + errorThrown + "' on URL ajax/tools/center.php </span>" );
+           $('#disclaimer_progress').html( "" );
+           if ( disclaimer_timeout_handler != "unset" )
+           {
+               clearTimeout( disclaimer_timeout_handler );
+               disclaimer_timeout_handler = "unset";
+           }
+           ga.ws.unsub( id, "disclaimer" );
+           eval( disclaimer_done_eval );
+          } );
+    return false;
+};
+
+function msg_disclaimer ( id, data )
+{
+   ga.data.update( "disclaimer", data, get_results_disclaimer, id );
+};
+
+$( "#disclaimer_submit" ).click( function( e ) {
+   e.preventDefault();
+   e.returnValue = false;
+   $( "#disclaimer" ).find( ".toclear" ).remove();   
+   if ( disclaimer_timeout_handler != "unset" ) {
+       
+       clearTimeout( disclaimer_timeout_handler );
+       if ( disclaimer_timeout_handler_uuid ) {
+           ga.ws.unsub( disclaimer_timeout_handler_uuid, "disclaimer" );
+       }
+       disclaimer_timeout_handler = "unset";
+   }
+   ga.value.resetDefaultValues( "disclaimer_output", true );
+
+   
+   return ga.xsede.select( "__resource__", do_disclaimer_submit, $(this) );
+   //   return do_disclaimer_submit( $(this) );
+});
+
+function do_disclaimer_submit( $form, airavataresource, skipcached ) {
+
+   var $ok = 0;
+   
+   
+
+   ga.event( "", "disclaimer", "submit clicked" );
+
+   
+
+
+
+
+
+   if ( !ga.valid.checksubmit( "disclaimer" ) ) {
+       ga.valid.showerrormessage( "disclaimer" );
+       return false;
+   }
+
+   if ( ga.specproj.data.length ) {
+      if ( $( "#_state" ).data( '_logon' ) &&
+           $( "#_state" ).data( '_logon' ).length ) {
+          $( "#sel_project" ).html( ga.specproj.gname() );
+          $( "#_state" ).data( '_project', ga.specproj.gname() );
+          
+      }
+   }  
+
+//   if ( 0 && !xsedeproject) {
+//      
+//      switch( project = ga.xsede.select( "__resource__", do_disclaimer_submit, $form ) ) {
+//      case "deferred" : return false; break;
+//      case "abort"    : return false; break;
+//      case "notused"  : break;
+//      }
+      
+      
+
+   if ( !airavataresource ) {
+      
+      switch( airavataresource = ga.airavata.select( "__resource__", "__airavataselect__", do_disclaimer_submit, $form ) ) {
+      case "deferred" : return false; break;
+      case "abort"    : return false; break;
+      case "notused"  : break;
+      }
+      
+   }
+   
+
+   $.ajax({
+       type: 'get'
+       ,url: "ajax/sys_config/sys_joblocked.php?_window=" +  window.name + "&_logon=" + $( "#_state" ).data( "_logon" )
+
+
+
+       ,context: $form
+       ,success: function( data ) { // your success handler
+
+          if ( !$ok )
+          {
+          switch ( data )
+          {
+             case "1" :
+             {
+                 ga.msg.box( { icon:"warning.png", text:"This project directory is currently locked by another project.\nYou can wait until it completes, change the project in user configuration or clear the lock in the job manager." } );
+                 return;
+             } break;
+             case "2" :
+             {
+                 ga.msg.box( { icon:"warning.png", text:"You must be logged in to submit this module." } );
+                 return;
+             } break;
+             case "0" :
+             {
+
+                 $ok = 1;
+             } break;
+             default : 
+             {
+                if ( /^Your job/.test( data ) ) {
+                   ga.msg.box( { icon : "warning.png",
+                                 text : data } );
+                   return;
+                }
+                
+                if ( skipcached ) {
+                    $ok = 1;
+                } else {
+                    return ga.cache.msg( "", "", get_results_disclaimer, do_disclaimer_submit, data, $form, airavataresource );
+                }
+             } break;
+          }
+          }
+       }
+       ,error: function() { // your error handler
+          ga.msg.box( { icon:"toast.png", text:"Checking the project lock failed. This is possibly a server or network issue" } );
+       }
+       ,complete: function() { 
+          this.off('submit');
+          if ( $ok )
+          {
+
+
+              $( "#disclaimer_results" ).text( "" );
+
+              ga.value.saveLastValues( "disclaimer" );
+              ga.value.resetDefaultValues( "disclaimer_output", true );
+
+              var found_errors = 0;
+              $("#disclaimer").find("input").each(function(i){
+                 if ( $(this).attr( 'required' ) && $(this).val().length == 0 )
+                 {
+                    var tag =  "#disclaimer " + "#" + $(this).attr('id') + "_msg";
+
+                    $( tag ).html( "missing required field" );
+                    found_errors = 1;
+                 }
+              });
+              if ( found_errors ) {
+                  return;
+              }
+
+    var tree_html = "";
+    $( "._hidden_tree_selects" ).remove( );
+    $.each( input_trees, function( k, v ){
+
+        $( 'input[type=hidden][name="' + v + '[]"]' ).remove();
+        var selectedElms = $('#' + v).jstree("get_selected", true);
+        var i = 0;
+        $.each(selectedElms, function() {
+           tree_html += '<input type="hidden" name="' + v + '[]" value="' + this.id + '" class="_hidden_tree_selects"/>';
+
+        });
+    });
+
+    $( this ).append( tree_html );
+
+
+    var logonadd = $("<input>").attr("type", "hidden").attr("name", "_logon").val( $( "#_state" ).data( "_logon" ) );$( this ).append($(logonadd));
+    var projectadd = $("<input>").attr("type", "hidden").attr("name", "_project").val( $( "#_state" ).data( "_project" ) );$( this ).append($(projectadd));
+    var windowadd = $("<input>").attr("type", "hidden").attr("name", "_window").val( window.name );$( this ).append($(windowadd));
+    
+    var vuuid = uuid.v1();
+
+
+
+
+
+
+
+    if ( airavataresource != "notused" ) {
+        $( this ).append( $("<input>").attr("type", "hidden").attr("name", "_airavataresource").val( airavataresource ) );
+    }
+
+    var uuidadd = $("<input>").attr("type", "hidden").attr("name", "_uuid").val( vuuid );$( this ).append($(uuidadd));
+//    ga.altfile.add( "disclaimer" );
+    ga.valuen.addhtml( "disclaimer" );
+
+    ga.extrahidden( "disclaimer" );
+
+    ga.ws.sub( vuuid, msg_disclaimer, "disclaimer" );
+
+    var formData = new FormData($('#disclaimer')[0]);
+    
+     
+     
+    
+     
+     
+
+     
+     if ( ga.multistage["disclaimer"] )
+      {
+        ga.value.modifyformdata(ga.multistage, "disclaimer", formData, ga.stages["disclaimer"], ga.currentstage);
+      }
+
+
+
+    $('#disclaimer_progress').html( "Uploading:<progress></progress>" );
+
+    var job_status = "";
+
+    ga.event( "", "disclaimer", "submit: passed submit checks, submitting" );
+
+
+    // var url - coditional based on module's .json setting, and use it in ajax call
+
+    $.ajax( {
+             dataType: "json",
+             cache:false,
+//             timeout:3000,  // for testing
+             type:"POST",
+             url:"ajax/disclaimer_menu/disclaimer.php",
+             data: formData,
+             xhr: function() {  // Custom XMLHttpRequest
+                 var myXhr = $.ajaxSettings.xhr();
+                 if(myXhr.upload){ // Check if upload property exists
+                     myXhr.upload.addEventListener('progress',
+                         function(e) {
+                         if(e.lengthComputable){
+                           $('#disclaimer_progress progress').attr({value:e.loaded,max:e.total});
+                         } }
+//                     progressHandlingFunction
+                    , false);
+                 }
+                 return myXhr;
+             },
+             contentType: false,
+             processData: false
+            } )
+    .done( function( data, status, xhr ) {
+    
+    if ( ga.multistage["disclaimer"] )
+      {
+        ga.value.showfields(ga.multistage, "disclaimer", ga.stages["disclaimer"], ga.currentstage);
+    	delete ga.stages["disclaimer"][ga.currentstage]; 
+    	++ga.currentstage;	
+      }	
+
+
+
+
+// refresh cache for this project
+           $('#disclaimer_progress').html( "" );
+   
+           var do_refresh = 1;
+
+           if ( do_refresh ) {
+              ga.fc.clear( $.base64.encode( "./" + $( "#_state" ).data( "_project" ) ) );
+              ga.jc.clear_leaf( vuuid );
+           }
+           
+// loop through data pairs
+           disclaimer_output_msgs.text( "" );
+           job_status = ga.data.update( "disclaimer", data ).job_status;
+
+           if ( job_status == "complete" ||
+                job_status == "cancelled" ||
+                job_status == "failed" )
+           {
+               if ( disclaimer_timeout_handler != "unset" )
+               {
+                   clearTimeout( disclaimer_timeout_handler );
+                   disclaimer_timeout_handler = "unset";
+               }
+               ga.ws.unsub( vuuid, "disclaimer" );
+               eval( disclaimer_done_eval );
+           } else {
+               disclaimer_timeout_handler = setTimeout( get_results_disclaimer, 2000, vuuid, 2000, 0 );
+               disclaimer_timeout_handler_uuid = vuuid;
+
+           }
+          } )
+    .fail( function( xhr, status, errorThrown ) {
+
+
+
+
+           $( "#disclaimer_results" ).html( "<span class=\"warning\"> Failed: " + status + " : '" + xhr.status + ":" + errorThrown + "' on URL ajax/disclaimer_menu/disclaimer.php </span>" );
+           $('#disclaimer_progress').html( "" );
+           if ( disclaimer_timeout_handler != "unset" )
+           {
+               clearTimeout( disclaimer_timeout_handler );
+               disclaimer_timeout_handler = "unset";
+           }
+           ga.ws.unsub( vuuid, "disclaimer" );
+           eval( disclaimer_done_eval );
+          } );
+          } else {
+
+          }
+       }
+   });
+} 
+
+disclaimer_reset = function() {
+    
+    if ( !10 ) {
+        // required to reset scrollheight ... 
+        document.getElementById( "disclaimer_output_textarea" ).style.height = 0;
+    }
+
+    if ( disclaimer_timeout_handler != "unset" ) {
+       
+       clearTimeout( disclaimer_timeout_handler );
+       if ( disclaimer_timeout_handler_uuid ) {
+           ga.ws.unsub( disclaimer_timeout_handler_uuid, "disclaimer" );
+       }
+       disclaimer_timeout_handler = "unset";
+    }
+    ga.event( "", "disclaimer", "reset clicked" );
+    ga.valid.clearerrorcounter( "disclaimer" );
+
+   if ( ga.multistage["disclaimer"] )
+     {
+       ga.currentstage = 0;
+       ga.value.sethiddenfields(ga.multistage,"disclaimer");
+       ga.stages["disclaimer"].length = 0;
+       ga.stages["disclaimer"] = ga.stagesdefault["disclaimer"].slice();
+       console.log("Reset: " + ga.stages["disclaimer"]);
+     }
+
+    //    ga.value.resetDefaultValues( "disclaimer" );
+    ga.valuen.restore.dflt(  "disclaimer" );
+    ga.value.resetDefaultValues( "disclaimer_output", true );
+    
+    eval( input_repeats );
+    return false;
+}
+
+$( "#disclaimer_reset" ).click( function() {
+   return disclaimer_reset();
+});
+
+ga.hhelp.set();
+
+
+eval( input_repeats );
+ga.pull.doPull();
+</script>
+</form>
+<div id="disclaimer_results"></div>
+<script>
+ga.tmp.html = "<hr>";
+ga.tmp.html = "";
+$("#disclaimer").append( ga.tmp.html );
+</script>
+
+<form id="disclaimer_output">
+<div id="disclaimer_output_msgs" class="warning" type="msgs"></div>
+<script>
+ga.value.setLastValueOutput( "disclaimer_output" );
+ga.value.extra_resets.clear();
+</script>
+
+<span id="disclaimer_output_airavata"></span>
+
+<table>
+<tr>
+<td colspan="4" style="vertical-align:top"><label hidden id="disclaimer_output_textarea_label" for="disclaimer_output_textarea" class="header3 ">Report:</label>
+<textarea readonly hidden id="disclaimer_output_textarea" rows="10" cols="110" class="help_link"></textarea>
+<span class="help">general textarea help</span>
+</td>
+</tr>
+</table>
+</form>
+
+
+
+
+<script>loaded_disclaimer = 1; </script>

@@ -1,0 +1,40 @@
+<style>
+#panel_Acknowledgements_menu {
+    position: relative;
+    display: block;  
+}
+</style>
+<p>
+<center>
+
+    <button id="Acknowledgements_menu_acknowledgements" class="help_link">Acknowledgements</button>
+<script>
+    $( "#Acknowledgements_menu_acknowledgements" ).click(function() {
+        var d=$( "#tab_docs > a" );
+        if ( d.length ) { d.attr( "href", "__docsbaseurl__/Acknowledgements_menu/acknowledgements/acknowledgements.html" ); };
+    
+        if ( ga.valuen.lastload && $( "#" + ga.valuen.lastload ).is( ":visible" ) ) { ga.valuen.save( ga.valuen.lastload ); }
+
+        if ( ga.valuen.lastload != "acknowledgements" || !$( "#" + ga.valuen.lastload ).is( ":visible" ) ) {
+            ga.loader.show();
+            $( "#panel_Acknowledgements_menu" ).load( "ajax/Acknowledgements_menu/acknowledgements.html", function() { ga.valuen.save( "acknowledgements", true ); ga.valuen.restore( "acknowledgements" ); ga.valuen.lastload = "acknowledgements"; ga.loader.hide(); });
+        }
+    });
+$( "#Acknowledgements_menu_acknowledgements" ).trigger( "click" );
+$( "#Acknowledgements_menu_acknowledgements" ).hide();
+
+</script>
+</center>
+</p>
+
+<div id="panel_Acknowledgements_menu">
+</div>
+
+
+<script>
+    $( "#panel_Acknowledgements_menu" ).text("");
+ga.tmp.bgi = ga.color.data.body.background;
+
+
+$("body").css( { "background": ga.tmp.bgi + " no-repeat center center fixed", "-webkit-background-size" : "cover", "-moz-background-size" : "cover", "-o-background-size" : "cover" , "background-size": "cover"} );
+</script>

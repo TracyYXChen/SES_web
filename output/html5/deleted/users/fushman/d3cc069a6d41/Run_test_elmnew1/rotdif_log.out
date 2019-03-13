@@ -1,0 +1,41 @@
+Options:
+temp = 273.0
+robust = false
+relax =
+elm = true
+axes = false
+axesl = 5.0
+pdb = 1P7F.pdb
+out = out
+help = false
+nostat = false
+nodynamics = false
+nogui = true
+model = 1
+wr = 1.4
+dock = false
+sr = 2.2
+
+Parsing pdb file....done.
+Predicting tensor...done.
+
+Dx = 1.68718 *(10^7) 1/s
+Dy = 2.09805 *(10^7) 1/s
+Dz = 2.39677 *(10^7) 1/s
+alpha = 97.11 deg
+beta = 70.15 deg
+gamma = 104.20 deg
+TAUc = 8.08800 ns
+anisotropy = 0.75072
+rhombicity = 0.79980
+
+====Diffusion Tensor====
+    [ 1.72998 -0.11173  0.07839]
+D = [-0.11173  2.34139  0.11389] *(10^7) 1/s
+    [ 0.07839  0.11389  2.11063]
+
+====Diffusion Tensor Sorted Eigendecomposition====
+    [ -0.9517    0.2841   -0.1165][  1.6872    0.0000    0.0000][ -0.9517   -0.2027    0.2307]
+D = [ -0.2027   -0.2963    0.9333][  0.0000    2.0981    0.0000][  0.2841   -0.2963    0.9118] *(10^7) 1/s
+    [  0.2307    0.9118    0.3396][  0.0000    0.0000    2.3968][ -0.1165    0.9333    0.3396]
+

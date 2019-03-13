@@ -1,0 +1,8 @@
+<?php
+
+if ( !isset( $GLOBALS[ "modulejson" ] ) || !is_array( $GLOBALS[ "modulejson" ] ) ) {
+   $GLOBALS[ "modulejson" ] = [];
+}
+
+$GLOBALS[ "modulejson" ][ "demo" ] = json_decode( '{"fields":[{"id":"text1","role":"input","type":"html","value":" <div style=\"width:800px;margin-left:100px\">     <p><span style=\"font-weight:bold;font-size:20pt;font-family:\\'Times New Roman\\'\">Instructions</span></p>      <p style=\"text-align:left;margin-bottom:0.000000pt;margin-top:0.000000pt\"></p>          <p style=\"font-size:16pt;font-family:\\'Times New Roman\\'\">     <i>RotDif</i> requires 2 input files:</p>      <p style=\"text-align:justify;margin-bottom:0.000000pt;margin-top:0.000000pt\">          <span style=\"font-size:16pt;font-family:\\'Times New Roman\\'\">        <p> \t<ul> \t  <li> Relaxation file (.txt) </li> \t</ul> \t       </p>        \t<p> \t  <ul> \t    <li>PDB file (.pdb) </li> \t  </ul> \t  \t</p>      \t<hr>  \t <p><span style=\"font-weight:bold;font-size:20pt;font-family:\\'Times New Roman\\'\">Example set of files</span></p> \t \t<p> Relaxation files</p> \t<ul> \t    <li> <a href=\"demo/rotdif_demo_data.txt\" download>Data at 1 field, rotdif_demo_data.txt</a> </li> \t    <li> <a href=\"demo/rotdif_demo_5fields_data.txt\" download>Data at 5 fields, rotdif_demo_5fields_data.txt</a> </li> \t     \t</ul> \t<p> Protein coordinates </p> \t<ul> \t  <li> <a href=\"demo/rotdif_demo_structure.pdb\">Coordinates, rotdif_demo_structure.pdb </a></li> \t   \t</ul> \t \t     </span></p>     </div> "}],"label":"How to Use","moduleid":"demo","nooutputhr":"true","noreset":"true","nosubmit":"true"}' );
+?>
